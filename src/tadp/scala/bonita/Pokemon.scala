@@ -1,6 +1,6 @@
 package tadp.scala.bonita
 
-class Pokemon(var unGenero:Char, var unaEnergia: Int, var unaEnergiaMaxima: Int, var unPeso: Int, var unaFuerza: Int, var unaAgilidad: Int ) {
+class Pokemon(var unGenero:Char, var unaEnergia: Int, var unaEnergiaMaxima: Int, var unPeso: Int, var unaFuerza: Int, var unaAgilidad: Int, val unaEspecie:Especie) {
   var nivel: Int = 1 //De 1 a 100
   var experiencia: Int = 0
   var genero: Char = unGenero//Macho o Hembra
@@ -10,5 +10,38 @@ class Pokemon(var unGenero:Char, var unaEnergia: Int, var unaEnergiaMaxima: Int,
   var fuerza: Int = unaFuerza//De 1 a 100
   var agilidad: Int = unaAgilidad//De 1 a 100
   var estado: Estado = new Saludable
+  var especie: Especie = unaEspecie 
+  
+  def estoyParalizado(): Boolean = {
+    return this.estado.paralisis 
+  }
+  
+  def estoyKO(): Boolean = {
+    return this.estado.knockeado
+  }
+  
+  def pasarAKO() = {
+    this.estado = new KO
+  }
+  
+  def tengoFuerzaSuficiente(unosKilos:Int) = {
+    if (unosKilos > this.fuerza * 10){
+      throw new StrengthException("No tengo fuerza suficiente")
+    }
+  }
+  
+  def puedoLevantarPesas(unosKilos:Int): Int = {
+  	this.tengoFuerzaSuficiente(unosKilos)
+    return this.especie.puedeLevantar()
+  
+  }
+  
+  def levantarPesas(unosKilos:Int) = {
+    if(this.estoyParalizado){
+      this.pasarAKO() 
+    } else {
+      this.experiencia = this.puedoLevantarPesas(unosKilos) * unosKilos
+    }
+  }
   
 }
