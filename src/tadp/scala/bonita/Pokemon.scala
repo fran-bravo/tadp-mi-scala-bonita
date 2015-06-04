@@ -12,6 +12,16 @@ class Pokemon(var unGenero:Char, var unaEnergia: Int, var unaEnergiaMaxima: Int,
   var estado: Estado = new Saludable
   var especie: Especie = unaEspecie 
   
+  // 
+  
+  def puedoRealizarActividad() = {
+    if (this.estado.knockeado) {
+      throw new KOException("Estoy Knockeado")
+    }
+  }
+  
+  // Metodos asociados al estado
+  
   def estoyParalizado(): Boolean = {
     return this.estado.paralisis 
   }
@@ -23,6 +33,8 @@ class Pokemon(var unGenero:Char, var unaEnergia: Int, var unaEnergiaMaxima: Int,
   def pasarAKO() = {
     this.estado = new KO
   }
+  
+  // Metodos auxiliares de levantarPesas
   
   def tengoFuerzaSuficiente(unosKilos:Int) = {
     if (unosKilos > this.fuerza * 10){
@@ -36,7 +48,10 @@ class Pokemon(var unGenero:Char, var unaEnergia: Int, var unaEnergiaMaxima: Int,
   
   }
   
+  // Actividad levantarPesas
+  
   def levantarPesas(unosKilos:Int) = {
+    this.puedoRealizarActividad
     if(this.estoyParalizado){
       this.pasarAKO() 
     } else {

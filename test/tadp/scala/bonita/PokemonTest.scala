@@ -76,4 +76,18 @@ class PokemonTest {
     assertEquals(0, pokemon.experiencia)
   }
   
+  @Test
+  def `Pokemon knockeado trata de levantar pesas` = {
+    var pokemon : Pokemon = new Pokemon('F', 50, 50, 10, 3, 3, pikachu)
+    pokemon.estado = new KO
+    
+    try {
+      pokemon.levantarPesas(1)
+    } catch {
+      case ex: KOException => {
+        assertEquals(ex.getMessage, "Estoy Knockeado")
+      }
+    }
+  }
+  
   }
