@@ -99,11 +99,15 @@ class Pokemon(var unGenero:Char, var unaEnergia: Int, var unaEnergiaMaxima: Int,
   //Ganar Experiencia
   
   def ganarExperiencia (exp: Int) = {
-    this.experiencia = this.experiencia + exp
+    this.experiencia += exp
     
     if (this.experiencia >= this.especie.experienciaParaNivel(this.nivel+1)){
-      this.nivel = this.nivel + 1
+      this.subirUnNivel()
     }
+  }
+  
+  def subirUnNivel() = {
+    this.nivel += 1
   }
   
 }
