@@ -7,11 +7,11 @@ import org.junit.Ignore
 
 class PokemonTest {
   
-  val raichu = new Especie(20, List(new Electrico), new SubirNivel(0))
-  val pikachu = new Especie(10, List(new Electrico), new SubirNivel(2), raichu)
-  val gastly = new Especie(2, List(new Fantasma), new SubirNivel(10))
-  val machop = new Especie(30, List(new Pelea), new SubirNivel(10))
-  val poliwrath = new Especie(20, List(new Agua, new Pelea), new SubirNivel(10))
+  val raichu = new Especie(20, List(new Electrico), new SubirNivel(0), 500)
+  val pikachu = new Especie(10, List(new Electrico), new SubirNivel(2), 350, raichu)
+  val gastly = new Especie(2, List(new Fantasma), new SubirNivel(10), 300)
+  val machop = new Especie(30, List(new Pelea), new SubirNivel(10), 250)
+  val poliwrath = new Especie(20, List(new Agua, new Pelea), new SubirNivel(10), 650)
   
   @Test
   def `Pokemon electrico levanta pesas` = {
@@ -100,6 +100,23 @@ class PokemonTest {
     pokemon.evolucionar()
     
        
+  }
+  
+  // Testeo del manejo de la experiencia
+  @Test
+  def `Pikachu necesita 2450 puntos de experiencia para subir al nivel 4` = {
+    assertEquals(pikachu.experienciaParaNivel(4), 2450)
+  }
+  
+  @Test
+  def `Un pikachu de nivel 2 sube de nivel cuando gana suficiente experiencia` = {
+    var pika: Pokemon = new Pokemon('H', 40, 40, 15, 10, 15, pikachu)
+    pika.experiencia = 600
+    pika.nivel = 2 //Con 600 pts de exp, este pikachu está en nivel 2
+    pika.ganarExperiencia(600)
+    
+    assertEquals(pika.experiencia, 1200)
+    assertEquals(pika.nivel, 3)
   }
   
   }
