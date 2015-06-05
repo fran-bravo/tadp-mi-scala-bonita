@@ -34,6 +34,10 @@ class Pokemon(var unGenero:Char, var unaEnergia: Int, var unaEnergiaMaxima: Int,
     this.estado = new KO
   }
   
+  def pasarAEnvenenado() = {
+    this.estado = new Envenenado
+  }
+  
   // Metodos auxiliares de levantarPesas
   
   def tengoFuerzaSuficiente(unosKilos:Int) = {
@@ -70,8 +74,12 @@ class Pokemon(var unGenero:Char, var unaEnergia: Int, var unaEnergiaMaxima: Int,
     
   }
   
-  def fingirIntercambio(){
+  def fingirIntercambio() = {
     this.especie.condicionDeEvolucion.fingeIntercambio(this)
+  }
+  
+  def usarPiedra(unaPiedra: Piedra) = {
+    this.especie.condicionDeEvolucion.usaPiedra(this, unaPiedra)
   }
   
   // Modificar peso

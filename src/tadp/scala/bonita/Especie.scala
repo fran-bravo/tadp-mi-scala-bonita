@@ -14,6 +14,13 @@ class Especie(val unPesoMaximo: Int, val unosTipos: List[Tipo], val resistEvo: I
     
   }
   
+  def tipoPrincipal(): Tipo = {
+    return tipos.head
+  }
+  
+  def tipoSecundario(): Tipo = {
+    return tipos.last //asumiendo que solo se pueden tener como maximo 2 tipos
+  }
   
   def puedeEvolucionar(unPokemon: Pokemon): Unit = {
     this.tengoEspecieDeEvolucion()
