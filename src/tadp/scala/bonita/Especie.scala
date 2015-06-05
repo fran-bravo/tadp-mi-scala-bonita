@@ -1,13 +1,12 @@
 package tadp.scala.bonita
 
 
-
-class Especie(val unPesoMaximo: Int, val unosTipos: List[Tipo], val condicion: CondicionEvolucion, val resistEvo: Int, val especieEvo: Especie = null) { 
+class Especie(val unPesoMaximo: Int, val unosTipos: List[Tipo], val resistEvo: Int, val condicion: CondicionEvolucion = null, val especieEvo: Especie = null) { 
   val pesoMaximo: Int = unPesoMaximo
   val tipos: List[Tipo] = unosTipos
-  val especieDeEvolucion: Especie = especieEvo //Si no se especifica, queda null y significa que no puede evolucionar
-  val condicionDeEvolucion: CondicionEvolucion = condicion
   val resistenciaEvolutiva: Int = resistEvo
+  val especieDeEvolucion: Especie = especieEvo //Si no se especifica, queda null y significa que no puede evolucionar
+  val condicionDeEvolucion: CondicionEvolucion = condicion //Si no se especifica, queda null y significa que no puede evolucionar
    
   def puedeLevantar(): Int = {
     val listaAux = this.tipos.map{case (tipo)=>tipo.puedoLevantar()} 

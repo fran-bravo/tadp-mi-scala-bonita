@@ -19,3 +19,9 @@ project/plugins/project/
 # Directory-based project format:
 .idea/
 /bin/
+
+# Otros
+.project
+.classpath
+.cache-main
+.cache-tests

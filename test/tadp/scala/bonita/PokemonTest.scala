@@ -7,11 +7,13 @@ import org.junit.Ignore
 
 class PokemonTest {
   
-  val raichu = new Especie(20, List(new Electrico), new SubirNivel(0), 500)
-  val pikachu = new Especie(10, List(new Electrico), new SubirNivel(2), 350, raichu)
-  val gastly = new Especie(2, List(new Fantasma), new SubirNivel(10), 300)
-  val machop = new Especie(30, List(new Pelea), new SubirNivel(10), 250)
-  val poliwrath = new Especie(20, List(new Agua, new Pelea), new SubirNivel(10), 650)
+  val raichu = new Especie(20, List(new Electrico),500 , new SubirNivel(0))
+  val pikachu = new Especie(10, List(new Electrico), 350, new SubirNivel(2), raichu)
+  val gastly = new Especie(2, List(new Fantasma), 300, new SubirNivel(10))
+  val machamp = new Especie(30, List(new Pelea), 700)
+  val machoke = new Especie(30, List(new Pelea),450 , new Intercambiar, machamp)
+  val machop = new Especie(30, List(new Pelea), 250, new SubirNivel(10))
+  val poliwrath = new Especie(20, List(new Agua, new Pelea), 650, new SubirNivel(10))
   
   @Test
   def `Pokemon electrico levanta pesas` = {
@@ -99,9 +101,38 @@ class PokemonTest {
     
     pokemon.evolucionar()
     
+  }
+  
+  @Test
+  def `Machoke evoluciona a Machamp cuando finge ser intercambiado` = {    
+    var pokemon : Pokemon = new Pokemon('M', 100, 100, 10, 5, 6, machoke) 
+      
+    pokemon.fingirIntercambio()
+    
+    assertEquals(machamp, pokemon.especie)
        
   }
   
+  @Test
+  def `Machop masculino engorda 1 kilo cuando finge intercambio` = {    
+    var pokemon : Pokemon = new Pokemon('M', 100, 100, 10, 5, 6, machop) 
+      
+    pokemon.fingirIntercambio()
+    
+    assertEquals(11, pokemon.peso)
+       
+  }
+  
+  @Test
+  def `Machop femenino adelgaza 10 kilos cuando finge intercambio` = {    
+    var pokemon : Pokemon = new Pokemon('F', 100, 100, 20, 5, 6, machop) 
+      
+    pokemon.fingirIntercambio()
+    
+    assertEquals(10, pokemon.peso)
+       
+  }
+
   // Testeo del manejo de la experiencia
   @Test
   def `Pikachu necesita 2450 puntos de experiencia para subir al nivel 4` = {
@@ -118,5 +149,5 @@ class PokemonTest {
     assertEquals(pika.experiencia, 1200)
     assertEquals(pika.nivel, 3)
   }
-  
-  }
+
+ }

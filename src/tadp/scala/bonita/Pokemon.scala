@@ -70,7 +70,24 @@ class Pokemon(var unGenero:Char, var unaEnergia: Int, var unaEnergiaMaxima: Int,
     
   }
   
+  def fingirIntercambio(){
+    this.especie.condicionDeEvolucion.fingeIntercambio(this)
+  }
   
+  // Modificar peso
+  
+  def modificarPeso(unPeso: Int) = {
+    this.peso += unPeso
+  }
+  
+  def modificarPesoPorIntercambio() = {
+    if(this.genero == 'M'){
+      modificarPeso(1)
+    } else {
+      modificarPeso(-10)
+    }
+  }
+
   //Ganar Experiencia
   
   def ganarExperiencia (exp: Int) = {
