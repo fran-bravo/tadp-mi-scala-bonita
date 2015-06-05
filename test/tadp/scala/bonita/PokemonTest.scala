@@ -22,17 +22,10 @@ class PokemonTest {
     
   }
   
-  @Test 
+  @Test(expected = classOf[TypeException])
   def `Pokemon fantasma trata de levantar pesas` = {
     var pokemon : Pokemon = new Pokemon('F', 50, 50, 1, 3, 3, gastly)
-    
-    try {
-      pokemon.levantarPesas(15)
-    } catch {
-      case ex: TypeException => {
-        assertEquals(ex.getMessage, "Soy de tipo fantasma")
-      }
-    }
+    pokemon.levantarPesas(15)
   }
   
   @Test
@@ -53,16 +46,10 @@ class PokemonTest {
     assertEquals(20, pokemon.experiencia)
   }
   
-  @Test
+  @Test(expected = classOf[StrengthException])
   def `Pokemon sin suficiente fuerza levanta pesas` = {
     var pokemon : Pokemon = new Pokemon('M', 100, 100, 10, 2, 6, pikachu) 
-    try {
-    	pokemon.levantarPesas(30)
-    } catch {
-      case ex: StrengthException => {
-        assertEquals(ex.getMessage, "No tengo fuerza suficiente")
-      }
-    }    
+   	pokemon.levantarPesas(30)    
   }
   
   @Test
@@ -76,18 +63,12 @@ class PokemonTest {
     assertEquals(0, pokemon.experiencia)
   }
   
-  @Test
+  @Test(expected = classOf[KOException])
   def `Pokemon knockeado trata de levantar pesas` = {
     var pokemon : Pokemon = new Pokemon('F', 50, 50, 10, 3, 3, pikachu)
     pokemon.estado = new KO
+     pokemon.levantarPesas(1)
     
-    try {
-      pokemon.levantarPesas(1)
-    } catch {
-      case ex: KOException => {
-        assertEquals(ex.getMessage, "Estoy Knockeado")
-      }
-    }
   }
   
   }
