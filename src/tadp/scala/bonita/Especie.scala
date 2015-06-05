@@ -27,7 +27,7 @@ class Especie(val unPesoMaximo: Int, val unosTipos: List[Tipo], val condicion: C
   }
   
   def cumpleCondicion(unPokemon: Pokemon) = {
-    this.condicionDeEvolucion.cumple(unPokemon)
+    this.condicionDeEvolucion.cumpleCondicion(unPokemon)
   }
   
 

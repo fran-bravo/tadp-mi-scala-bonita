@@ -7,7 +7,7 @@ import org.junit.Ignore
 
 class PokemonTest {
   
-  val raichu = new Especie(20, List(new Electrico), new SubirNivel(2))
+  val raichu = new Especie(20, List(new Electrico), new SubirNivel(0))
   val pikachu = new Especie(10, List(new Electrico), new SubirNivel(2), raichu)
   val gastly = new Especie(2, List(new Fantasma), new SubirNivel(10))
   val machop = new Especie(30, List(new Pelea), new SubirNivel(10))
@@ -74,5 +74,32 @@ class PokemonTest {
     
   }
  
+  @Test(expected = classOf[EvolutionException])
+  def `Raichu no puede evolucionar` = {
+    var pokemon : Pokemon = new Pokemon('M', 100, 100, 10, 5, 6, raichu) 
+    
+    pokemon.evolucionar()
+       
+  }
+  
+  @Test
+  def `Pikachu evoluciona a raichu` = {    
+    var pokemon : Pokemon = new Pokemon('M', 100, 100, 10, 5, 6, pikachu) 
+    pokemon.nivel = 2
+    
+    pokemon.evolucionar()
+    
+    assertEquals(raichu, pokemon.especie)
+    
+  }
+  
+  @Test(expected = classOf[EvolutionException])
+  def `Pikachu no cumple el nivel necesario para evolucionar a raichu` = {
+    var pokemon : Pokemon = new Pokemon('M', 100, 100, 10, 5, 6, pikachu) 
+    
+    pokemon.evolucionar()
+    
+       
+  }
   
   }

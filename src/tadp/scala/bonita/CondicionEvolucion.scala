@@ -15,7 +15,7 @@ abstract class CondicionEvolucion {
 
 class SubirNivel(val nivel: Int) extends CondicionEvolucion{
   
-  val nivelEvolucion: Int = nivel //Si es cero, quiere decir que no evoluciona
+  val nivelEvolucion: Int = nivel
  
   override def cumple(unPokemon: Pokemon): Boolean = {
     return nivelEvolucion == unPokemon.nivel

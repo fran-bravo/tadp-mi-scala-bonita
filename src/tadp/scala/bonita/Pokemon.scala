@@ -65,7 +65,9 @@ class Pokemon(var unGenero:Char, var unaEnergia: Int, var unaEnergiaMaxima: Int,
   
   def evolucionar() = {
     this.especie.puedeEvolucionar(this)
-   // this.especie.evolucionar(this)
+    
+    this.especie = this.especie.especieDeEvolucion
+    
   }
   
 }
