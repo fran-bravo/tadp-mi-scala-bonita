@@ -13,16 +13,18 @@ abstract class CondicionEvolucion {
 }
 
 
-class SubirNivel extends CondicionEvolucion{
+class SubirNivel(val nivel: Int) extends CondicionEvolucion{
+  
+  val nivelEvolucion: Int = nivel //Si es cero, quiere decir que no evoluciona
  
   override def cumple(unPokemon: Pokemon): Boolean = {
-    return unPokemon.especie.nivelEvolucion == unPokemon.nivel
+    return nivelEvolucion == unPokemon.nivel
   }
 
 }
 
 
-class Intercambiar extends CondicionEvolucion{
+class Intercambiar() extends CondicionEvolucion{
   
   override def cumple(unPokemon: Pokemon): Boolean = {
     //tiene que fijarse si el pokemon cree que lo quieren intercambiar

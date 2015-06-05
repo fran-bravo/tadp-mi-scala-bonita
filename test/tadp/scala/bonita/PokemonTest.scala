@@ -7,11 +7,11 @@ import org.junit.Ignore
 
 class PokemonTest {
   
-  val raichu = new Especie(20, List(new Electrico), new SubirNivel)
-  val pikachu = new Especie(10, List(new Electrico), new SubirNivel, 2, raichu)
-  val gastly = new Especie(2, List(new Fantasma), new SubirNivel, 10)
-  val machop = new Especie(30, List(new Pelea), new SubirNivel, 10)
-  val poliwrath = new Especie(20, List(new Agua, new Pelea), new SubirNivel, 10)
+  val raichu = new Especie(20, List(new Electrico), new SubirNivel(2))
+  val pikachu = new Especie(10, List(new Electrico), new SubirNivel(2), raichu)
+  val gastly = new Especie(2, List(new Fantasma), new SubirNivel(10))
+  val machop = new Especie(30, List(new Pelea), new SubirNivel(10))
+  val poliwrath = new Especie(20, List(new Agua, new Pelea), new SubirNivel(10))
   
   @Test
   def `Pokemon electrico levanta pesas` = {
