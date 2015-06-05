@@ -7,10 +7,12 @@ import org.junit.Ignore
 
 class PokemonTest {
   
-  val raichu = new Especie(20, List(new Electrico), new SubirNivel(0))
+  val raichu = new Especie(20, List(new Electrico))
   val pikachu = new Especie(10, List(new Electrico), new SubirNivel(2), raichu)
   val gastly = new Especie(2, List(new Fantasma), new SubirNivel(10))
-  val machop = new Especie(30, List(new Pelea), new SubirNivel(10))
+  val machamp = new Especie(30, List(new Pelea))
+  val machoke = new Especie(30, List(new Pelea), new Intercambiar, machamp)
+  val machop = new Especie(30, List(new Pelea), new SubirNivel(10), machoke)
   val poliwrath = new Especie(20, List(new Agua, new Pelea), new SubirNivel(10))
   
   @Test
@@ -99,7 +101,38 @@ class PokemonTest {
     
     pokemon.evolucionar()
     
+  }
+  
+  @Test
+  def `Machoke evoluciona a Machamp cuando finge ser intercambiado` = {    
+    var pokemon : Pokemon = new Pokemon('M', 100, 100, 10, 5, 6, machoke) 
+      
+    pokemon.fingirIntercambio()
+    
+    assertEquals(machamp, pokemon.especie)
        
   }
+  
+  @Test
+  def `Machop masculino engorda 1 kilo cuando finge intercambio` = {    
+    var pokemon : Pokemon = new Pokemon('M', 100, 100, 10, 5, 6, machop) 
+      
+    pokemon.fingirIntercambio()
+    
+    assertEquals(11, pokemon.peso)
+       
+  }
+  
+  @Test
+  def `Machop femenino adelgaza 10 kilos cuando finge intercambio` = {    
+    var pokemon : Pokemon = new Pokemon('F', 100, 100, 20, 5, 6, machop) 
+      
+    pokemon.fingirIntercambio()
+    
+    assertEquals(10, pokemon.peso)
+       
+  }
+  
+  
   
   }

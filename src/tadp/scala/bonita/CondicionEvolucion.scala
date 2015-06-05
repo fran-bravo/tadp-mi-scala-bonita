@@ -10,6 +10,10 @@ abstract class CondicionEvolucion {
     }
   }
   
+  def fingeIntercambio(unPokemon: Pokemon): Unit = {
+    unPokemon.modificarPesoPorIntercambio()
+  }
+  
 }
 
 
@@ -26,9 +30,15 @@ class SubirNivel(val nivel: Int) extends CondicionEvolucion{
 
 class Intercambiar() extends CondicionEvolucion{
   
+  var fingioIntercambio: Boolean = false
+  
   override def cumple(unPokemon: Pokemon): Boolean = {
-    //tiene que fijarse si el pokemon cree que lo quieren intercambiar
-    return true
+    return fingioIntercambio
+  }
+  
+  override def fingeIntercambio(unPokemon: Pokemon) = {
+    this.fingioIntercambio = true
+    unPokemon.evolucionar()
   }
   
 }
