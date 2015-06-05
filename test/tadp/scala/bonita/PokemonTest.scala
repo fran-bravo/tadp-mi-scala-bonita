@@ -7,10 +7,11 @@ import org.junit.Ignore
 
 class PokemonTest {
   
-  val pikachu = new Especie(10, List(new Electrico))
-  val gastly = new Especie(2, List(new Fantasma))
-  val machop = new Especie(30, List(new Pelea))
-  val poliwrath = new Especie(20, List(new Agua, new Pelea))
+  val raichu = new Especie(20, List(new Electrico), new SubirNivel)
+  val pikachu = new Especie(10, List(new Electrico), new SubirNivel, 2, raichu)
+  val gastly = new Especie(2, List(new Fantasma), new SubirNivel, 10)
+  val machop = new Especie(30, List(new Pelea), new SubirNivel, 10)
+  val poliwrath = new Especie(20, List(new Agua, new Pelea), new SubirNivel, 10)
   
   @Test
   def `Pokemon electrico levanta pesas` = {
@@ -49,7 +50,9 @@ class PokemonTest {
   @Test(expected = classOf[StrengthException])
   def `Pokemon sin suficiente fuerza levanta pesas` = {
     var pokemon : Pokemon = new Pokemon('M', 100, 100, 10, 2, 6, pikachu) 
-   	pokemon.levantarPesas(30)    
+   	pokemon.levantarPesas(30)
+    
+    assertEquals(true, pokemon.estoyParalizado())
   }
   
   @Test
@@ -70,5 +73,6 @@ class PokemonTest {
      pokemon.levantarPesas(1)
     
   }
+ 
   
   }

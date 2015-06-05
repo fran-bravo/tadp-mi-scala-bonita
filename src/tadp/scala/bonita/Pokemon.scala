@@ -38,6 +38,7 @@ class Pokemon(var unGenero:Char, var unaEnergia: Int, var unaEnergiaMaxima: Int,
   
   def tengoFuerzaSuficiente(unosKilos:Int) = {
     if (unosKilos > this.fuerza * 10){
+      this.estado = new Paralizado
       throw new StrengthException("No tengo fuerza suficiente")
     }
   }
@@ -57,6 +58,14 @@ class Pokemon(var unGenero:Char, var unaEnergia: Int, var unaEnergiaMaxima: Int,
     } else {
       this.experiencia = this.puedoLevantarPesas(unosKilos) * unosKilos
     }
+  }
+  
+  
+  //Evolucionar
+  
+  def evolucionar() = {
+    this.especie.puedeEvolucionar(this)
+   // this.especie.evolucionar(this)
   }
   
 }
