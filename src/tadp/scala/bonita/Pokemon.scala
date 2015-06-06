@@ -1,17 +1,17 @@
 package tadp.scala.bonita
 
-class Pokemon(var unGenero:Char, var unaEnergia: Int, var unaEnergiaMaxima: Int, var unPeso: Int, var unaFuerza: Int, var unaAgilidad: Int, val unaEspecie:Especie) {
-  var nivel: Int = 1 //De 1 a 100
-  var experiencia: Int = 0
-  var genero: Char = unGenero//Macho o Hembra
-  var energia: Int = unaEnergia//Minimo 0, maximo energiaMaxima
-  var energiaMaxima: Int = unaEnergiaMaxima
-  var peso: Int = unPeso//Minimo 0
-  var fuerza: Int = unaFuerza//De 1 a 100
-  var agilidad: Int = unaAgilidad//De 1 a 100
-  var estado: Estado = Saludable
-  var especie: Especie = unaEspecie 
-  
+case class Pokemon(
+  val genero: Char, //M o F
+  val energia: Int, //Minimo 0, maximo energiaMaxima
+  val energiaMaxima: Int,
+  val peso: Int, //Minimo 0
+  val fuerza: Int, //De 1 a 100
+  val agilidad: Int, //De 1 a 100
+  val especie: Especie,
+  val nivel: Int = 1, //De 1 a 100
+  val experiencia: Int = 0,
+  val estado: Estado = Saludable)
+  {
   // 
   
   def puedoRealizarActividad() = {
@@ -35,18 +35,18 @@ class Pokemon(var unGenero:Char, var unaEnergia: Int, var unaEnergiaMaxima: Int,
   }
   
   def pasarAKO() = {
-    this.estado = KO
+    copy(estado = KO)
   }
   
   def pasarAEnvenenado() = {
-    this.estado = Envenenado
+    copy(estado = Envenenado)
   }
   
   // Metodos auxiliares de levantarPesas
   
   def tengoFuerzaSuficiente(unosKilos:Int) = {
     if (unosKilos > this.fuerza * 10){
-      this.estado = Paralizado
+      copy(estado = Paralizado)
       throw new StrengthException("No tengo fuerza suficiente")
     }
   }
@@ -64,7 +64,7 @@ class Pokemon(var unGenero:Char, var unaEnergia: Int, var unaEnergiaMaxima: Int,
     if(this.estoyParalizado){
       this.pasarAKO() 
     } else {
-      this.experiencia = this.puedoLevantarPesas(unosKilos) * unosKilos
+      copy(experiencia = this.puedoLevantarPesas(unosKilos) * unosKilos)
     }
   }
   
@@ -72,21 +72,21 @@ class Pokemon(var unGenero:Char, var unaEnergia: Int, var unaEnergiaMaxima: Int,
   //Evolucionar
   
   def evolucionar() = {
-    this.especie = this.especie.especieDeEvolucion.get
+    copy(especie = this.especie.especieDeEvolucion.get)
   }
   
   def fingirIntercambio() = {
-    this.especie.condicionDeEvolucion.map{_.fingeIntercambio(this)}
+    this.especie.condicionDeEvolucion.map{_.fingeIntercambio(this)}.get
   }
   
   def usarPiedra(unaPiedra: PiedraAbstract) = {
-    this.especie.condicionDeEvolucion.map{_.usaPiedra(this, unaPiedra)}
+    this.especie.condicionDeEvolucion.map{_.usaPiedra(this, unaPiedra)}.get
   }
   
   // Modificar peso
   
   def modificarPeso(unPeso: Int) = {
-    this.peso += unPeso
+    copy(peso = peso + unPeso)
   }
   
   def modificarPesoPorIntercambio() = this.genero match{
@@ -96,17 +96,18 @@ class Pokemon(var unGenero:Char, var unaEnergia: Int, var unaEnergiaMaxima: Int,
 
   //Ganar Experiencia
   
-  def ganarExperiencia (exp: Int) = {
-    this.experiencia += exp
+  def ganarExperiencia (exp: Int): Pokemon = {
+    var pokemon: Pokemon = copy(experiencia = experiencia + exp)
     
-    if (this.experiencia >= this.especie.experienciaParaNivel(this.nivel+1)){
-      this.subirUnNivel()
+    if (pokemon.experiencia >= pokemon.especie.experienciaParaNivel(pokemon.nivel+1)){
+      pokemon = pokemon.subirUnNivel()
     }
+    return pokemon
   }
   
-  def subirUnNivel() = {
-    this.nivel += 1
-    this.especie.condicionDeEvolucion.map{_.subioDeNivel(this)}
+  def subirUnNivel(): Pokemon = {
+    val pokemon: Pokemon = copy(nivel = nivel + 1)
+    pokemon.especie.condicionDeEvolucion.map{_.subioDeNivel(pokemon)}.get
   }
   
   def pierdeCon(tipo: Tipo): Boolean = {

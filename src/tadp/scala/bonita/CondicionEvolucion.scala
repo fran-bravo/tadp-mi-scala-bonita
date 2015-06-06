@@ -2,15 +2,15 @@ package tadp.scala.bonita
 
 abstract class CondicionEvolucion {
   
-  def fingeIntercambio(unPokemon: Pokemon): Unit = {
+  def fingeIntercambio(unPokemon: Pokemon): Pokemon = {
     unPokemon.modificarPesoPorIntercambio()
   }
   
-  def usaPiedra(unPokemon: Pokemon, unaPiedra: PiedraAbstract){
-    //Si la condicion no es usar piedra, no hace nada?
+  def usaPiedra(unPokemon: Pokemon, unaPiedra: PiedraAbstract): Pokemon = {
+    return unPokemon
   }
   
-  def subioDeNivel(unPokemon: Pokemon){}
+  def subioDeNivel(unPokemon: Pokemon): Pokemon = { return unPokemon}
   
 }
 
@@ -23,9 +23,10 @@ class SubirNivel(val nivel: Int) extends CondicionEvolucion{
     return nivelEvolucion == unPokemon.nivel
   }
   
-  override def subioDeNivel(unPokemon: Pokemon) = {
+  override def subioDeNivel(unPokemon: Pokemon): Pokemon = {
     if(this.cumple(unPokemon))
-      unPokemon.evolucionar()
+      return unPokemon.evolucionar()
+    return unPokemon
   }
 
 }
@@ -39,7 +40,7 @@ class Intercambiar() extends CondicionEvolucion{
     return fingioIntercambio
   }
   
-  override def fingeIntercambio(unPokemon: Pokemon) = {
+  override def fingeIntercambio(unPokemon: Pokemon): Pokemon = {
     this.fingioIntercambio = true
     unPokemon.evolucionar()
   }
@@ -53,26 +54,26 @@ class UsarPiedra extends CondicionEvolucion{
     return unaPiedra.dejaEvolucionarA(unPokemon)
   }
   
-  override def usaPiedra(unPokemon: Pokemon, unaPiedra: PiedraAbstract) =
+  override def usaPiedra(unPokemon: Pokemon, unaPiedra: PiedraAbstract): Pokemon =
     unaPiedra match{
-    case PiedraLunar =>//No hace nada
+    case PiedraLunar => return unPokemon
     case _ =>  if(this.cumple(unPokemon, unaPiedra))
                   unPokemon.evolucionar()
                else
                   this.envenenar(unPokemon)
   }
   
-  def envenenar(unPokemon: Pokemon){
+  def envenenar(unPokemon: Pokemon): Pokemon = {
     unPokemon.pasarAEnvenenado()
   }
   
 }
 
 class UsarPiedraLunar extends UsarPiedra{
-  override def usaPiedra(unPokemon: Pokemon, unaPiedra: PiedraAbstract) = 
+  override def usaPiedra(unPokemon: Pokemon, unaPiedra: PiedraAbstract): Pokemon = 
     unaPiedra match {
     case PiedraLunar => unPokemon.evolucionar()
-    case _ => //No hace nada
+    case _ => return unPokemon
     }
 }
 
