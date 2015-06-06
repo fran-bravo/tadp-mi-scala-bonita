@@ -1,10 +1,16 @@
 package tadp.scala.bonita
 
-class Piedra(val unTipo: Tipo) {
+abstract class PiedraAbstract{
+  def dejaEvolucionarA(unPokemon: Pokemon): Boolean = {true}
+}
+
+class Piedra(val unTipo: Tipo) extends PiedraAbstract {
   val tipo: Tipo = unTipo
   
-  def matcheaTipos(unPokemon: Pokemon): Boolean = {
+  override def dejaEvolucionarA(unPokemon: Pokemon): Boolean = {
     return (unPokemon.especie.tipoPrincipal() == tipo) || (!unPokemon.pierdeCon(tipo))
   }
   
 }
+
+case object PiedraLunar extends PiedraAbstract 

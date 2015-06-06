@@ -6,7 +6,7 @@ abstract class CondicionEvolucion {
     unPokemon.modificarPesoPorIntercambio()
   }
   
-  def usaPiedra(unPokemon: Pokemon, unaPiedra: Piedra){
+  def usaPiedra(unPokemon: Pokemon, unaPiedra: PiedraAbstract){
     //Si la condicion no es usar piedra, no hace nada?
   }
   
@@ -49,20 +49,30 @@ class Intercambiar() extends CondicionEvolucion{
 
 class UsarPiedra extends CondicionEvolucion{
    
-  def cumple(unPokemon: Pokemon, unaPiedra: Piedra): Boolean = {
-    return unaPiedra.matcheaTipos(unPokemon)
+  def cumple(unPokemon: Pokemon, unaPiedra: PiedraAbstract): Boolean = {
+    return unaPiedra.dejaEvolucionarA(unPokemon)
   }
   
-  override def usaPiedra(unPokemon: Pokemon, unaPiedra: Piedra){
-    if(this.cumple(unPokemon, unaPiedra))
-      unPokemon.evolucionar()
-    else
-      this.penalizar(unPokemon)
+  override def usaPiedra(unPokemon: Pokemon, unaPiedra: PiedraAbstract) =
+    unaPiedra match{
+    case PiedraLunar =>//No hace nada
+    case _ =>  if(this.cumple(unPokemon, unaPiedra))
+                  unPokemon.evolucionar()
+               else
+                  this.envenenar(unPokemon)
   }
   
-  def penalizar(unPokemon: Pokemon){
+  def envenenar(unPokemon: Pokemon){
     unPokemon.pasarAEnvenenado()
   }
   
+}
+
+class UsarPiedraLunar extends UsarPiedra{
+  override def usaPiedra(unPokemon: Pokemon, unaPiedra: PiedraAbstract) = 
+    unaPiedra match {
+    case PiedraLunar => unPokemon.evolucionar()
+    case _ => //No hace nada
+    }
 }
 

@@ -79,7 +79,7 @@ class Pokemon(var unGenero:Char, var unaEnergia: Int, var unaEnergiaMaxima: Int,
     this.especie.condicionDeEvolucion.map{_.fingeIntercambio(this)}
   }
   
-  def usarPiedra(unaPiedra: Piedra) = {
+  def usarPiedra(unaPiedra: PiedraAbstract) = {
     this.especie.condicionDeEvolucion.map{_.usaPiedra(this, unaPiedra)}
   }
   

@@ -15,6 +15,8 @@ class PokemonTest {
   val machop = new Especie(30, List(Pelea), 250, Some(new SubirNivel(10)), Some(machoke))
   val poliwrath = new Especie(20, List(Agua, Pelea), 650, None, None)
   val poliwhirl = new Especie(18, List(Agua), 500, Some(new UsarPiedra), Some(poliwrath))
+  val clefable = new Especie(18, List(Normal), 500, None, None)
+  val clefairy = new Especie(18, List(Normal), 500, Some(new UsarPiedraLunar), Some(clefable))
   
   @Test
   def `Pokemon electrico levanta pesas` = {
@@ -76,14 +78,6 @@ class PokemonTest {
      pokemon.levantarPesas(1)
     
   }
- 
- /* @Test
-  def `Raichu no puede evolucionar` = {
-    var pokemon : Pokemon = new Pokemon('M', 100, 100, 10, 5, 6, raichu) 
-    
-    pokemon.evolucionar()
-       
-  } */
   
   @Test
   def `Pikachu evoluciona a raichu` = {    
@@ -150,6 +144,33 @@ class PokemonTest {
     pokemon.usarPiedra(new Piedra(Electrico))
     
     assert(pokemon.estoyEnvenenado())
+  }
+  
+  @Test
+  def `Poliwhirl no evoluciona si se le pasa una piedra lunar` = {
+    var pokemon : Pokemon = new Pokemon('M', 100, 100, 20, 5, 6, poliwhirl)
+    
+    pokemon.usarPiedra(PiedraLunar)
+    
+    assertEquals(poliwhirl, pokemon.especie)
+  }
+  
+  @Test
+  def `Clefairy evoluciona si se le da una piedra lunar` = {
+    var pokemon : Pokemon = new Pokemon('M', 100, 100, 20, 5, 6, clefairy)
+    
+    pokemon.usarPiedra(PiedraLunar)
+    
+    assertEquals(clefable, pokemon.especie)
+  }
+  
+  @Test
+  def `Clefairy no evoluciona si se le pasa otra piedra` = {
+    var pokemon : Pokemon = new Pokemon('M', 100, 100, 20, 5, 6, clefairy)
+    
+    pokemon.usarPiedra(new Piedra(Agua))
+    
+    assertEquals(clefairy, pokemon.especie)
   }
 
   // Testeo del manejo de la experiencia
