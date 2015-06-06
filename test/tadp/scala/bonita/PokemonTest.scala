@@ -7,13 +7,13 @@ import org.junit.Ignore
 
 class PokemonTest {
   
-  val raichu = new Especie(20, List(new Electrico),500 , new SubirNivel(0))
-  val pikachu = new Especie(10, List(new Electrico), 350, new SubirNivel(2), raichu)
-  val gastly = new Especie(2, List(new Fantasma), 300, new SubirNivel(10))
-  val machamp = new Especie(30, List(new Pelea), 700)
-  val machoke = new Especie(30, List(new Pelea),450 , new Intercambiar, machamp)
-  val machop = new Especie(30, List(new Pelea), 250, new SubirNivel(10))
-  val poliwrath = new Especie(20, List(new Agua, new Pelea), 650, new SubirNivel(10))
+  val raichu = new Especie(20, List(Electrico),500 , None, None)
+  val pikachu = new Especie(10, List(Electrico), 350, Some(new SubirNivel(2)), Some(raichu))
+  val gastly = new Especie(2, List(Fantasma), 300, None, None)
+  val machamp = new Especie(30, List(Pelea), 700, None, None)
+  val machoke = new Especie(30, List(Pelea),450 , Some(new Intercambiar), Some(machamp))
+  val machop = new Especie(30, List(Pelea), 250, Some(new SubirNivel(10)), Some(machoke))
+  val poliwrath = new Especie(20, List(Agua, Pelea), 650, None, None)
   
   @Test
   def `Pokemon electrico levanta pesas` = {
@@ -76,31 +76,31 @@ class PokemonTest {
     
   }
  
-  @Test(expected = classOf[EvolutionException])
+ /* @Test
   def `Raichu no puede evolucionar` = {
     var pokemon : Pokemon = new Pokemon('M', 100, 100, 10, 5, 6, raichu) 
     
     pokemon.evolucionar()
        
-  }
+  } */
   
   @Test
   def `Pikachu evoluciona a raichu` = {    
     var pokemon : Pokemon = new Pokemon('M', 100, 100, 10, 5, 6, pikachu) 
-    pokemon.nivel = 2
     
-    pokemon.evolucionar()
+    pokemon.subirUnNivel()
     
     assertEquals(raichu, pokemon.especie)
     
   }
   
-  @Test(expected = classOf[EvolutionException])
+  @Test
   def `Pikachu no cumple el nivel necesario para evolucionar a raichu` = {
-    var pokemon : Pokemon = new Pokemon('M', 100, 100, 10, 5, 6, pikachu) 
+    var pokemon : Pokemon = new Pokemon('M', 100, 100, 10, 5, 6, pikachu)
+    pokemon.nivel = 0
     
-    pokemon.evolucionar()
-    
+    pokemon.subirUnNivel()
+    assertEquals(pikachu, pokemon.especie)
   }
   
   @Test
@@ -148,6 +148,16 @@ class PokemonTest {
     
     assertEquals(pika.experiencia, 1200)
     assertEquals(pika.nivel, 3)
+  }
+  
+  @Test
+  def `El tipo Fuego le gana al tipo Planta` = {
+    assert(Fuego.leGanaA(Planta))
+  }
+  
+  @Test
+  def `El tipo Fuego no le gana al tipo Agua` = {
+    assert(!Fuego.leGanaA(Agua))
   }
 
  }

@@ -2,14 +2,6 @@ package tadp.scala.bonita
 
 abstract class CondicionEvolucion {
   
-  def cumple(unPokemon: Pokemon, unaPiedra: Piedra = null): Boolean
-    
-  def cumpleCondicion(unPokemon: Pokemon): Unit = {
-    if(!this.cumple(unPokemon)){
-      throw new EvolutionException("No cumple condicion de evolucion") 
-    }
-  }
-  
   def fingeIntercambio(unPokemon: Pokemon): Unit = {
     unPokemon.modificarPesoPorIntercambio()
   }
@@ -18,6 +10,8 @@ abstract class CondicionEvolucion {
     //Si la condicion no es usar piedra, no hace nada?
   }
   
+  def subioDeNivel(unPokemon: Pokemon){}
+  
 }
 
 
@@ -25,8 +19,13 @@ class SubirNivel(val nivel: Int) extends CondicionEvolucion{
   
   val nivelEvolucion: Int = nivel
  
-  override def cumple(unPokemon: Pokemon, unaPiedra: Piedra = null): Boolean = {
+  def cumple(unPokemon: Pokemon): Boolean = {
     return nivelEvolucion == unPokemon.nivel
+  }
+  
+  override def subioDeNivel(unPokemon: Pokemon) = {
+    if(this.cumple(unPokemon))
+      unPokemon.evolucionar()
   }
 
 }
@@ -36,7 +35,7 @@ class Intercambiar() extends CondicionEvolucion{
   
   var fingioIntercambio: Boolean = false
   
-  override def cumple(unPokemon: Pokemon, unaPiedra: Piedra = null): Boolean = {
+  def cumple(unPokemon: Pokemon): Boolean = {
     return fingioIntercambio
   }
   
@@ -50,23 +49,18 @@ class Intercambiar() extends CondicionEvolucion{
 
 class UsarPiedra extends CondicionEvolucion{
    
-  override def cumple(unPokemon: Pokemon, unaPiedra: Piedra): Boolean = {
+  def cumple(unPokemon: Pokemon, unaPiedra: Piedra): Boolean = {
     return unaPiedra.matcheaTipos(unPokemon)
   }
   
   override def usaPiedra(unPokemon: Pokemon, unaPiedra: Piedra){
-    unPokemon.evolucionar()
+    if(this.cumple(unPokemon, unaPiedra))
+      unPokemon.evolucionar()
+    else this.penalizar(unPokemon)
   }
   
   def penalizar(unPokemon: Pokemon){
     unPokemon.pasarAEnvenenado()
-  }
-  
- override def cumpleCondicion(unPokemon: Pokemon): Unit = { //Redefino para poder agregar el penalizar. Quedo choto :\
-    if(!this.cumple(unPokemon)){
-      penalizar(unPokemon)
-      throw new EvolutionException("No cumple condicion de evolucion") 
-    }
   }
   
 }

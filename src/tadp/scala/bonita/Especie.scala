@@ -1,12 +1,12 @@
 package tadp.scala.bonita
 
 
-class Especie(val unPesoMaximo: Int, val unosTipos: List[Tipo], val resistEvo: Int, val condicion: CondicionEvolucion = null, val especieEvo: Especie = null) { 
+class Especie(val unPesoMaximo: Int, val unosTipos: List[Tipo], val resistEvo: Int, val condicion: Option[CondicionEvolucion], val especieEvo: Option[Especie]) { 
   val pesoMaximo: Int = unPesoMaximo
   val tipos: List[Tipo] = unosTipos
   val resistenciaEvolutiva: Int = resistEvo
-  val especieDeEvolucion: Especie = especieEvo //Si no se especifica, queda null y significa que no puede evolucionar
-  val condicionDeEvolucion: CondicionEvolucion = condicion //Si no se especifica, queda null y significa que no puede evolucionar
+  val especieDeEvolucion: Option[Especie] = especieEvo
+  val condicionDeEvolucion: Option[CondicionEvolucion] = condicion
    
   def puedeLevantar(): Int = {
     val listaAux = this.tipos.map{case (tipo)=>tipo.puedoLevantar()} 
@@ -20,21 +20,6 @@ class Especie(val unPesoMaximo: Int, val unosTipos: List[Tipo], val resistEvo: I
   
   def tipoSecundario(): Tipo = {
     return tipos.last //asumiendo que solo se pueden tener como maximo 2 tipos
-  }
-  
-  def puedeEvolucionar(unPokemon: Pokemon): Unit = {
-    this.tengoEspecieDeEvolucion()
-    this.cumpleCondicion(unPokemon)
-  }
-
-  def tengoEspecieDeEvolucion() = {
-    if(especieDeEvolucion == null){
-     throw new EvolutionException("No tengo especie de evolucion") 
-    }
-  }
-  
-  def cumpleCondicion(unPokemon: Pokemon) = {
-    this.condicionDeEvolucion.cumpleCondicion(unPokemon)
   }
   
   def experienciaParaNivel(nivel: Int): Int = nivel match{   

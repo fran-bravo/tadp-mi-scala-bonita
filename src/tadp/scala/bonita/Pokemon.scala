@@ -68,18 +68,15 @@ class Pokemon(var unGenero:Char, var unaEnergia: Int, var unaEnergiaMaxima: Int,
   //Evolucionar
   
   def evolucionar() = {
-    this.especie.puedeEvolucionar(this)
-    
-    this.especie = this.especie.especieDeEvolucion
-    
+    this.especie = this.especie.especieDeEvolucion.get
   }
   
   def fingirIntercambio() = {
-    this.especie.condicionDeEvolucion.fingeIntercambio(this)
+    this.especie.condicionDeEvolucion.map{_.fingeIntercambio(this)}
   }
   
   def usarPiedra(unaPiedra: Piedra) = {
-    this.especie.condicionDeEvolucion.usaPiedra(this, unaPiedra)
+    this.especie.condicionDeEvolucion.map{_.usaPiedra(this, unaPiedra)}
   }
   
   // Modificar peso
@@ -108,6 +105,7 @@ class Pokemon(var unGenero:Char, var unaEnergia: Int, var unaEnergiaMaxima: Int,
   
   def subirUnNivel() = {
     this.nivel += 1
+    this.especie.condicionDeEvolucion.map{_.subioDeNivel(this)}
   }
   
 }

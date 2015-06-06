@@ -1,7 +1,7 @@
 package tadp.scala.bonita
 
 
-class Tipo {
+abstract class Tipo(val perdedores: Tipo*) {
   
   def puedoLevantar(): Int = {
      return 1
@@ -11,70 +11,46 @@ class Tipo {
     !this.leGanaA(unPokemon.especie.tipoPrincipal()) || !this.leGanaA(unPokemon.especie.tipoSecundario())
   }
   
-  def leGanaA(unTipo: Tipo): Boolean
+  def leGanaA(unTipo: Tipo): Boolean ={
+    perdedores.contains(unTipo)
+  }
   
 }
 
-class Fuego extends Tipo {
-  
-}
+case object Fuego extends Tipo(Planta, Hielo, Bicho)
 
-class Agua extends Tipo {
-  
-}
+case object Agua extends Tipo(Fuego, Roca, Tierra)
 
-class Tierra extends Tipo {
-  
-}
+case object Tierra extends Tipo(Electrico, Roca, Fuego, Veneno)
 
-class Roca extends Tipo {
-  
-}
+case object Roca extends Tipo(Volador, Fuego, Hielo, Bicho)
 
-class Pelea extends Tipo {
+case object Pelea extends Tipo(Hielo, Roca, Normal) {
   override def puedoLevantar(): Int = {
     return 2
   }
 }
 
-class Planta extends Tipo {
-  
-}
+case object Planta extends Tipo(Agua, Tierra, Roca)
 
-class Hielo extends Tipo {
-  
-}
+case object Hielo extends Tipo(Dragon, Tierra, Planta, Volador)
 
-class Fantasma extends Tipo {
+case object Fantasma extends Tipo(Psiquico) {//FIXME FALTA AGREGAR FANTASMA
   override def puedoLevantar(): Int = {
     throw new TypeException("Soy de tipo fantasma")
   }
 }
 
-class Electrico extends Tipo {
-  
-}
+case object Electrico extends Tipo(Agua, Volador)
 
-class Veneno extends Tipo {
-  
-}
+case object Veneno extends Tipo(Planta)
 
-class Psiquico extends Tipo {
-  
-}
+case object Psiquico extends Tipo(Veneno, Pelea)
 
-class Bicho extends Tipo {
-  
-}
+case object Bicho extends Tipo(Psiquico, Planta)
 
-class Volador extends Tipo {
-  
-}
+case object Volador extends Tipo(Planta, Pelea, Bicho)
 
-class Normal extends Tipo {
-  
-}
+case object Normal extends Tipo()
 
-class Dragon extends Tipo {
-  
-}
+case object Dragon extends Tipo()//FIXME FALTA DRAGON
