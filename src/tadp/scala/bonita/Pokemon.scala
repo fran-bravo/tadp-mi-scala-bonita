@@ -9,7 +9,7 @@ class Pokemon(var unGenero:Char, var unaEnergia: Int, var unaEnergiaMaxima: Int,
   var peso: Int = unPeso//Minimo 0
   var fuerza: Int = unaFuerza//De 1 a 100
   var agilidad: Int = unaAgilidad//De 1 a 100
-  var estado: Estado = new Saludable
+  var estado: Estado = Saludable
   var especie: Especie = unaEspecie 
   
   // 
@@ -30,19 +30,23 @@ class Pokemon(var unGenero:Char, var unaEnergia: Int, var unaEnergiaMaxima: Int,
     return this.estado.knockeado
   }
   
+  def estoyEnvenenado(): Boolean = {
+    return this.estado.envenenado()
+  }
+  
   def pasarAKO() = {
-    this.estado = new KO
+    this.estado = KO
   }
   
   def pasarAEnvenenado() = {
-    this.estado = new Envenenado
+    this.estado = Envenenado
   }
   
   // Metodos auxiliares de levantarPesas
   
   def tengoFuerzaSuficiente(unosKilos:Int) = {
     if (unosKilos > this.fuerza * 10){
-      this.estado = new Paralizado
+      this.estado = Paralizado
       throw new StrengthException("No tengo fuerza suficiente")
     }
   }
@@ -85,12 +89,9 @@ class Pokemon(var unGenero:Char, var unaEnergia: Int, var unaEnergiaMaxima: Int,
     this.peso += unPeso
   }
   
-  def modificarPesoPorIntercambio() = {
-    if(this.genero == 'M'){
-      modificarPeso(1)
-    } else {
-      modificarPeso(-10)
-    }
+  def modificarPesoPorIntercambio() = this.genero match{
+    case 'M' => modificarPeso(1)
+    case 'F' => modificarPeso(-10)
   }
 
   //Ganar Experiencia
@@ -106,6 +107,10 @@ class Pokemon(var unGenero:Char, var unaEnergia: Int, var unaEnergiaMaxima: Int,
   def subirUnNivel() = {
     this.nivel += 1
     this.especie.condicionDeEvolucion.map{_.subioDeNivel(this)}
+  }
+  
+  def pierdeCon(tipo: Tipo): Boolean = {
+    this.especie.tipos.forall{tipoPok => tipo.leGanaA(tipoPok)}
   }
   
 }

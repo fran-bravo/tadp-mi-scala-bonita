@@ -14,6 +14,7 @@ class PokemonTest {
   val machoke = new Especie(30, List(Pelea),450 , Some(new Intercambiar), Some(machamp))
   val machop = new Especie(30, List(Pelea), 250, Some(new SubirNivel(10)), Some(machoke))
   val poliwrath = new Especie(20, List(Agua, Pelea), 650, None, None)
+  val poliwhirl = new Especie(18, List(Agua), 500, Some(new UsarPiedra), Some(poliwrath))
   
   @Test
   def `Pokemon electrico levanta pesas` = {
@@ -54,24 +55,24 @@ class PokemonTest {
     var pokemon : Pokemon = new Pokemon('M', 100, 100, 10, 2, 6, pikachu) 
    	pokemon.levantarPesas(30)
     
-    assertEquals(true, pokemon.estoyParalizado())
+    assert(pokemon.estoyParalizado())
   }
   
   @Test
   def `Pokemon paralizado levanta pesas y pasa a KO` = {
     var pokemon : Pokemon = new Pokemon('M', 100, 100, 10, 2, 6, pikachu)
-    pokemon.estado = new Paralizado
+    pokemon.estado = Paralizado
     
     pokemon.levantarPesas(5)
     
-    assertEquals(true, pokemon.estoyKO())
+    assert(pokemon.estoyKO())
     assertEquals(0, pokemon.experiencia)
   }
   
   @Test(expected = classOf[KOException])
   def `Pokemon knockeado trata de levantar pesas` = {
     var pokemon : Pokemon = new Pokemon('F', 50, 50, 10, 3, 3, pikachu)
-    pokemon.estado = new KO
+    pokemon.estado = KO
      pokemon.levantarPesas(1)
     
   }
@@ -132,6 +133,24 @@ class PokemonTest {
     assertEquals(10, pokemon.peso)
        
   }
+  
+  @Test
+  def `Poliwhirl evoluciona cuando se le da una piedra Agua` = {
+    var pokemon : Pokemon = new Pokemon('M', 100, 100, 20, 5, 6, poliwhirl)
+    
+    pokemon.usarPiedra(new Piedra(Agua))
+    
+    assertEquals(poliwrath, pokemon.especie)
+  }
+  
+  @Test
+  def `Poliwhirl queda envenenado si se le da una piedra trueno` = {
+    var pokemon : Pokemon = new Pokemon('M', 100, 100, 20, 5, 6, poliwhirl)
+    
+    pokemon.usarPiedra(new Piedra(Electrico))
+    
+    assert(pokemon.estoyEnvenenado())
+  }
 
   // Testeo del manejo de la experiencia
   @Test
@@ -150,6 +169,7 @@ class PokemonTest {
     assertEquals(pika.nivel, 3)
   }
   
+  // Testeo de tipos
   @Test
   def `El tipo Fuego le gana al tipo Planta` = {
     assert(Fuego.leGanaA(Planta))
@@ -158,6 +178,12 @@ class PokemonTest {
   @Test
   def `El tipo Fuego no le gana al tipo Agua` = {
     assert(!Fuego.leGanaA(Agua))
+  }
+  
+  @Test
+  def `Poliwhirl pierde contra el tipo eléctrico por ser de agua` = {
+    var pokemon : Pokemon = new Pokemon('M', 100, 100, 20, 5, 6, poliwhirl)
+    assert(pokemon.pierdeCon(Electrico))
   }
 
  }

@@ -8,27 +8,29 @@ class Estado{
   def knockeado(): Boolean = {
     return false
   }
-}
-
-class Saludable extends Estado{
   
+  def envenenado(): Boolean = {
+    return false
+  }
 }
 
-class Dormido extends Estado {
-  
+case object Saludable extends Estado
+
+case object Dormido extends Estado
+
+case object Envenenado extends Estado {
+  override def envenenado(): Boolean = {
+    return true
+  }
 }
 
-class Envenenado extends Estado {
-  
-}
-
-class Paralizado extends Estado{
+case object Paralizado extends Estado{
   override def paralisis(): Boolean = {
     return true
   }
 }
 
-class KO extends Estado{
+case object KO extends Estado{
   override def knockeado(): Boolean = {
     return true
   }

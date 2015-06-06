@@ -56,7 +56,8 @@ class UsarPiedra extends CondicionEvolucion{
   override def usaPiedra(unPokemon: Pokemon, unaPiedra: Piedra){
     if(this.cumple(unPokemon, unaPiedra))
       unPokemon.evolucionar()
-    else this.penalizar(unPokemon)
+    else
+      this.penalizar(unPokemon)
   }
   
   def penalizar(unPokemon: Pokemon){

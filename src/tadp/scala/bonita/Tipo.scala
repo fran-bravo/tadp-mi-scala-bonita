@@ -7,10 +7,6 @@ abstract class Tipo(val perdedores: Tipo*) {
      return 1
   }
   
-  def noLeGanaA(unPokemon: Pokemon): Boolean = {
-    !this.leGanaA(unPokemon.especie.tipoPrincipal()) || !this.leGanaA(unPokemon.especie.tipoSecundario())
-  }
-  
   def leGanaA(unTipo: Tipo): Boolean ={
     perdedores.contains(unTipo)
   }
