@@ -7,16 +7,16 @@ import org.junit.Ignore
 
 class PokemonTest {
   
-  val raichu = new Especie(20, List(Electrico),500 , None, None)
-  val pikachu = new Especie(10, List(Electrico), 350, Some(new SubirNivel(2)), Some(raichu))
-  val gastly = new Especie(2, List(Fantasma), 300, None, None)
-  val machamp = new Especie(30, List(Pelea), 700, None, None)
-  val machoke = new Especie(30, List(Pelea),450 , Some(new Intercambiar), Some(machamp))
-  val machop = new Especie(30, List(Pelea), 250, Some(new SubirNivel(10)), Some(machoke))
-  val poliwrath = new Especie(20, List(Agua, Pelea), 650, None, None)
-  val poliwhirl = new Especie(18, List(Agua), 500, Some(new UsarPiedra), Some(poliwrath))
-  val clefable = new Especie(18, List(Normal), 500, None, None)
-  val clefairy = new Especie(18, List(Normal), 500, Some(new UsarPiedraLunar), Some(clefable))
+  val raichu = new Especie(20, List(Electrico),500 , None, None, 1, 0, 0, 3)
+  val pikachu = new Especie(10, List(Electrico), 350, Some(new SubirNivel(2)), Some(raichu), 1, 0, 0, 2)
+  val gastly = new Especie(2, List(Fantasma), 300, None, None, 2, 0, 0, 1)
+  val machamp = new Especie(30, List(Pelea), 700, None, None, 3, 1, 3, 1)
+  val machoke = new Especie(30, List(Pelea),450 , Some(new Intercambiar), Some(machamp), 2, 1, 2, 1)
+  val machop = new Especie(30, List(Pelea), 250, Some(new SubirNivel(10)), Some(machoke), 1, 0, 1, 0)
+  val poliwrath = new Especie(20, List(Agua, Pelea), 650, None, None, 2, 2, 2, 1)
+  val poliwhirl = new Especie(18, List(Agua), 500, Some(new UsarPiedra), Some(poliwrath), 1, 1, 1, 1)
+  val clefable = new Especie(18, List(Normal), 500, None, None, 2, 1, 1, 1)
+  val clefairy = new Especie(18, List(Normal), 500, Some(new UsarPiedraLunar), Some(clefable), 1, 0, 0, 1)
   
   @Test
   def `Pokemon electrico levanta pesas` = {
@@ -183,7 +183,7 @@ class PokemonTest {
   def `Un pikachu de nivel 2 sube de nivel cuando gana suficiente experiencia` = {
     var pika: Pokemon = new Pokemon('H', 40, 40, 15, 10, 15, pikachu)
     pika = pika.copy(experiencia = 600)
-    pika = pika.copy(nivel = 2) //Con 600 pts de exp, este pikachu está en nivel 2
+    pika = pika.copy(nivel = 2) //Con 600 pts de exp, este pikachu estï¿½ en nivel 2
     pika = pika.ganarExperiencia(600)
     
     assertEquals(pika.experiencia, 1200)
@@ -202,7 +202,7 @@ class PokemonTest {
   }
   
   @Test
-  def `Poliwhirl pierde contra el tipo eléctrico por ser de agua` = {
+  def `Poliwhirl pierde contra el tipo elï¿½ctrico por ser de agua` = {
     var pokemon : Pokemon = new Pokemon('M', 100, 100, 20, 5, 6, poliwhirl)
     assert(pokemon.pierdeCon(Electrico))
   }
