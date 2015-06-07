@@ -9,10 +9,19 @@ class Ataque(val tipoAtaque: Tipo, var PA: Int, var PAMax: Int, val efectoAtaque
   
   def usardoPor(pokemon: Pokemon){
     if (puntosAtaque == 0){
-      throw new NoRemainingPPException("No quedan más PP!")
+      throw new NoRemainingPPException("No quedan mas PP!")
     }
-    efecto(pokemon) //Esto no sé si debería provocar un efecto de lado
+    efecto(pokemon) //Esto no se si deberia provocar un efecto de lado
     this.puntosAtaque -= 1    
   }
   
+}
+
+class AtaqueConcreto()
+{
+  val ataque: Ataque
+  var puntosAtaque: Int
+  var puntosAtaqueMax: Int
+  var duenio: Pokemon
+
 }
