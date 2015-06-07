@@ -6,6 +6,14 @@ class Ataque(val tipoAtaque: Tipo, var PA: Int, val efectoAtaque: (Pokemon => Po
   val puntosAtaqueBase = PA
   val efecto: Pokemon => Pokemon = efectoAtaque
   
+  def experienciaPara(pokemon: Pokemon) : Int = pokemon match
+  {
+    case poke if tipo == Dragon => 80
+    case poke if poke.especie.tipoPrincipal() == tipo => 50
+    case poke if poke.especie.tipoSecundario() == tipo && poke.genero == 'M' => 20
+    case poke if poke.especie.tipoSecundario() == tipo && poke.genero == 'F' => 40
+  }
+  
 }
 
 class AtaqueConcreto(unAtaque: Ataque)
