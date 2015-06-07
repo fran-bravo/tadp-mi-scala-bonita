@@ -3,6 +3,9 @@ package tadp.scala.bonita
 /**
  * @author Dario
  */
-class Genero {
+abstract class Genero {
   
 }
+
+case object Macho extends Genero
+case object Hembra extends Genero

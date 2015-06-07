@@ -1,7 +1,7 @@
 package tadp.scala.bonita
 
 case class Pokemon(
-  val genero: Char, //M o F
+  val genero: Genero, //Macho o Hembra
   val energia: Int, //Minimo 0, maximo energiaMaxima
   val energiaMaximaBase: Int,
   val pesoBase: Int, //Minimo 0
@@ -100,8 +100,8 @@ case class Pokemon(
   }
   
   def modificarPesoPorIntercambio() = this.genero match{
-    case 'M' => modificarPeso(1)
-    case 'F' => modificarPeso(-10)
+    case Macho => modificarPeso(1)
+    case Hembra => modificarPeso(-10)
   }
 
   //Ganar Experiencia
