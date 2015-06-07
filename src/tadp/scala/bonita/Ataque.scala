@@ -13,7 +13,6 @@ class AtaqueConcreto(unAtaque: Ataque)
   val ataque: Ataque = unAtaque
   var puntosAtaque: Int = unAtaque.puntosAtaqueBase
   var puntosAtaqueMax: Int = unAtaque.puntosAtaqueBase
-  var duenio: Pokemon
 
    def usadoPor(pokemon: Pokemon){
     if (puntosAtaque == 0){
