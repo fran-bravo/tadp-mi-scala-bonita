@@ -3,16 +3,26 @@ package tadp.scala.bonita
 case class Pokemon(
   val genero: Char, //M o F
   val energia: Int, //Minimo 0, maximo energiaMaxima
-  val energiaMaxima: Int,
-  val peso: Int, //Minimo 0
-  val fuerza: Int, //De 1 a 100
-  val agilidad: Int, //De 1 a 100
+  val energiaMaximaBase: Int,
+  val pesoBase: Int, //Minimo 0
+  val fuerzaBase: Int, //De 1 a 100
+  val velocidadBase: Int, //De 1 a 100
   val especie: Especie,
   val nivel: Int = 1, //De 1 a 100
   val experiencia: Int = 0,
   val estado: Estado = Saludable)
   {
   // 
+  
+  def peso : Int = pesoBase + especie.incPeso * nivel
+  
+  def energiaMaxima : Int = energiaMaximaBase + especie.incEnergiaMaxima * nivel
+  
+  def velocidad : Int = velocidadBase + especie.incVelocidad * nivel
+  
+  def fuerza : Int = fuerzaBase + especie.incFuerza * nivel
+  
+  //pero mira como esta ese codigo repetido papa
   
   def puedoRealizarActividad() = {
     if (this.estado.knockeado) {
@@ -45,7 +55,7 @@ case class Pokemon(
   // Metodos auxiliares de levantarPesas
   
   def tengoFuerzaSuficiente(unosKilos:Int) = {
-    if (unosKilos > this.fuerza * 10){
+    if (unosKilos > this.fuerzaBase * 10){
       copy(estado = Paralizado)
       throw new StrengthException("No tengo fuerza suficiente")
     }
@@ -86,7 +96,7 @@ case class Pokemon(
   // Modificar peso
   
   def modificarPeso(unPeso: Int) = {
-    copy(peso = peso + unPeso)
+    copy(pesoBase = pesoBase + unPeso)
   }
   
   def modificarPesoPorIntercambio() = this.genero match{
