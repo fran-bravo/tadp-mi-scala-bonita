@@ -3,7 +3,7 @@ package tadp.scala.bonita
 /**
  * @author Dario
  */
-abstract class Genero {
+trait Genero {
   
 }
 
