@@ -4,23 +4,11 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.Ignore
 
-
 class PokemonTest {
-  
-  val raichu = new Especie(20, List(Electrico),500 , None, None, 1, 0, 0, 3)
-  val pikachu = new Especie(10, List(Electrico), 350, Some(new SubirNivel(2)), Some(raichu), 1, 0, 0, 2)
-  val gastly = new Especie(2, List(Fantasma), 300, None, None, 2, 0, 0, 1)
-  val machamp = new Especie(30, List(Pelea), 700, None, None, 3, 1, 3, 1)
-  val machoke = new Especie(30, List(Pelea),450 , Some(new Intercambiar), Some(machamp), 2, 1, 2, 1)
-  val machop = new Especie(30, List(Pelea), 250, Some(new SubirNivel(10)), Some(machoke), 1, 0, 1, 0)
-  val poliwrath = new Especie(20, List(Agua, Pelea), 650, None, None, 2, 2, 2, 1)
-  val poliwhirl = new Especie(18, List(Agua), 500, Some(new UsarPiedra), Some(poliwrath), 1, 1, 1, 1)
-  val clefable = new Especie(18, List(Normal), 500, None, None, 2, 1, 1, 1)
-  val clefairy = new Especie(18, List(Normal), 500, Some(new UsarPiedraLunar), Some(clefable), 1, 0, 0, 1)
   
   @Test
   def `Pokemon electrico levanta pesas` = {
-    var pokemon : Pokemon = new Pokemon(Macho, 100, 100, 10, 5, 6, pikachu) 
+    var pokemon : Pokemon = fixture.nuevoPikachuM() 
     
     pokemon = pokemon.levantarPesas(15)
     
@@ -30,13 +18,13 @@ class PokemonTest {
   
   @Test(expected = classOf[TypeException])
   def `Pokemon fantasma trata de levantar pesas`: Unit = {
-    var pokemon : Pokemon = new Pokemon(Hembra, 50, 50, 1, 3, 3, gastly)
+    var pokemon : Pokemon = new Pokemon(Hembra, 50, 50, 1, 3, 3, fixture.gastly)
     pokemon.levantarPesas(15)
   }
   
   @Test
   def `Pokemon pelea levanta pesas` = {
-    var pokemon : Pokemon = new Pokemon(Hembra, 50, 50, 10, 8, 3, machop)
+    var pokemon : Pokemon = new Pokemon(Hembra, 50, 50, 10, 8, 3, fixture.machop)
     
     pokemon = pokemon.levantarPesas(10)
     
@@ -45,7 +33,7 @@ class PokemonTest {
   
   @Test
   def `Pokemon subtipo pelea levanta pesas` = {
-    var pokemon : Pokemon = new Pokemon(Macho, 50, 50, 10, 4, 3, poliwrath)
+    var pokemon : Pokemon = new Pokemon(Macho, 50, 50, 10, 4, 3, fixture.poliwrath)
     
     pokemon = pokemon.levantarPesas(10)
     
@@ -54,7 +42,7 @@ class PokemonTest {
   
   @Test(expected = classOf[StrengthException])
   def `Pokemon sin suficiente fuerza levanta pesas` = {
-    var pokemon : Pokemon = new Pokemon(Macho, 100, 100, 10, 2, 6, pikachu) 
+    var pokemon : Pokemon = new Pokemon(Macho, 100, 100, 10, 2, 6, fixture.pikachu) 
    	pokemon.levantarPesas(30)
     
     assert(pokemon.estoyParalizado())
@@ -62,7 +50,7 @@ class PokemonTest {
   
   @Test
   def `Pokemon paralizado levanta pesas y pasa a KO` = {
-    var pokemon : Pokemon = new Pokemon(Macho, 100, 100, 10, 2, 6, pikachu)
+    var pokemon : Pokemon = fixture.nuevoPikachuM()
     pokemon = pokemon.copy(estado = Paralizado)
     
     pokemon = pokemon.levantarPesas(5)
@@ -73,7 +61,7 @@ class PokemonTest {
   
   @Test(expected = classOf[KOException])
   def `Pokemon knockeado trata de levantar pesas`: Unit = {
-    var pokemon : Pokemon = new Pokemon(Hembra, 50, 50, 10, 3, 3, pikachu)
+    var pokemon : Pokemon = fixture.nuevoPikachuM()
     pokemon = pokemon.copy(estado = KO)
     pokemon.levantarPesas(1)
     
@@ -81,36 +69,36 @@ class PokemonTest {
   
   @Test
   def `Pikachu evoluciona a raichu` = {    
-    var pokemon : Pokemon = new Pokemon(Macho, 100, 100, 10, 5, 6, pikachu) 
+    var pokemon : Pokemon = fixture.nuevoPikachuParaEvolucion()
     
     pokemon = pokemon.subirUnNivel()
     
-    assertEquals(raichu, pokemon.especie)
+    assertEquals(fixture.raichu, pokemon.especie)
     
   }
   
   @Test
   def `Pikachu no cumple el nivel necesario para evolucionar a raichu` = {
-    var pokemon : Pokemon = new Pokemon(Macho, 100, 100, 10, 5, 6, pikachu)
+    var pokemon : Pokemon = fixture.nuevoPikachuParaEvolucion()
     pokemon = pokemon.copy(nivel = 0)
     
     pokemon.subirUnNivel()
-    assertEquals(pikachu, pokemon.especie)
+    assertEquals(fixture.pikachu, pokemon.especie)
   }
   
   @Test
   def `Machoke evoluciona a Machamp cuando finge ser intercambiado` = {    
-    var pokemon : Pokemon = new Pokemon(Macho, 100, 100, 10, 5, 6, machoke) 
+    var pokemon : Pokemon = new Pokemon(Macho, 100, 100, 10, 5, 6, fixture.machoke) 
       
     pokemon = pokemon.fingirIntercambio()
     
-    assertEquals(machamp, pokemon.especie)
+    assertEquals(fixture.machamp, pokemon.especie)
        
   }
   
   @Test
   def `Machop masculino engorda 1 kilo cuando finge intercambio` = {    
-    var pokemon : Pokemon = new Pokemon(Macho, 100, 100, 10, 5, 6, machop) 
+    var pokemon : Pokemon = new Pokemon(Macho, 100, 100, 10, 5, 6, fixture.machop) 
       
     pokemon = pokemon.fingirIntercambio()
     
@@ -120,7 +108,7 @@ class PokemonTest {
   
   @Test
   def `Machop femenino adelgaza 10 kilos cuando finge intercambio` = {    
-    var pokemon : Pokemon = new Pokemon(Hembra, 100, 100, 20, 5, 6, machop) 
+    var pokemon : Pokemon = new Pokemon(Hembra, 100, 100, 20, 5, 6, fixture.machop) 
       
     pokemon = pokemon.fingirIntercambio()
     
@@ -130,16 +118,16 @@ class PokemonTest {
   
   @Test
   def `Poliwhirl evoluciona cuando se le da una piedra Agua` = {
-    var pokemon : Pokemon = new Pokemon(Macho, 100, 100, 20, 5, 6, poliwhirl)
+    var pokemon : Pokemon = fixture.nuevoPoliwhirlM()
     
     pokemon = pokemon.usarPiedra(new Piedra(Agua))
     
-    assertEquals(poliwrath, pokemon.especie)
+    assertEquals(fixture.poliwrath, pokemon.especie)
   }
   
   @Test
   def `Poliwhirl queda envenenado si se le da una piedra trueno` = {
-    var pokemon : Pokemon = new Pokemon(Macho, 100, 100, 20, 5, 6, poliwhirl)
+    var pokemon : Pokemon = fixture.nuevoPoliwhirlM()
     
     pokemon = pokemon.usarPiedra(new Piedra(Electrico))
     
@@ -148,40 +136,40 @@ class PokemonTest {
   
   @Test
   def `Poliwhirl no evoluciona si se le pasa una piedra lunar` = {
-    var pokemon : Pokemon = new Pokemon(Macho, 100, 100, 20, 5, 6, poliwhirl)
+    var pokemon : Pokemon = fixture.nuevoPoliwhirlM()
     
     pokemon.usarPiedra(PiedraLunar)
     
-    assertEquals(poliwhirl, pokemon.especie)
+    assertEquals(fixture.poliwhirl, pokemon.especie)
   }
   
   @Test
   def `Clefairy evoluciona si se le da una piedra lunar` = {
-    var pokemon : Pokemon = new Pokemon(Macho, 100, 100, 20, 5, 6, clefairy)
+    var pokemon : Pokemon = fixture.nuevoClefairyM()
     
     pokemon = pokemon.usarPiedra(PiedraLunar)
     
-    assertEquals(clefable, pokemon.especie)
+    assertEquals(fixture.clefable, pokemon.especie)
   }
   
   @Test
   def `Clefairy no evoluciona si se le pasa otra piedra` = {
-    var pokemon : Pokemon = new Pokemon(Macho, 100, 100, 20, 5, 6, clefairy)
+    var pokemon : Pokemon = fixture.nuevoClefairyM()
     
     pokemon.usarPiedra(new Piedra(Agua))
     
-    assertEquals(clefairy, pokemon.especie)
+    assertEquals(fixture.clefairy, pokemon.especie)
   }
 
   // Testeo del manejo de la experiencia
   @Test
   def `Pikachu necesita 2450 puntos de experiencia para subir al nivel 4` = {
-    assertEquals(pikachu.experienciaParaNivel(4), 2450)
+    assertEquals(fixture.pikachu.experienciaParaNivel(4), 2450)
   }
   
   @Test
   def `Un pikachu de nivel 2 sube de nivel cuando gana suficiente experiencia` = {
-    var pika: Pokemon = new Pokemon(Hembra, 40, 40, 15, 10, 15, pikachu)
+    var pika: Pokemon = new Pokemon(Hembra, 40, 40, 15, 10, 15, fixture.pikachu)
     pika = pika.copy(experiencia = 600)
     pika = pika.copy(nivel = 2) //Con 600 pts de exp, este pikachu est� en nivel 2
     pika = pika.ganarExperiencia(600)
@@ -203,7 +191,7 @@ class PokemonTest {
   
   @Test
   def `Poliwhirl pierde contra el tipo electrico por ser de agua` = {
-    var pokemon : Pokemon = new Pokemon(Macho, 100, 100, 20, 5, 6, poliwhirl)
+    var pokemon : Pokemon = fixture.nuevoPoliwhirlM()
     assert(pokemon.pierdeCon(Electrico))
   }
 
