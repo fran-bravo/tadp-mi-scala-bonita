@@ -14,7 +14,7 @@ case class Pokemon(
   val nivel: Int = 1, //De 1 a 100
   val experiencia: Int = 0, 
   val estado: Estado = Saludable,
-  val ataques: Map[Ataque, Int] = Map[Ataque, Int]()) //que representa el PP que tiene para cada ataque
+  val ataques: Map[String, Int] = Map[String, Int]()) //que representa el PP que tiene para cada ataque
   {
     
   def peso : Int = pesoBase + especie.incPeso * (nivel-1)
@@ -133,17 +133,18 @@ case class Pokemon(
   }
 
   def pa(ataque: Ataque): Int = {
-    ataques(ataque) //verificar condición de error acá?
+    ataques(ataque.nombre) //verificar condición de error acá?
   }
   
   def decrementarPA(ataque: Ataque): Pokemon = { //verificar que esté el ataque 
-    var pokemon : Pokemon = copy(ataques = ataques.-(ataque).+((ataque, ataques.get(ataque).get - 1)))
+    var nombre : String = ataque.nombre
+    var pokemon : Pokemon = copy(ataques = ataques.-(nombre).+((nombre, ataques.get(nombre).get - 1)))
     pokemon    
   }
   
   def incorporar(ataque: Ataque): Pokemon =
   {
-    copy(ataques = ataques.+((ataque, ataque.PA)))
+    return copy(ataques = ataques.+((ataque.nombre, ataque.puntosAtaqueBase)))
   }
   
 }

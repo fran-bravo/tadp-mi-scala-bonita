@@ -1,10 +1,10 @@
 package tadp.scala.bonita
 
-class Ataque(val tipoAtaque: Tipo, var PA: Int, val efectoAtaque: (Pokemon => Pokemon) = {p => p}){
-  
-  val tipo: Tipo = tipoAtaque
-  val puntosAtaqueBase = PA
-  val efecto: Pokemon => Pokemon = efectoAtaque
+class Ataque(val nombre: String,
+             val tipo: Tipo, 
+             val puntosAtaqueBase: Int, 
+             val efecto: (Pokemon => Pokemon) = {p => p})
+  {  
   
   def experienciaPara(pokemon: Pokemon) : Int = pokemon match
   {
@@ -21,6 +21,7 @@ class Ataque(val tipoAtaque: Tipo, var PA: Int, val efectoAtaque: (Pokemon => Po
     case _ => false
   }
     
+  
 }
 
 class AtaqueConcreto(unAtaque: Ataque)

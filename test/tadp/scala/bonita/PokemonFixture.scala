@@ -36,20 +36,20 @@ package object fixture {
   
   
   //Ataques
-  val thunderbolt = new Ataque(Electrico, 15)
-  val pound = new Ataque(Normal, 35)
-  val surf = new Ataque(Agua, 15)
-  val flamethrower = new Ataque(Fuego, 15)
-  val giga_drain = new Ataque(Planta, 10)
-  val psychic = new Ataque(Psiquico, 10)
-  val fly = new Ataque(Volador, 15)
-  val dragon_rage = new Ataque(Dragon, 10)
+  def thunderbolt = new Ataque("thunderbolt", Electrico, 15)
+  def pound = new Ataque("pound", Normal, 35)
+  def surf = new Ataque("surf", Agua, 15)
+  def flamethrower = new Ataque("flamethrower", Fuego, 15)
+  def giga_drain = new Ataque("giga drain", Planta, 10)
+  def psychic = new Ataque("psychic", Psiquico, 10)
+  def fly = new Ataque("fly", Volador, 15)
+  def dragon_rage = new Ataque("dragon rage", Dragon, 10)
   
   //Ataques con efecto
-  val enfocarse = new Ataque(Normal, 30, {p => p.ganarVelocidad(1)})
-  val rest = new Ataque(Psiquico, 10, {p => p.curarTodaLaEnergia().pasarADormido()})
-  val endurecerse = new Ataque(Normal, 40, {p => p.curarEnergia(5).pasarAParalizado()})
-  
+  /*def enfocarse = new Ataque(Normal, 30, {p => p.ganarVelocidad(1)})
+  def rest = new Ataque(Psiquico, 10, {p => p.curarTodaLaEnergia().pasarADormido()})
+  def endurecerse = new Ataque(Normal, 40, {p => p.curarEnergia(5).pasarAParalizado()})
+  */
     
   def nuevoPikachuM(): Pokemon = {
     new Pokemon(Macho, 100, 100, 10, 2, 6, pikachu) 
@@ -80,8 +80,5 @@ package object fixture {
     nuevoCharizardF.incorporar(fly)
   }
   
-  def nuevoCharizardConDragonRage(): Pokemon = {
-    nuevoCharizardF.incorporar(dragon_rage)
-  }
   
 }
