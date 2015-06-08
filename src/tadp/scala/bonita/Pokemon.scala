@@ -120,6 +120,10 @@ case class Pokemon(
     return pokemon
   }
   
+  def ganarVelocidad (vel: Int): Pokemon = {
+    copy(velocidadBase = velocidad + vel)
+  }
+  
   def subirUnNivel(): Pokemon = {
     val pokemon: Pokemon = copy(nivel = nivel + 1)
     pokemon.especie.condicionDeEvolucion.map{_.subioDeNivel(pokemon)}.get

@@ -13,12 +13,22 @@ trait Actividad {
   def doRealizar(pokemon:Pokemon) : Pokemon
 }
 
-case class realizarAtaque(ataque:Ataque) extends Actividad 
+case class RealizarAtaque(ataque:Ataque) extends Actividad 
 {
   def doRealizar(pokemon:Pokemon) : Pokemon =
   {
     if (pokemon.pa(ataque) == 0) throw new NoRemainingPPException("No quedan mas PP!")
    pokemon.ganarExperiencia(ataque.experienciaPara(pokemon)).decrementarPA(ataque)
     
+  }
+}
+
+case class Nadar(minutos: Int) extends Actividad
+{
+  def doRealizar(pokemon : Pokemon) : Pokemon = pokemon match
+  {
+    case poke if poke.pierdeCon(Agua) => poke.pasarAKO
+    case poke if poke.especie.tipos.contains(Agua) => poke.ganarExperiencia(200 * minutos).ganarVelocidad(minutos)
+    case poke => poke.ganarExperiencia(200 * minutos) //FIXME codigo repetido aqui!
   }
 }
