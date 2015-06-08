@@ -44,4 +44,9 @@ class RealizarAtaqueTest
     Assert.assertEquals(80, dratini.experiencia)
   }
   
+  //FALTA TESTEAR: que alguien con dragón como tipo secundario (kingdra?) use un ataque dragón
+  //que se maneje bien el caso de tratar de hacer un ataque que no sé
+  //que se maneje bien el caso de atacar si no tengo PP
+  //que funcionen bien los ataques con efecto secundario (probar al menos los de la consigna)
+  
 }
