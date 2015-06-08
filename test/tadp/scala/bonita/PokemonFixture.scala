@@ -70,14 +70,28 @@ package object fixture {
   def nuevoCharizardF(): Pokemon = {
     new Pokemon(Hembra, 100, 100, 120, 80, 7, charizard)
   }
+  def nuevoCharizardM(): Pokemon = {
+    new Pokemon(Macho, 100, 100, 120, 80, 7, charizard)
+  }
+  
+  def nuevoDratiniM(): Pokemon = {
+    new Pokemon(Macho, 100, 100, 30, 15, 20, dratini)
+  }
   //pokemones que saben cosas:
   
   def nuevoPikachuConThunderbolt(): Pokemon = {
     nuevoPikachuM.incorporar(thunderbolt)
   }
   
-  def nuevoCharizardConFly(): Pokemon = {
+  def nuevoCharizardFConFly(): Pokemon = {
     nuevoCharizardF.incorporar(fly)
+  }
+  def nuevoCharizardMConFly(): Pokemon = {
+    nuevoCharizardM.incorporar(fly)
+  }
+  
+  def nuevoDratiniMConDragonRage(): Pokemon = {
+    nuevoDratiniM.incorporar(dragon_rage)
   }
   
   
