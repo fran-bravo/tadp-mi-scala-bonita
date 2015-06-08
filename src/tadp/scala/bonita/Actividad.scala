@@ -13,3 +13,12 @@ trait Actividad {
   def doRealizar(pokemon:Pokemon) : Pokemon
 }
 
+case class realizarAtaque(ataque:Ataque) extends Actividad 
+{
+  def doRealizar(pokemon:Pokemon) : Pokemon =
+  {
+    if (pokemon.pa(ataque) == 0) throw new NoRemainingPPException("No quedan mas PP!")
+   pokemon.ganarExperiencia(ataque.experienciaPara(pokemon)).decrementarPA(ataque)
+    
+  }
+}

@@ -1,18 +1,23 @@
 package tadp.scala.bonita
 
+
+
 case class Pokemon(
-  val genero: Genero, //Macho o Hembra
-  val energia: Int, //Minimo 0, maximo energiaMaxima
-  val energiaMaximaBase: Int,
-  val pesoBase: Int, //Minimo 0
-  val fuerzaBase: Int, //De 1 a 100
-  val velocidadBase: Int, //De 1 a 100
-  val especie: Especie,
+  val genero: Genero,  //Macho o Hemb, 
+  val energia: Int,  //Minimo 0, maximo energiaMaxi, 
+  val energiaMaximaBase: Int, 
+  val pesoBase: Int,  //Minimo, 
+  val fuerzaBase: Int,  //De 1 a 1, 
+  val velocidadBase: Int,  //De 1 a 1, 
+  val especie: Especie, 
   val nivel: Int = 1, //De 1 a 100
-  val experiencia: Int = 0,
-  val estado: Estado = Saludable)
+  val experiencia: Int = 0, 
+  val estado: Estado = Saludable,
+  val ataques: Map[Ataque, Int] = Map[Ataque, Int]()) //que representa el PP que tiene para cada ataque
   {
   // 
+  
+  
   
   def peso : Int = pesoBase + especie.incPeso * nivel
   
@@ -122,6 +127,15 @@ case class Pokemon(
   
   def pierdeCon(tipo: Tipo): Boolean = {
     this.especie.tipos.forall{tipoPok => tipo.leGanaA(tipoPok)}
+  }
+
+  def pa(ataque: Ataque): Int = {
+    ataques(ataque) //verificar condición de error acá?
+  }
+  
+  def decrementarPA(ataque: Ataque): Pokemon = { //verificar que esté el ataque 
+    var pokemon : Pokemon = copy(ataques = ataques.-(ataque).+((ataque, ataques.get(ataque).get - 1)))
+    pokemon    
   }
   
 }
