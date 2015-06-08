@@ -32,3 +32,21 @@ case class Nadar(minutos: Int) extends Actividad
     case poke => poke.ganarExperiencia(200 * minutos) //FIXME codigo repetido aqui!
   }
 }
+
+case class AprenderAtaque(ataque:Ataque) extends Actividad
+{
+  def doRealizar(pokemon:Pokemon) : Pokemon = 
+  {
+    if (ataque.esAfin(pokemon.especie))
+    {
+      pokemon.incorporar(ataque)
+    }
+    
+    else
+    {
+      pokemon.pasarAKO()
+    }
+    
+  }
+
+}

@@ -1,4 +1,5 @@
 package tadp.scala.bonita
+import scala.math
 
 
 
@@ -15,18 +16,11 @@ case class Pokemon(
   val estado: Estado = Saludable,
   val ataques: Map[Ataque, Int] = Map[Ataque, Int]()) //que representa el PP que tiene para cada ataque
   {
-  // 
-  
-  
-  
-  def peso : Int = pesoBase + especie.incPeso * nivel
-  
-  def energiaMaxima : Int = energiaMaximaBase + especie.incEnergiaMaxima * nivel
-  
-  def velocidad : Int = velocidadBase + especie.incVelocidad * nivel
-  
-  def fuerza : Int = fuerzaBase + especie.incFuerza * nivel
-  
+    
+  def peso : Int = pesoBase + especie.incPeso * (nivel-1)
+  def energiaMaxima : Int = energiaMaximaBase + especie.incEnergiaMaxima * (nivel-1)
+  def velocidad : Int = velocidadBase + especie.incVelocidad * (nivel-1)
+  def fuerza : Int = fuerzaBase + especie.incFuerza * (nivel-1)
   //pero mira como esta ese codigo repetido papa
   
   def puedoRealizarActividad() = {
@@ -49,12 +43,17 @@ case class Pokemon(
     return this.estado.envenenado()
   }
   
-  def pasarAKO() = {
-    copy(estado = KO)
+  def pasarAKO() = copy(estado = KO)
+  def pasarAEnvenenado() = copy(estado = Envenenado)  
+  def pasarAParalizado() = copy(estado = Paralizado)
+  def pasarADormido() = copy(estado = Dormido)
+  
+  def curarEnergia(nrg : Int) = {
+    copy(energia = math.max(energiaMaxima, energia+nrg))
   }
   
-  def pasarAEnvenenado() = {
-    copy(estado = Envenenado)
+  def curarTodaLaEnergia() = {
+    copy(energia = energiaMaxima)
   }
   
   // Metodos auxiliares de levantarPesas
@@ -140,6 +139,11 @@ case class Pokemon(
   def decrementarPA(ataque: Ataque): Pokemon = { //verificar que esté el ataque 
     var pokemon : Pokemon = copy(ataques = ataques.-(ataque).+((ataque, ataques.get(ataque).get - 1)))
     pokemon    
+  }
+  
+  def incorporar(ataque: Ataque): Pokemon =
+  {
+    copy(ataques = ataques.+((ataque, ataque.PA)))
   }
   
 }

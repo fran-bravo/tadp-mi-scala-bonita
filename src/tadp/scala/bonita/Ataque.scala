@@ -1,6 +1,6 @@
 package tadp.scala.bonita
 
-class Ataque(val tipoAtaque: Tipo, var PA: Int, val efectoAtaque: (Pokemon => Pokemon)){
+class Ataque(val tipoAtaque: Tipo, var PA: Int, val efectoAtaque: (Pokemon => Pokemon) = {p => p}){
   
   val tipo: Tipo = tipoAtaque
   val puntosAtaqueBase = PA
@@ -14,6 +14,13 @@ class Ataque(val tipoAtaque: Tipo, var PA: Int, val efectoAtaque: (Pokemon => Po
     case poke if poke.especie.tipoSecundario() == tipo && poke.genero == 'F' => 40
   }
   
+  def esAfin(especie: Especie) : Boolean = tipo match
+  {
+    case Normal => true
+    case other if especie.tipos.contains(other) => true
+    case _ => false
+  }
+    
 }
 
 class AtaqueConcreto(unAtaque: Ataque)
