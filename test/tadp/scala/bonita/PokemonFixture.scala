@@ -33,7 +33,8 @@ package object fixture {
   val alakazam = new Especie(48, List(Psiquico), 700, None, None, 3, 2, 2, 2)
   val kadabra = new Especie(56, List(Psiquico), 500, Some(new Intercambiar()), Some(alakazam), 2, 2, 2, 3)
   val abra = new Especie(20, List(Psiquico), 350, Some(new SubirNivel(16)), Some(kadabra), 2, 1, 1, 2)
-  
+  //Especie tipo Volador-Roca
+  val aerodactyl = new Especie(90, List(Volador, Roca), 1000, None, None, 3, 1, 2, 1)
   
   //Ataques
   def thunderbolt = new Ataque("thunderbolt", Electrico, 15)
@@ -76,6 +77,10 @@ package object fixture {
   
   def nuevoDratiniM(): Pokemon = {
     new Pokemon(Macho, 100, 100, 30, 15, 20, dratini)
+  }
+  
+  def nuevoAerodactylF(): Pokemon = {
+    new Pokemon(Hembra, 100, 100, 40, 50, 8, aerodactyl)
   }
   //pokemones que saben cosas:
   

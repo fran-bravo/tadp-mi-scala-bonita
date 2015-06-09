@@ -28,7 +28,7 @@ case class Nadar(minutos: Int) extends Actividad
   def doRealizar(pokemon : Pokemon) : Pokemon = pokemon match
   {
     case poke if poke.pierdeCon(Agua) => poke.pasarAKO
-    case poke if poke.especie.tipos.contains(Agua) => poke.ganarExperiencia(200 * minutos).ganarVelocidad(minutos).perderEnergia(minutos)
+    case poke if poke.especie.tipos.contains(Agua) => poke.ganarExperiencia(200 * minutos).ganarVelocidad(minutos/60).perderEnergia(minutos)
     case poke => poke.ganarExperiencia(200 * minutos).perderEnergia(minutos) //FIXME codigo repetido aqui!
   }
 }
