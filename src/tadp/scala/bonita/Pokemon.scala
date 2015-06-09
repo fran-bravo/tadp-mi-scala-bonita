@@ -49,6 +49,10 @@ case class Pokemon(
     return this.estado.envenenado()
   }
   
+  def estoyDormido() : Boolean = {
+    return this.estado.dormido()
+  }
+  
   def pasarAKO() = copy(estado = KO)
   def pasarAEnvenenado() = copy(estado = Envenenado)  
   def pasarAParalizado() = copy(estado = Paralizado)
