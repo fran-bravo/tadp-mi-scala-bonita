@@ -164,6 +164,10 @@ case class Pokemon(
   def pierdeCon(tipo: Tipo): Boolean = {
     this.especie.tipos.exists{tipoPok => tipo.leGanaA(tipoPok)}
   }
+  
+  def sabeElAtaque(ataque:Ataque): Boolean = {
+    ataques.keys.exists { key => key == ataque.nombre }
+  }
 
   def paActual(ataque: Ataque): Int = {
     ataques(ataque.nombre)._1 //verificar condición de error acá?
