@@ -14,7 +14,7 @@ case class Pokemon(
   val nivel: Int = 1, //De 1 a 100
   val experiencia: Int = 0, 
   val estado: Estado = Saludable,
-  val ataques: Map[String, Int] = Map[String, Int]()) //que representa el PP que tiene para cada ataque
+  val ataques: Map[String, (Int, Int)] = Map[String, (Int, Int)]()) //que representa el PP que tiene para cada ataque
   {
     
   def peso : Int = pesoBase + especie.incPeso * (nivel-1)
@@ -63,6 +63,7 @@ case class Pokemon(
     return this.estado.dormido()
   }
   
+  def pasarASaludable() = copy(estado = Saludable)
   def pasarAKO() = copy(estado = KO)
   def pasarAEnvenenado() = copy(estado = Envenenado)  
   def pasarAParalizado() = copy(estado = Paralizado)
@@ -159,19 +160,27 @@ case class Pokemon(
     this.especie.tipos.forall{tipoPok => tipo.leGanaA(tipoPok)}
   }
 
-  def pa(ataque: Ataque): Int = {
-    ataques(ataque.nombre) //verificar condición de error acá?
+  def paActual(ataque: Ataque): Int = {
+    ataques(ataque.nombre)._1 //verificar condición de error acá?
+  }
+  def paMax(ataque: Ataque): Int = {
+    ataques(ataque.nombre)._2 //idem
   }
   
   def decrementarPA(ataque: Ataque): Pokemon = { //verificar que esté el ataque 
     var nombre : String = ataque.nombre
-    var pokemon : Pokemon = copy(ataques = ataques.-(nombre).+((nombre, ataques.get(nombre).get - 1)))
+    var pokemon : Pokemon = copy(ataques = ataques.-(nombre).+((nombre, (ataques.get(nombre).get._1 - 1, ataques.get(nombre).get._2))))
     pokemon    
+  }
+  
+  def recuperarPA(ataque: Ataque): Pokemon = {
+    def restaurarPP : ((Int, Int)) => (Int, Int) = { case (actual, max) => (max, max)}
+    copy(ataques = ataques.mapValues(restaurarPP))
   }
   
   def incorporar(ataque: Ataque): Pokemon =
   {
-    return copy(ataques = ataques.+((ataque.nombre, ataque.puntosAtaqueBase)))
+    return copy(ataques = ataques.+((ataque.nombre, (ataque.puntosAtaqueBase, ataque.puntosAtaqueBase))))
   }
   
 }

@@ -17,7 +17,7 @@ case class RealizarAtaque(ataque:Ataque) extends Actividad
 {
   def doRealizar(pokemon:Pokemon) : Pokemon =
   {
-    if (pokemon.pa(ataque) == 0) throw new NoRemainingPPException("No quedan mas PP!")
+    if (pokemon.paActual(ataque) == 0) throw new NoRemainingPPException("No quedan mas PP!")
    pokemon.ganarExperiencia(ataque.experienciaPara(pokemon)).decrementarPA(ataque)
     
   }
@@ -59,4 +59,26 @@ case object ComerHierro extends Actividad
 case object ComerCalcio extends Actividad
 {
   def doRealizar(pokemon:Pokemon) : Pokemon = pokemon.ganarVelocidad(5)
+}
+
+case object UsarPocion extends Actividad
+{
+  def doRealizar(pokemon:Pokemon) : Pokemon = pokemon.curarEnergia(50)
+}
+
+case object UsarAntidoto extends Actividad
+{
+  def doRealizar(pokemon:Pokemon) : Pokemon = pokemon.estado match
+  {
+    case Envenenado => pokemon.pasarASaludable
+    case _ => pokemon
+  }
+}
+
+case object UsarEther extends Actividad{
+  def doRealizar(pokemon:Pokemon) = pokemon.estado match
+  {
+    case KO => pokemon
+    case _ => pokemon.pasarASaludable
+  }
 }
