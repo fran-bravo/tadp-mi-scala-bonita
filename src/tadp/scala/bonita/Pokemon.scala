@@ -77,6 +77,11 @@ case class Pokemon(
     //que tiene que matchear el estado del pokemon con dormido
   }
   
+  def perderEnergia(nrg : Int) = {
+    if (energia <= nrg) copy(energia=0, estado=KO) //esto no lo dice pero... es muy lógico
+    else copy(energia = energia - nrg)
+  }
+  
   def curarEnergia(nrg : Int) = {
     copy(energia = math.max(energiaMaxima, energia+nrg))
   }
@@ -157,7 +162,7 @@ case class Pokemon(
   }
   
   def pierdeCon(tipo: Tipo): Boolean = {
-    this.especie.tipos.forall{tipoPok => tipo.leGanaA(tipoPok)}
+    this.especie.tipos.exists{tipoPok => tipo.leGanaA(tipoPok)}
   }
 
   def paActual(ataque: Ataque): Int = {

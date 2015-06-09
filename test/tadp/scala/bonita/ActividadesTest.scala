@@ -10,7 +10,7 @@ class ActividadesTest {
   //Esta clase testea actividades en general
   
   @Test
-  def unPokemonDormidoIgnoraLaActividad()
+  def `un pokemon dormido ignora la actividad`
   {
     var pikachu = fixture.nuevoPikachuConThunderbolt()
     pikachu = pikachu.pasarADormido()
@@ -22,7 +22,7 @@ class ActividadesTest {
   //la forma posta posta sería con un mock pero... dale
   
   @Test
-  def unPokemonDormidoDespiertaLuegoDeIgnorarTresActividades()
+  def `un pokemon dormido despierta despues de ignorar tres actividades`
   {
     var pikachu = fixture.nuevoPikachuConThunderbolt()
     pikachu = pikachu.pasarADormido()
@@ -36,7 +36,7 @@ class ActividadesTest {
   }
   
   @Test(expected = classOf[KOException])
-  def unPokemonKORompeCuandoSeLePasaUnaActividad
+  def `un pokemon KO rompe cuando se le pasa una actividad`
   {
     var pikachu = fixture.nuevoPikachuConThunderbolt()
     pikachu = pikachu.pasarAKO()
@@ -44,7 +44,7 @@ class ActividadesTest {
   }
   
   @Test(expected = classOf[CaracteristicasInvalidasException])
-  def unPokemonQueQuedaConCaracteristicasInvalidasRompe
+  def `un pokemon que queda con caracteristicas invalidas rompe`
   {
     var machamp = new Pokemon(Macho, 100, 100, 45, 97, 12, fixture.machamp)
     machamp.realizarActividad(ComerHierro)

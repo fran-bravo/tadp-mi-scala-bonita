@@ -9,7 +9,7 @@ import org.junit.Test
 class RealizarAtaqueTest 
 {
   @Test
-  def realizarAtaqueGastaPA
+  def `realizar un ataque gasta PA`
   {
     var pikachu = fixture.nuevoPikachuConThunderbolt()
     Assert.assertEquals(15, pikachu.paActual(fixture.thunderbolt))
@@ -18,7 +18,7 @@ class RealizarAtaqueTest
   }
   
   @Test
-  def funcionaElRecuperarPA 
+  def `funciona el recuperar PA`
   { //estrictamente hablando este test no va acá, pero lo tengo que probar YA
     var pikachu = fixture.nuevoPikachuConThunderbolt()
     Assert.assertEquals(15, pikachu.paActual(fixture.thunderbolt))
@@ -30,7 +30,7 @@ class RealizarAtaqueTest
   
   
   @Test
-  def realizarAtaqueDeTipoPrincipalDa50Exp
+  def `realizar ataque de tipo principal da 50 exp`
   {
     var pikachu = fixture.nuevoPikachuConThunderbolt()
     Assert.assertEquals(0, pikachu.experiencia)
@@ -39,7 +39,7 @@ class RealizarAtaqueTest
   }
   
   @Test
-  def realizarAtaqueDeTipoSecundarioDa20ExpAUnMacho
+  def `realizar ataque de tipo secundario da 20 exp a un macho`
   {
     var charizard = fixture.nuevoCharizardMConFly()
     Assert.assertEquals(0, charizard.experiencia)
@@ -48,7 +48,7 @@ class RealizarAtaqueTest
   }
 
   @Test
-  def realizarAtaqueDeTipoSecundarioDa40ExpAUnaHembra
+  def `realizar ataque de tipo secundario da 40 exp a una hembra`
   {
     var charizard = fixture.nuevoCharizardFConFly()
     Assert.assertEquals(0, charizard.experiencia)
@@ -57,7 +57,7 @@ class RealizarAtaqueTest
   }
   
   @Test
-  def realizarAtaqueDragonDa80Exp
+  def `realizar ataque dragon da 80 exp`
   {
     var dratini = fixture.nuevoDratiniMConDragonRage()
     Assert.assertEquals(0, dratini.experiencia)
