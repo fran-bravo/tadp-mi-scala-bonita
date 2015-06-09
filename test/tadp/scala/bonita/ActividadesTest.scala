@@ -35,5 +35,13 @@ class ActividadesTest {
     Assert.assertFalse(pikachu.estoyDormido())
   }
   
+  @Test(expected = classOf[KOException])
+  def unPokemonKORompeCuandoSeLePasaUnaActividad
+  {
+    var pikachu = fixture.nuevoPikachuConThunderbolt()
+    pikachu = pikachu.pasarAKO()
+    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
+  }
+  
   
 }
