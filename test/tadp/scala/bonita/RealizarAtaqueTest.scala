@@ -13,7 +13,7 @@ class RealizarAtaqueTest
   {
     var pikachu = fixture.nuevoPikachuConThunderbolt()
     Assert.assertEquals(0, pikachu.experiencia)
-    pikachu = new RealizarAtaque(fixture.thunderbolt).realizar(pikachu)
+    pikachu = pikachu.realizarActividad(new RealizarAtaque(fixture.thunderbolt))
     Assert.assertEquals(50, pikachu.experiencia)
   }
   
@@ -22,7 +22,7 @@ class RealizarAtaqueTest
   {
     var charizard = fixture.nuevoCharizardMConFly()
     Assert.assertEquals(0, charizard.experiencia)
-    charizard = new RealizarAtaque(fixture.fly).realizar(charizard)
+    charizard = charizard.realizarActividad(new RealizarAtaque(fixture.fly))
     Assert.assertEquals(20, charizard.experiencia)
   }
 
@@ -31,7 +31,7 @@ class RealizarAtaqueTest
   {
     var charizard = fixture.nuevoCharizardFConFly()
     Assert.assertEquals(0, charizard.experiencia)
-    charizard = new RealizarAtaque(fixture.fly).realizar(charizard)
+    charizard = charizard.realizarActividad(new RealizarAtaque(fixture.fly))
     Assert.assertEquals(40, charizard.experiencia)
   }
   
@@ -40,7 +40,7 @@ class RealizarAtaqueTest
   {
     var dratini = fixture.nuevoDratiniMConDragonRage()
     Assert.assertEquals(0, dratini.experiencia)
-    dratini = new RealizarAtaque(fixture.dragon_rage).realizar(dratini)
+    dratini = dratini.realizarActividad(new RealizarAtaque(fixture.dragon_rage))
     Assert.assertEquals(80, dratini.experiencia)
   }
   

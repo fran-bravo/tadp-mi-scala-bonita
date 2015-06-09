@@ -23,11 +23,17 @@ case class Pokemon(
   def fuerza : Int = fuerzaBase + especie.incFuerza * (nivel-1)
   //pero mira como esta ese codigo repetido papa
   
-  def puedoRealizarActividad() = {
+  
+  def puedoRealizarActividad() = { //si la hacemos bien, este method debería quedar deprecado
     if (this.estado.knockeado) {
       throw new KOException("Estoy Knockeado")
     }
   }
+  
+  def realizarActividad(actividad:Actividad) : Pokemon= { //este vendría a ser el accept
+    actividad.realizar(this)
+  }
+  
   
   // Metodos asociados al estado
   
