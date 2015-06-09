@@ -47,5 +47,40 @@ class AprenderAtaqueTest {
     
   }
   
+  @Test
+  def `pokemon electrico tambien puede aprender pound, que es un ataque tipo normal`
+  {
+    var pikachu = fixture.nuevoPikachuM()
+    Assert.assertFalse(pikachu.sabeElAtaque(fixture.pound))
+    pikachu = pikachu.realizarActividad(AprenderAtaque(fixture.pound))
+    Assert.assertTrue(pikachu.sabeElAtaque(fixture.pound))
+  }
+  
+  @Test
+  def `otro pokemon puede aprender pound`
+  {
+    var dratini = fixture.nuevoDratiniM()
+    Assert.assertFalse(dratini.sabeElAtaque(fixture.pound))
+    dratini = dratini.realizarActividad(AprenderAtaque(fixture.pound))
+    Assert.assertTrue(dratini.sabeElAtaque(fixture.pound))
+  }
+  
+  @Test
+  def `un pokemon intenta aprender un ataque no afin, no lo aprende`
+  {
+    var pikachu = fixture.nuevoPikachuM()
+    Assert.assertFalse(pikachu.sabeElAtaque(fixture.dragon_rage))
+    pikachu = pikachu.realizarActividad(AprenderAtaque(fixture.dragon_rage))
+    Assert.assertFalse(pikachu.sabeElAtaque(fixture.dragon_rage))
+  }
+  
+  @Test
+  def `un pokemon intenta aprender un ataque no afin, queda KO`
+  {
+    var pikachu = fixture.nuevoPikachuM()
+    Assert.assertFalse(pikachu.sabeElAtaque(fixture.dragon_rage))
+    pikachu = pikachu.realizarActividad(AprenderAtaque(fixture.dragon_rage))
+    Assert.assertEquals(KO, pikachu.estado)
+  }
   
 }
