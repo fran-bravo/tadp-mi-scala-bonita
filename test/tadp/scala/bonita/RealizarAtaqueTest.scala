@@ -17,6 +17,17 @@ class RealizarAtaqueTest
     Assert.assertEquals(14, pikachu.paActual(fixture.thunderbolt))
   }
   
+  @Test
+  def funcionaElRecuperarPA 
+  { //estrictamente hablando este test no va acá, pero lo tengo que probar YA
+    var pikachu = fixture.nuevoPikachuConThunderbolt()
+    Assert.assertEquals(15, pikachu.paActual(fixture.thunderbolt))
+    pikachu = pikachu.realizarActividad(new RealizarAtaque(fixture.thunderbolt))
+    Assert.assertEquals(14, pikachu.paActual(fixture.thunderbolt))
+    pikachu = pikachu.recuperarPA()
+    Assert.assertEquals(15, pikachu.paActual(fixture.thunderbolt)) 
+  }
+  
   
   @Test
   def realizarAtaqueDeTipoPrincipalDa50Exp

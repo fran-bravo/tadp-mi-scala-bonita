@@ -173,7 +173,7 @@ case class Pokemon(
     pokemon    
   }
   
-  def recuperarPA(ataque: Ataque): Pokemon = {
+  def recuperarPA(): Pokemon = {
     def restaurarPP : ((Int, Int)) => (Int, Int) = { case (actual, max) => (max, max)}
     copy(ataques = ataques.mapValues(restaurarPP))
   }
