@@ -43,5 +43,12 @@ class ActividadesTest {
     pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
   }
   
+  @Test(expected = classOf[CaracteristicasInvalidasException])
+  def unPokemonQueQuedaConCaracteristicasInvalidasRompe
+  {
+    var machamp = new Pokemon(Macho, 100, 100, 45, 97, 12, fixture.machamp)
+    machamp.realizarActividad(ComerHierro)
+  }
+  
   
 }

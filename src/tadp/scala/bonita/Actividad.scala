@@ -7,7 +7,7 @@ trait Actividad {
   def realizar(pokemon: Pokemon) : Pokemon = pokemon.estado match {
     case KO => throw new KOException
     case Dormido(_) => pokemon.irDespertando()
-    case poke => doRealizar(pokemon)
+    case poke => doRealizar(pokemon).validarCaracteristicas() //esto va a venir reemplazado por un try seguramente
   }
   
   def doRealizar(pokemon:Pokemon) : Pokemon
@@ -49,4 +49,14 @@ case class AprenderAtaque(ataque:Ataque) extends Actividad
     
   }
 
+}
+
+case object ComerHierro extends Actividad
+{
+  def doRealizar(pokemon:Pokemon) : Pokemon = pokemon.ganarFuerza(5)
+}
+
+case object ComerCalcio extends Actividad
+{
+  def doRealizar(pokemon:Pokemon) : Pokemon = pokemon.ganarVelocidad(5)
 }

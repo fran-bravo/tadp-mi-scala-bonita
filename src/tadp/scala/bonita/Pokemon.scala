@@ -23,6 +23,16 @@ case class Pokemon(
   def fuerza : Int = fuerzaBase + especie.incFuerza * (nivel-1)
   //pero mira como esta ese codigo repetido papa
   
+  def validarCaracteristicas() =
+  {
+    if ((peso > 100) || (peso <1)
+        || (fuerza > 100) || (fuerza <1)
+        || (velocidad > 100) || (velocidad < 1)
+        || (nivel > 100) || (nivel < 1))
+      throw new CaracteristicasInvalidasException("Se llegó a un pokemon con características inválidas")
+    //else
+    this
+  }
   
   def puedoRealizarActividad() = { //si la hacemos bien, este method debería quedar deprecado
     if (this.estado.knockeado) {
@@ -77,7 +87,7 @@ case class Pokemon(
   // Metodos auxiliares de levantarPesas
   
   def tengoFuerzaSuficiente(unosKilos:Int) = {
-    if (unosKilos > this.fuerzaBase * 10){
+    if (unosKilos > this.fuerza * 10){
       copy(estado = Paralizado)
       throw new StrengthException("No tengo fuerza suficiente")
     }
@@ -137,9 +147,8 @@ case class Pokemon(
     return pokemon
   }
   
-  def ganarVelocidad (vel: Int): Pokemon = {
-    copy(velocidadBase = velocidad + vel)
-  }
+  def ganarVelocidad (vel: Int): Pokemon = copy(velocidadBase = velocidadBase + vel)
+  def ganarFuerza(fza : Int): Pokemon = copy(fuerzaBase = fuerzaBase + fza)
   
   def subirUnNivel(): Pokemon = {
     val pokemon: Pokemon = copy(nivel = nivel + 1)

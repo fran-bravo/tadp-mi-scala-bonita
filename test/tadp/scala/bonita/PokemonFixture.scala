@@ -68,10 +68,10 @@ package object fixture {
   }
   
   def nuevoCharizardF(): Pokemon = {
-    new Pokemon(Hembra, 100, 100, 120, 80, 7, charizard)
+    new Pokemon(Hembra, 100, 100, 50, 40, 7, charizard)
   }
   def nuevoCharizardM(): Pokemon = {
-    new Pokemon(Macho, 100, 100, 120, 80, 7, charizard)
+    new Pokemon(Macho, 100, 100, 50, 40, 7, charizard)
   }
   
   def nuevoDratiniM(): Pokemon = {
