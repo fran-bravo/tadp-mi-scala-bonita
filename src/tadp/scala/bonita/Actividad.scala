@@ -6,7 +6,7 @@ package tadp.scala.bonita
 trait Actividad {
   def realizar(pokemon: Pokemon) : Pokemon = pokemon.estado match {
     case KO => throw new KOException
-    case Dormido => pokemon //????? FALTA IMPLEMENTAR LO DE QUE SE VA DESPERTANDO
+    case Dormido(_) => pokemon.irDespertando()
     case poke => doRealizar(pokemon)
   }
   

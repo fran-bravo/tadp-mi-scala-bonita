@@ -52,7 +52,15 @@ case class Pokemon(
   def pasarAKO() = copy(estado = KO)
   def pasarAEnvenenado() = copy(estado = Envenenado)  
   def pasarAParalizado() = copy(estado = Paralizado)
-  def pasarADormido() = copy(estado = Dormido)
+  def pasarADormido() = copy(estado = Dormido()) //dormido defaultea a profundidad=3
+  
+  def irDespertando() = estado match {
+    case Dormido(1) => copy(estado = Saludable)
+    case Dormido(n) => copy(estado = Dormido(n-1))
+    //match error acá significa que traté de ir despertando a alguien que no estaba dormido
+    //no debería ocurrir porque sólo se llama después de entrar por un pattern match
+    //que tiene que matchear el estado del pokemon con dormido
+  }
   
   def curarEnergia(nrg : Int) = {
     copy(energia = math.max(energiaMaxima, energia+nrg))

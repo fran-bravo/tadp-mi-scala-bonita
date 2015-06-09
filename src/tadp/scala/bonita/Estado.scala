@@ -16,7 +16,7 @@ class Estado{
 
 case object Saludable extends Estado
 
-case object Dormido extends Estado
+case class Dormido(val profundidad:Int = 3) extends Estado
 
 case object Envenenado extends Estado {
   override def envenenado(): Boolean = {
