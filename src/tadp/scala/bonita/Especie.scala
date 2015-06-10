@@ -27,6 +27,8 @@ class Especie(
     return tipos.last //asumiendo que solo se pueden tener como maximo 2 tipos
   }
   
+  def tieneElTipo(tipo: Tipo): Boolean = tipos.contains(tipo)
+  
   def experienciaParaNivel(nivel: Int): Int = nivel match{   
     case 1 => 0
     case _ => (2 * this.experienciaParaNivel(nivel-1)) + this.resistenciaEvolutiva

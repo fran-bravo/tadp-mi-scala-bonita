@@ -23,12 +23,27 @@ case class RealizarAtaque(ataque:Ataque) extends Actividad
   }
 }
 
+case class LevantarPesas(kg: Int) extends Actividad
+{
+  def doRealizar(pokemon:Pokemon) : Pokemon = pokemon.estado match
+    {
+      case Paralizado => pokemon.pasarAKO
+      case _ if kg > pokemon.fuerza*10 => pokemon.pasarAParalizado
+      case _ if pokemon.tieneElTipo(Fantasma) => throw new TypeException 
+      case _ => { var mult = 1: Int
+                  if (pokemon.tieneElTipo(Pelea)) mult = 2
+                  pokemon.ganarExperiencia(kg*mult)
+                }
+    }
+
+}
+
 case class Nadar(minutos: Int) extends Actividad
 {
   def doRealizar(pokemon : Pokemon) : Pokemon = pokemon match
   {
     case poke if poke.pierdeCon(Agua) => poke.pasarAKO
-    case poke if poke.especie.tipos.contains(Agua) => poke.ganarExperiencia(200 * minutos).ganarVelocidad(minutos/60).perderEnergia(minutos)
+    case poke if poke.tieneElTipo(Agua) => poke.ganarExperiencia(200 * minutos).ganarVelocidad(minutos/60).perderEnergia(minutos)
     case poke => poke.ganarExperiencia(200 * minutos).perderEnergia(minutos) //FIXME codigo repetido aqui!
   }
 }

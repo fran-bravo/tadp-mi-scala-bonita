@@ -11,7 +11,7 @@ class ActividadesTest {
   
   @Test
   def `un pokemon dormido ignora la actividad`
-  {
+  { 
     var pikachu = fixture.nuevoPikachuConThunderbolt()
     pikachu = pikachu.pasarADormido()
     pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))

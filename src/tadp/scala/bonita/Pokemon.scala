@@ -34,11 +34,7 @@ case class Pokemon(
     this
   }
   
-  def puedoRealizarActividad() = { //si la hacemos bien, este method debería quedar deprecado
-    if (this.estado.knockeado) {
-      throw new KOException("Estoy Knockeado")
-    }
-  }
+
   
   def realizarActividad(actividad:Actividad) : Pokemon= { //este vendría a ser el accept
     actividad.realizar(this)
@@ -89,33 +85,6 @@ case class Pokemon(
   def curarTodaLaEnergia() = {
     copy(energia = energiaMaxima)
   }
-  
-  // Metodos auxiliares de levantarPesas
-  
-  def tengoFuerzaSuficiente(unosKilos:Int) = {
-    if (unosKilos > this.fuerza * 10){
-      copy(estado = Paralizado)
-      throw new StrengthException("No tengo fuerza suficiente")
-    }
-  }
-  
-  def puedoLevantarPesas(unosKilos:Int): Int = {
-  	this.tengoFuerzaSuficiente(unosKilos)
-    return this.especie.puedeLevantar()
-  
-  }
-  
-  // Actividad levantarPesas
-  
-  def levantarPesas(unosKilos:Int) = {
-    this.puedoRealizarActividad
-    if(this.estoyParalizado){
-      this.pasarAKO() 
-    } else {
-      copy(experiencia = this.puedoLevantarPesas(unosKilos) * unosKilos)
-    }
-  }
-  
   
   //Evolucionar
   
@@ -188,7 +157,7 @@ case class Pokemon(
   }
   
   def incrementarTodosLosPAMaxEn2(): Pokemon = {
-    def incrementarPPMaxEn2: ((Int, Int)) => (Int, Int) = { case(actual, max) => (actual, max+2)} 
+    def incrementarPPMaxEn2: ((Int, Int)) => (Int, Int) = { case (actual, max) => (actual, max+2)} 
     copy(ataques = ataques.mapValues(incrementarPPMaxEn2))
     //para parametrizar ese 2 creo que necesito saber aplicación parcial
     //no es que sea necesario parametrizarlo anyway, pero quedaría copado
@@ -198,5 +167,7 @@ case class Pokemon(
   {
     return copy(ataques = ataques.+((ataque.nombre, (ataque.puntosAtaqueBase, ataque.puntosAtaqueBase))))
   }
+  
+  def tieneElTipo(tipo: Tipo) : Boolean = especie.tieneElTipo(tipo)
   
 }
