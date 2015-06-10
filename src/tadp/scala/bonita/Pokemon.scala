@@ -83,7 +83,7 @@ case class Pokemon(
   }
   
   def curarEnergia(nrg : Int) = {
-    copy(energia = math.max(energiaMaxima, energia+nrg))
+    copy(energia = math.min(energiaMaxima, energia+nrg))
   }
   
   def curarTodaLaEnergia() = {
