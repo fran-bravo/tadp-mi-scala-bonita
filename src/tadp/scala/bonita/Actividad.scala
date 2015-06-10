@@ -3,6 +3,12 @@ package tadp.scala.bonita
 /**
  * @author Dario
  */
+
+//la idea es que acá el resultado cada actividad depende sólo de sus parámetros (y del pokemon)
+//puede pensarse como en el micro, que cada instrucción depende sólo de sus parámetros (y del micro)
+//un siguiente paso sería sacar este código de realizar la actividad a un gran pattern match
+//por ahora no tiene mucho sentido que sean case classes pero va a servir más adelante
+
 trait Actividad {
   def realizar(pokemon: Pokemon) : Pokemon = pokemon.estado match {
     case KO => throw new KOException
@@ -12,6 +18,8 @@ trait Actividad {
   
   def doRealizar(pokemon:Pokemon) : Pokemon
 }
+
+
 
 case class RealizarAtaque(ataque:Ataque) extends Actividad 
 {
