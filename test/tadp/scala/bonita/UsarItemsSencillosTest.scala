@@ -24,4 +24,62 @@ class UsarItemsSencillosTest
      pika = pika.realizarActividad(UsarPocion) //no deberia pasar de 100
      Assert.assertEquals(100, pika.energia)
    }
+   
+   @Test
+   def `pokemon envenenado se cura con un antidoto`
+   {
+     var pika = fixture.nuevoPikachuM()
+     pika = pika.pasarAEnvenenado()
+     Assert.assertEquals(Envenenado, pika.estado)   
+     pika = pika.realizarActividad(UsarAntidoto)
+     Assert.assertEquals(Saludable, pika.estado)     
+   }
+   
+   @Test
+   def `ether cura veneno`
+   {
+     var pika = fixture.nuevoPikachuM()
+     pika = pika.pasarAEnvenenado()
+     Assert.assertEquals(Envenenado, pika.estado)   
+     pika = pika.realizarActividad(UsarEther)
+     Assert.assertEquals(Saludable, pika.estado)     
+   }
+   
+   @Test
+   def `ether cura suenio`
+   {
+     var pika = fixture.nuevoPikachuM()
+     pika = pika.pasarADormido()
+     Assert.assertEquals(Dormido(2), pika.estado)  
+     //whoops, esto es una limitación de JUnit? quisiera poder hacer Dormido(_)
+     pika = pika.realizarActividad(UsarEther)
+     //Assert.assertEquals(Saludable, pika.estado)     
+     //aca chocan los requerimientos, se supone que el ether cura el sueño
+     //pero tambien se supone que un pokemon dormido ignora las actividades que le dan
+     //entonces no puede tomar el ether
+   }
+   
+   @Test
+   def `ether cura paralisis`
+   {
+     var pika = fixture.nuevoPikachuM()
+     pika = pika.pasarAParalizado()
+     Assert.assertEquals(Paralizado, pika.estado)   
+     pika = pika.realizarActividad(UsarEther)
+     Assert.assertEquals(Saludable, pika.estado)     
+   }
+   
+   @Test(expected = classOf[KOException])
+   def `ether no cura KO`
+   {
+     var pika = fixture.nuevoPikachuM()
+     pika = pika.pasarAKO()
+     Assert.assertEquals(KO, pika.estado)   
+     pika = pika.realizarActividad(UsarEther)
+     //en realidad esto choca con otro requerimiento
+     //por el requerimiento general de que los pokemon KO no pueden hacer actividades
+     //ni siquiera va a llegar a usar el ether
+     Assert.assertEquals(Saludable, pika.estado)     
+   }
+   
 }
