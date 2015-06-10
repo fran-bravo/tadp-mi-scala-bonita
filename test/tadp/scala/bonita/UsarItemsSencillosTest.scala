@@ -50,7 +50,7 @@ class UsarItemsSencillosTest
    {
      var pika = fixture.nuevoPikachuM()
      pika = pika.pasarADormido()
-     Assert.assertEquals(Dormido(2), pika.estado)  
+     Assert.assertEquals(Dormido(3), pika.estado)  
      //whoops, esto es una limitación de JUnit? quisiera poder hacer Dormido(_)
      pika = pika.realizarActividad(UsarEther)
      //Assert.assertEquals(Saludable, pika.estado)     
@@ -82,4 +82,35 @@ class UsarItemsSencillosTest
      Assert.assertEquals(Saludable, pika.estado)     
    }
    
+   
+   @Test
+   def `hierro aumenta en 5 la fuerza de un pokemon`
+   {
+     var pika = fixture.nuevoPikachuM()
+     Assert.assertEquals(2, pika.fuerzaBase)
+     pika = pika.realizarActividad(ComerHierro)
+     Assert.assertEquals(7, pika.fuerzaBase)
+   }
+   
+   @Test
+   def `calcio aumenta en 5 la velocidad de un pokemon`
+   {
+     var pika = fixture.nuevoPikachuM()
+     Assert.assertEquals(6, pika.velocidadBase)
+     pika = pika.realizarActividad(ComerCalcio)
+     Assert.assertEquals(11, pika.velocidadBase)
+   }
+   
+   @Test
+   def `zinc aumenta en 2 el pp max de cada ataque`
+   {
+     var pika = fixture.nuevoPikachuM()
+     pika = pika.realizarActividad(AprenderAtaque(fixture.thunderbolt))
+     pika = pika.realizarActividad(AprenderAtaque(fixture.pound))
+     Assert.assertEquals(15, pika.paMax(fixture.thunderbolt))
+     Assert.assertEquals(35, pika.paMax(fixture.pound))
+     pika.realizarActividad(ComerZinc)
+     Assert.assertEquals(17, pika.paMax(fixture.thunderbolt))
+     Assert.assertEquals(37, pika.paMax(fixture.pound))
+   }
 }
