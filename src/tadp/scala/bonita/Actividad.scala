@@ -51,6 +51,21 @@ case class AprenderAtaque(ataque:Ataque) extends Actividad
 
 }
 
+
+case object Descansar extends Actividad
+{
+  def doRealizar(pokemon:Pokemon) : Pokemon = {
+    var poke : Pokemon = pokemon.recuperarPA()
+    poke.estado match
+    {
+      case Saludable if (poke.energia < poke.energiaMaxima/2) => poke.pasarADormido()
+      case _ => poke
+    }
+  }
+}
+
+
+
 case object ComerHierro extends Actividad
 {
   def doRealizar(pokemon:Pokemon) : Pokemon = pokemon.ganarFuerza(5)
@@ -59,6 +74,11 @@ case object ComerHierro extends Actividad
 case object ComerCalcio extends Actividad
 {
   def doRealizar(pokemon:Pokemon) : Pokemon = pokemon.ganarVelocidad(5)
+}
+
+case object ComerZinc extends Actividad
+{
+  def doRealizar(pokemon: Pokemon) : Pokemon = pokemon.incrementarTodosLosPAMaxEn2
 }
 
 case object UsarPocion extends Actividad

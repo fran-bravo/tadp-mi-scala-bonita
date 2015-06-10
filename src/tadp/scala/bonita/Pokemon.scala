@@ -187,6 +187,13 @@ case class Pokemon(
     copy(ataques = ataques.mapValues(restaurarPP))
   }
   
+  def incrementarTodosLosPAMaxEn2(): Pokemon = {
+    def incrementarPPMaxEn2: ((Int, Int)) => (Int, Int) = { case(actual, max) => (actual, max+2)} 
+    copy(ataques = ataques.mapValues(incrementarPPMaxEn2))
+    //para parametrizar ese 2 creo que necesito saber aplicación parcial
+    //no es que sea necesario parametrizarlo anyway, pero quedaría copado
+  }
+  
   def incorporar(ataque: Ataque): Pokemon =
   {
     return copy(ataques = ataques.+((ataque.nombre, (ataque.puntosAtaqueBase, ataque.puntosAtaqueBase))))
