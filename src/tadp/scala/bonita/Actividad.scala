@@ -25,9 +25,9 @@ case class RealizarAtaque(ataque:Ataque) extends Actividad
 {
   def doRealizar(pokemon:Pokemon) : Pokemon =
   {
+		if (pokemon.noConoceAtaque(ataque)) throw new UnknownAttackException("No conoce el ataque")
     if (pokemon.paActual(ataque) == 0) throw new NoRemainingPPException("No quedan mas PP!")
-    if (pokemon.noConoceAtaque(ataque)) throw new UnknownAttackException("No conoce el ataque")
-   pokemon.ganarExperiencia(ataque.experienciaPara(pokemon)).decrementarPA(ataque)
+   ataque.efecto(pokemon.ganarExperiencia(ataque.experienciaPara(pokemon)).decrementarPA(ataque))
     
   }
 }

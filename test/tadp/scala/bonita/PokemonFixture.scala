@@ -29,6 +29,7 @@ package object fixture {
   val dragonite = new Especie(210, List(Dragon, Volador), 700, None, None, 3, 4, 3, 3)
   val dragonair = new Especie(16, List(Dragon), 500, Some(new SubirNivel(55)), Some(dragonite), 2, 1, 2, 3)
   val dratini = new Especie(4, List(Dragon), 350, Some(new SubirNivel(30)), Some(dragonair), 1, 1, 1, 2)
+  val kingdra = new Especie(150, List(Agua, Dragon), 700, None, None, 3, 3, 3, 3)
   //Especies Tipo Psiquico
   val alakazam = new Especie(48, List(Psiquico), 700, None, None, 3, 2, 2, 2)
   val kadabra = new Especie(56, List(Psiquico), 500, Some(new Intercambiar()), Some(alakazam), 2, 2, 2, 3)
@@ -45,12 +46,13 @@ package object fixture {
   def psychic = new Ataque("psychic", Psiquico, 10)
   def fly = new Ataque("fly", Volador, 15)
   def dragon_rage = new Ataque("dragon rage", Dragon, 10)
+  def hiper_rayo = new Ataque("hiper beam", Normal, 5)
   
   //Ataques con efecto
-  /*def enfocarse = new Ataque(Normal, 30, {p => p.ganarVelocidad(1)})
-  def rest = new Ataque(Psiquico, 10, {p => p.curarTodaLaEnergia().pasarADormido()})
-  def endurecerse = new Ataque(Normal, 40, {p => p.curarEnergia(5).pasarAParalizado()})
-  */
+  def enfocarse = new Ataque("focus", Normal, 30, {p => p.ganarVelocidad(1)})
+  def rest = new Ataque("rest", Psiquico, 10, {p => p.curarTodaLaEnergia().pasarADormido()})
+  def endurecerse = new Ataque("endurance", Normal, 40, {p => p.curarEnergia(5).pasarAParalizado()})
+  
     
   def nuevoPikachuM(): Pokemon = {
     new Pokemon(Macho, 100, 100, 10, 2, 6, pikachu) 
@@ -82,6 +84,19 @@ package object fixture {
   def nuevoAerodactylF(): Pokemon = {
     new Pokemon(Hembra, 100, 100, 40, 50, 8, aerodactyl)
   }
+  
+  def nuevoAbraM(): Pokemon = {
+    new Pokemon(Macho, 20, 20, 10, 12, 13, abra)
+  }
+  
+  def nuevoclefairyF(): Pokemon = {
+    new Pokemon(Hembra, 80, 80, 23, 20, 15, clefairy)
+  }
+  
+  def nuevoKingdraM(): Pokemon = {
+    new Pokemon(Macho, 100, 100, 40, 40, 10, kingdra)
+  }
+  
   //pokemones que saben cosas:
   
   def nuevoPikachuConThunderbolt(): Pokemon = {
@@ -97,6 +112,26 @@ package object fixture {
   
   def nuevoDratiniMConDragonRage(): Pokemon = {
     nuevoDratiniM.incorporar(dragon_rage)
+  }
+  
+  def nuevoAbraConRest(): Pokemon = {
+    nuevoAbraM.incorporar(rest)
+  }
+  
+  def nuevoclefairyConEndurance(): Pokemon = {
+    nuevoclefairyF.incorporar(endurecerse)
+  }
+  
+  def nuevoclefairyConFocus(): Pokemon = {
+    nuevoclefairyF.incorporar(enfocarse)
+  }
+  
+  def nuevoclefairyConHyperBeam(): Pokemon = {
+    nuevoclefairyF.incorporar(hiper_rayo)
+  }
+  
+  def nuevoKingdraConDragonRage(): Pokemon = {
+    nuevoKingdraM().incorporar(dragon_rage)
   }
   
   
