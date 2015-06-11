@@ -80,11 +80,13 @@ case object Descansar extends Actividad
 {
   def doRealizar(pokemon:Pokemon) : Pokemon = {
     var poke : Pokemon = pokemon.recuperarPA()
+    
     poke.estado match
     {
       case Saludable if (poke.energia < poke.energiaMaxima/2) => poke.pasarADormido()
       case _ => poke
     }
+
   }
 }
 

@@ -89,14 +89,14 @@ class RealizarAtaqueTest
     abra = abra.realizarActividad(RealizarAtaque(fixture.rest))
     
     Assert.assertEquals(50, abra.experiencia)
-    Assert.assertEquals(Dormido(3), abra.estado)
+    Assert.assertEquals(Dormido(), abra.estado)
     Assert.assertEquals(20, abra.energia)
   }
   
   @Test
   def `un pokemon realiza ataque con endurecer`
   {
-    var clefairy = fixture.nuevoclefairyConEndurance()
+    var clefairy = fixture.nuevoClefairyConEndurance()
     clefairy = clefairy.perderEnergia(20)
     clefairy = clefairy.realizarActividad(RealizarAtaque(fixture.endurecerse))
     
@@ -109,7 +109,7 @@ class RealizarAtaqueTest
   @Test
   def `un pokemon realiza ataque con enfocar`
   {
-    var clefairy = fixture.nuevoclefairyConFocus()
+    var clefairy = fixture.nuevoClefairyConFocus()
     val velocidadPrevia = clefairy.velocidad
     clefairy = clefairy.realizarActividad(RealizarAtaque(fixture.enfocarse))
     
@@ -130,7 +130,7 @@ class RealizarAtaqueTest
   @Test(expected = classOf[NoRemainingPPException])
   def `un pokemon quiere realiza ataque sin pps`
   {
-    var clefairy = fixture.nuevoclefairyConHyperBeam()
+    var clefairy = fixture.nuevoClefairyConHyperBeam()
     //Hiper rayo tiene 5 PPs
     clefairy = clefairy.realizarActividad(RealizarAtaque(fixture.hiper_rayo))
     clefairy = clefairy.realizarActividad(RealizarAtaque(fixture.hiper_rayo))

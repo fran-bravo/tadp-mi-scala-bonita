@@ -109,8 +109,37 @@ class UsarItemsSencillosTest
      pika = pika.realizarActividad(AprenderAtaque(fixture.pound))
      Assert.assertEquals(15, pika.paMax(fixture.thunderbolt))
      Assert.assertEquals(35, pika.paMax(fixture.pound))
-     pika.realizarActividad(ComerZinc)
+     pika = pika.realizarActividad(ComerZinc)
      Assert.assertEquals(17, pika.paMax(fixture.thunderbolt))
      Assert.assertEquals(37, pika.paMax(fixture.pound))
    }
+   
+  @Test
+  def `un pokemon con un ataque come zinc`
+  {
+    var pikachu = fixture.nuevoPikachuConThunderbolt()
+    val ppThunderbolt = pikachu.paMax(fixture.thunderbolt)
+    
+    pikachu = pikachu.realizarActividad(ComerZinc)
+    
+    Assert.assertEquals(ppThunderbolt+2, pikachu.paMax(fixture.thunderbolt))
+    
+  }
+  
+  @Test
+  def `un pokemon con muchos ataques come zinc`
+  {
+    var pikachu = fixture.nuevoPikachuMultiplesAtaques()
+    
+    val ppThunderbolt = pikachu.paMax(fixture.thunderbolt)
+    val ppThunder= pikachu.paMax(fixture.thunder)
+    val ppStorm = pikachu.paMax(fixture.storm)
+    
+    pikachu = pikachu.realizarActividad(ComerZinc)
+    
+    Assert.assertEquals(ppThunderbolt+2, pikachu.paMax(fixture.thunderbolt))
+    Assert.assertEquals(ppThunder+2, pikachu.paMax(fixture.thunder))
+    Assert.assertEquals(ppStorm+2, pikachu.paMax(fixture.storm))
+    
+  }
 }

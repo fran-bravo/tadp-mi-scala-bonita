@@ -51,5 +51,53 @@ class ActividadesTest {
   }
   
   
+  @Test
+  def `un pokemon recupera todos los pp al descansar`
+  {
+    var pikachu = fixture.nuevoPikachuConThunderbolt()
+    val ppInicial = pikachu.paActual(fixture.thunderbolt)
+    
+    pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
+    pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
+    pikachu.realizarActividad(Descansar)
+    
+    Assert.assertEquals(ppInicial, pikachu.paActual(fixture.thunderbolt))
+  }
+  
+  @Test
+  def `un pokemon con menos de la mitad de vida sano se duerme al descansar`
+  {
+    var pikachu = fixture.nuevoPikachuConThunderbolt()
+    pikachu = pikachu.perderEnergia(60) //Le queda 40 de vida de un total de 100
+    val ppInicial = pikachu.paActual(fixture.thunderbolt)
+    
+    pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
+    pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
+    pikachu = pikachu.realizarActividad(Descansar)
+
+    Assert.assertEquals(ppInicial, pikachu.paActual(fixture.thunderbolt))
+    Assert.assertEquals(40, pikachu.energia)
+    Assert.assertEquals(Dormido(), pikachu.estado)
+  }
+  
+  @Test
+  def `un pokemon con menos de la mitad de vida no sano no se duerme al descansar`
+  {
+    var pikachu = fixture.nuevoPikachuConThunderbolt()
+    pikachu = pikachu.perderEnergia(60) //Le queda 40 de vida de un total de 100
+    pikachu = pikachu.pasarAEnvenenado()
+    val estadoInicial = pikachu.estado
+    val ppInicial = pikachu.paActual(fixture.thunderbolt)
+    
+    pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
+    pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
+    pikachu = pikachu.realizarActividad(Descansar)
+
+    Assert.assertEquals(ppInicial, pikachu.paActual(fixture.thunderbolt))
+    Assert.assertEquals(40, pikachu.energia)
+    Assert.assertEquals(estadoInicial, pikachu.estado)
+  }
+  
+  
   
 }

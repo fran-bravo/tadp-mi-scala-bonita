@@ -39,6 +39,8 @@ package object fixture {
   
   //Ataques
   def thunderbolt = new Ataque("thunderbolt", Electrico, 15)
+  def thunder = new Ataque("thunder", Electrico, 10)
+  def storm = new Ataque("storm", Electrico, 20)
   def pound = new Ataque("pound", Normal, 35)
   def surf = new Ataque("surf", Agua, 15)
   def flamethrower = new Ataque("flamethrower", Fuego, 15)
@@ -89,7 +91,7 @@ package object fixture {
     new Pokemon(Macho, 20, 20, 10, 12, 13, abra)
   }
   
-  def nuevoclefairyF(): Pokemon = {
+  def nuevoClefairyF(): Pokemon = {
     new Pokemon(Hembra, 80, 80, 23, 20, 15, clefairy)
   }
   
@@ -101,6 +103,13 @@ package object fixture {
   
   def nuevoPikachuConThunderbolt(): Pokemon = {
     nuevoPikachuM.incorporar(thunderbolt)
+  }
+  
+  def nuevoPikachuMultiplesAtaques(): Pokemon ={
+    var pikachu = nuevoPikachuM.incorporar(thunderbolt)
+    pikachu = pikachu.incorporar(thunder)
+    pikachu = pikachu.incorporar(storm)
+    return pikachu
   }
   
   def nuevoCharizardFConFly(): Pokemon = {
@@ -118,16 +127,16 @@ package object fixture {
     nuevoAbraM.incorporar(rest)
   }
   
-  def nuevoclefairyConEndurance(): Pokemon = {
-    nuevoclefairyF.incorporar(endurecerse)
+  def nuevoClefairyConEndurance(): Pokemon = {
+    nuevoClefairyF.incorporar(endurecerse)
   }
   
-  def nuevoclefairyConFocus(): Pokemon = {
-    nuevoclefairyF.incorporar(enfocarse)
+  def nuevoClefairyConFocus(): Pokemon = {
+    nuevoClefairyF.incorporar(enfocarse)
   }
   
-  def nuevoclefairyConHyperBeam(): Pokemon = {
-    nuevoclefairyF.incorporar(hiper_rayo)
+  def nuevoClefairyConHyperBeam(): Pokemon = {
+    nuevoClefairyF.incorporar(hiper_rayo)
   }
   
   def nuevoKingdraConDragonRage(): Pokemon = {
