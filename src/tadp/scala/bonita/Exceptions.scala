@@ -13,3 +13,5 @@ class EvolutionException(msg: String = null) extends RuntimeException(msg)
 class NoRemainingPPException(msg: String = null) extends RuntimeException(msg)
 
 class CaracteristicasInvalidasException(msg: String = null) extends RuntimeException(msg)
+
+class UnknownAttackException(msg: String = null) extends RuntimeException(msg)

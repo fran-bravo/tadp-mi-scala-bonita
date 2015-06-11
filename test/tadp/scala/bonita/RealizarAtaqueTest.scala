@@ -70,4 +70,18 @@ class RealizarAtaqueTest
   //que se maneje bien el caso de atacar si no tengo PP
   //que funcionen bien los ataques con efecto secundario (probar al menos los de la consigna)
   
+  @Test(expected = classOf[UnknownAttackException])
+  def `un pokemon no conoce el ataque y quiere realizarlo igual`
+  {
+    var pikachu = fixture.nuevoPikachuM()
+    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
+  }
+  
+  @Test
+  def `un pokemon no conoce ataque`
+  {
+    var pikachu = fixture.nuevoPikachuM()
+    assert(pikachu.noConoceAtaque(fixture.thunderbolt))
+  }
+  
 }

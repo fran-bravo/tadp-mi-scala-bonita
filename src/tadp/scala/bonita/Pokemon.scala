@@ -157,7 +157,7 @@ case class Pokemon(
   }
   
   def incrementarTodosLosPAMaxEn2(): Pokemon = {
-    def incrementarPPMaxEn2: ((Int, Int)) => (Int, Int) = { case (actual, max) => (actual, max+2)} 
+    def incrementarPPMaxEn2: ((Int, Int)) => (Int, Int) = { case (actual, max) => (actual,  max+2)} 
     copy(ataques = ataques.mapValues(incrementarPPMaxEn2))
     //para parametrizar ese 2 creo que necesito saber aplicación parcial
     //no es que sea necesario parametrizarlo anyway, pero quedaría copado
@@ -166,6 +166,11 @@ case class Pokemon(
   def incorporar(ataque: Ataque): Pokemon =
   {
     return copy(ataques = ataques.+((ataque.nombre, (ataque.puntosAtaqueBase, ataque.puntosAtaqueBase))))
+  }
+  
+    
+  def noConoceAtaque(ataque: Ataque): Boolean = {
+    return !ataques.contains(ataque.nombre)
   }
   
   def tieneElTipo(tipo: Tipo) : Boolean = especie.tieneElTipo(tipo)
