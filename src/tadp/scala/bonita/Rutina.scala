@@ -8,8 +8,9 @@ class Rutina(
   def realizarRutina(pokemon: Pokemon): Pokemon = {
     
     var poke = pokemon.copy()
-   actividades.foldLeft(poke){(actividadAnterior, actividadActual) => poke.realizarActividad(actividadActual)}
-    
+    actividades.foldLeft(poke){(actividadAnterior, actividadActual) => poke = poke.realizarActividad(actividadActual)
+                                                                       poke                              
+                                                                       }
     return poke
    
   }

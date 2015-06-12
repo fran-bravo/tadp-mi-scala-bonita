@@ -35,6 +35,11 @@ class Especie(
     // No estoy contemplando un nivel menor a 1
   }
   
+  def fingeIntercambio(pokemon:Pokemon) : Pokemon ={
+    var poke = this.condicionDeEvolucion.get.fingeIntercambio(pokemon)
+    return poke
+  }
+  
   
 
 }

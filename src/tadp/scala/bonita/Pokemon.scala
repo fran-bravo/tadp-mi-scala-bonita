@@ -181,4 +181,9 @@ case class Pokemon(
   def realizarRutina(rutina: Rutina) = {
     rutina.realizarRutina(this)
   }
+  
+  def fingeIntercambio() : Pokemon = {
+    var poke = this.especie.fingeIntercambio(this)
+    return poke
+  }
 }

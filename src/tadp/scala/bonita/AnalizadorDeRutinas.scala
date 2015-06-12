@@ -12,15 +12,19 @@ class AnalizadorDeRutina(val criterio: Pokemon => Int) {
    rutinas match  {
      case Nil => resultados     
      case rutina :: restantes =>
+
        val poke: Try[Pokemon] = Try(pokemon.realizarRutina(rutina))
        
        if (poke.isSuccess) {
-         resultados :+ (rutina.nombre, poke.get)
+         resultados = resultados :+ (rutina.nombre, poke.get)
        }
        
-       analizar(pokemon, restantes)
+       resultados :+ analizar(pokemon, restantes)
+
+       resultados
+       
    }
-    
+
    return resultados
   }
   
@@ -34,7 +38,11 @@ class AnalizadorDeRutina(val criterio: Pokemon => Int) {
     resultados.size match {
       case 0 => throw new NoRutineForPokemonException("El pokemon no puede hacer ninguna rutina del conjunto")
       case _ =>
-        resultados.maxBy{case (nombre, poke) => criterio(poke)}._1
+        val posiblesPokemons : List[(String, Pokemon)] = rutinas.map { rutina =>                                                                      
+                                                                       (rutina.nombre, rutina.realizarRutina(pokemon)) }
+
+        posiblesPokemons.maxBy { case (nombre, poke) => criterio(poke) }._1
+       
         
     }
     

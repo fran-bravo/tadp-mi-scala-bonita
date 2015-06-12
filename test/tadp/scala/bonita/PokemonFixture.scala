@@ -127,6 +127,12 @@ package object fixture {
     nuevoAbraM.incorporar(rest)
   }
   
+  def nuevoAbraConPsychicYRest(): Pokemon = {
+    var abra = nuevoAbraM.incorporar(rest)
+    abra = abra.incorporar(psychic)
+    return abra
+  }  
+  
   def nuevoClefairyConEndurance(): Pokemon = {
     nuevoClefairyF.incorporar(endurecerse)
   }
@@ -142,6 +148,35 @@ package object fixture {
   def nuevoKingdraConDragonRage(): Pokemon = {
     nuevoKingdraM().incorporar(dragon_rage)
   }
+  
+  def pokemonUsa5hiperrayos(pokemon:Pokemon) = {
+    var poke: Pokemon = pokemon
+    poke = poke.realizarActividad(RealizarAtaque(hiper_rayo))
+    poke = poke.realizarActividad(RealizarAtaque(hiper_rayo))
+    poke = poke.realizarActividad(RealizarAtaque(hiper_rayo))
+    poke = poke.realizarActividad(RealizarAtaque(hiper_rayo))
+    poke = poke.realizarActividad(RealizarAtaque(hiper_rayo))
+    poke  
+  }
+
+  //Alguna rutinas
+   val rutinaNivel = new Rutina("Rutina Ataques", 
+                      List(RealizarAtaque(fixture.dragon_rage), RealizarAtaque(fixture.dragon_rage),
+                           RealizarAtaque(fixture.dragon_rage), RealizarAtaque(fixture.dragon_rage),
+                           RealizarAtaque(fixture.dragon_rage), FingirIntercambio, Nadar(1)))
+   val rutinaEnergia = new Rutina("Rutina Comida", 
+                      List(ComerHierro, ComerZinc, ComerCalcio, FingirIntercambio))
+   val rutinaMenosPeso = new Rutina("Rutina Descanso", 
+                      List(Descansar, Nadar(1)))
+   //Coleccion de rutinas
+   val rutinas : List[Rutina] = List(rutinaNivel, rutinaEnergia, rutinaMenosPeso)
+   val auxRutinas : List[Rutina] = List(rutinaEnergia, rutinaNivel, rutinaMenosPeso)
+  
+  //Criterios de analisis de rutina
+  //val criterioMasNivel = {poke:Pokemon => poke.nivel }
+  def criterioMasNivel(poke:Pokemon): Int = { poke.nivel}
+  def criterioMasEnergia(poke:Pokemon): Int = { poke.energia}
+  def criterioMenorPeso(poke:Pokemon): Int = { -poke.peso }
   
   
 }

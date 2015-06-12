@@ -28,8 +28,9 @@ class RutinaTest {
     
     var rutina = new Rutina("Rutina con 3 ataques",
                             List(RealizarAtaque(fixture.thunderbolt),RealizarAtaque(fixture.thunderbolt),RealizarAtaque(fixture.thunderbolt)))
-  
-    assert(!pikachu.realizarRutina(rutina).estoyDormido())                                                  
+
+    pikachu = pikachu.realizarRutina(rutina)
+    assertEquals(false, pikachu.estoyDormido())                                                  
   }
   
   @Test(expected = classOf[CaracteristicasInvalidasException])
@@ -41,4 +42,28 @@ class RutinaTest {
     machamp.realizarRutina(rutina)
   }
   
+  @Test(expected = classOf[UnknownAttackException])
+  def `Un pokemon no puede realizar rutina de ataques si no conoce a uno de ellos`
+   {
+    var pikachu = fixture.nuevoPikachuConThunderbolt()
+    
+    
+    var rutina = new Rutina("Rutina con 3 ataques",
+                            List(RealizarAtaque(fixture.thunderbolt),RealizarAtaque(fixture.storm),RealizarAtaque(fixture.thunderbolt)))
+
+    pikachu = pikachu.realizarRutina(rutina)                                                  
+  }
+  
+  @Test(expected = classOf[NoRemainingPPException])
+  def `Un pokemon no puede realizar rutina de ataques sin PPs`
+   {
+    var clefairy = fixture.nuevoClefairyConHyperBeam()
+    clefairy = fixture.pokemonUsa5hiperrayos(clefairy)
+    
+    
+    var rutina = new Rutina("Rutina con 3 ataques",
+                            List(RealizarAtaque(fixture.hiper_rayo),RealizarAtaque(fixture.storm),RealizarAtaque(fixture.thunderbolt)))
+
+    clefairy = clefairy.realizarRutina(rutina)                                                  
+  }
 }

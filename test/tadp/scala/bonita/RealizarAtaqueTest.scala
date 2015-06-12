@@ -74,6 +74,13 @@ class RealizarAtaqueTest
     pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
   }
   
+  @Test(expected = classOf[UnknownAttackException])
+  def `un pokemon no conoce el ataque, pero conoce otro y quiere realizarlo igual`
+  {
+    var pikachu = fixture.nuevoPikachuConThunderbolt()
+    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.storm))
+  }
+  
   @Test
   def `un pokemon no conoce ataque`
   {
@@ -132,11 +139,7 @@ class RealizarAtaqueTest
   {
     var clefairy = fixture.nuevoClefairyConHyperBeam()
     //Hiper rayo tiene 5 PPs
-    clefairy = clefairy.realizarActividad(RealizarAtaque(fixture.hiper_rayo))
-    clefairy = clefairy.realizarActividad(RealizarAtaque(fixture.hiper_rayo))
-    clefairy = clefairy.realizarActividad(RealizarAtaque(fixture.hiper_rayo))
-    clefairy = clefairy.realizarActividad(RealizarAtaque(fixture.hiper_rayo))
-    clefairy = clefairy.realizarActividad(RealizarAtaque(fixture.hiper_rayo))
+    clefairy = fixture.pokemonUsa5hiperrayos(clefairy)
     clefairy = clefairy.realizarActividad(RealizarAtaque(fixture.hiper_rayo))
   }
   

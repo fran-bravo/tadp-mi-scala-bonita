@@ -91,7 +91,13 @@ case object Descansar extends Actividad
   }
 }
 
-
+case object FingirIntercambio extends Actividad
+{
+  def doRealizar(pokemon:Pokemon) : Pokemon = {
+    var poke : Pokemon = pokemon.fingeIntercambio()
+    return poke
+  }
+}
 
 case object ComerHierro extends Actividad
 {
