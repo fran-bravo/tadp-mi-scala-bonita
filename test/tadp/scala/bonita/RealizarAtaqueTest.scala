@@ -143,4 +143,5 @@ class RealizarAtaqueTest
     clefairy = clefairy.realizarActividad(RealizarAtaque(fixture.hiper_rayo))
   }
   
+  
 }

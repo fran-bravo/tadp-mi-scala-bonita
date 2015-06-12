@@ -1,52 +1,74 @@
 package tadp.scala.bonita
 
 
-abstract class Tipo(val perdedores: Tipo*) {
+abstract class Tipo(val nombresperdedores: List[String]) {
+
   
   def puedoLevantar(): Int = {
      return 1
   }
   
   def leGanaA(unTipo: Tipo): Boolean ={
-    perdedores.contains(unTipo)
+    var perdedores : List[Tipo] = List()
+    
+    perdedores =nombresperdedores.map { nombre:String => nombre match {
+                                                                        case "Planta" => Planta
+                                                                        case "Fuego" => Fuego
+                                                                        case "Agua" => Agua
+                                                                        case "Hielo" => Hielo
+                                                                        case "Dragon" => Dragon
+                                                                        case "Normal" => Normal
+                                                                        case "Roca" => Roca
+                                                                        case "Tierra" => Tierra
+                                                                        case "Veneno" => Veneno
+                                                                        case "Electrico" => Electrico
+                                                                        case "Volador" => Volador
+                                                                        case "Bicho" => Bicho
+                                                                        case "Fantasma" => Fantasma
+                                                                        case "Pelea" => Pelea
+                                                                        case "Psiquico" => Psiquico
+                                                                      } 
+    }
+    perdedores.exists  {perdedor:Tipo => perdedor == unTipo}
   }
   
 }
 
-case object Fuego extends Tipo(Planta, Hielo, Bicho)
+case object Fuego extends Tipo(List("Planta", "Hielo", "Bicho"))
 
-case object Agua extends Tipo(Fuego, Roca, Tierra)
+case object Agua extends Tipo(List("Fuego", "Roca", "Tierra"))
 
-case object Tierra extends Tipo(Electrico, Roca, Fuego, Veneno)
+case object Tierra extends Tipo(List("Electrico", "Roca", "Fuego", "Veneno"))
 
-case object Roca extends Tipo(Volador, Fuego, Hielo, Bicho)
+case object Roca extends Tipo(List("Volador", "Fuego", "Hielo", "Bicho"))
 
-case object Pelea extends Tipo(Hielo, Roca, Normal) {
+case object Pelea extends Tipo(List("Hielo", "Roca", "Normal")) {
   override def puedoLevantar(): Int = {
     return 2
   }
 }
 
-case object Planta extends Tipo(Agua, Tierra, Roca)
+case object Planta extends Tipo(List("Agua", "Tierra", "Roca"))
 
-case object Hielo extends Tipo(Dragon, Tierra, Planta, Volador)
+case object Hielo extends Tipo(List("Dragon", "Tierra", "Planta", "Volador"))
 
-case object Fantasma extends Tipo(Psiquico) {//FIXME FALTA AGREGAR FANTASMA
+case object Fantasma extends Tipo(List("Psiquico", "Fantasma")) {
   override def puedoLevantar(): Int = {
     throw new TypeException("Soy de tipo fantasma")
   }
 }
 
-case object Electrico extends Tipo(Agua, Volador)
+case object Electrico extends Tipo(List("Agua", "Volador"))
 
-case object Veneno extends Tipo(Planta)
+case object Veneno extends Tipo(List("Planta"))
 
-case object Psiquico extends Tipo(Veneno, Pelea)
+case object Psiquico extends Tipo(List("Veneno", "Pelea"))
 
-case object Bicho extends Tipo(Psiquico, Planta)
+case object Bicho extends Tipo(List("Psiquico", "Planta"))
 
-case object Volador extends Tipo(Planta, Pelea, Bicho)
+case object Volador extends Tipo(List("Planta", "Pelea", "Bicho"))
 
-case object Normal extends Tipo()
+case object Normal extends Tipo(List())
 
-case object Dragon extends Tipo()//FIXME FALTA DRAGON
+case object Dragon extends Tipo(List("Dragon"))
+
