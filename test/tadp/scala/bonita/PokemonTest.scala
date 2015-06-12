@@ -119,6 +119,15 @@ class PokemonTest {
     assertEquals(pika.nivel, 3)
   }
   
+  @Test
+  def `Un dragonite de nivel 1 sube de nivel al recibir 700 de experiencia` = {
+    var dragonite = fixture.nuevoDragoniteM()
+    dragonite = dragonite.ganarExperiencia(700)
+    
+    assertEquals(dragonite.experiencia, 700)
+    assertEquals(dragonite.nivel, 2)
+  }
+  
   // Testeo de tipos
   @Test
   def `El tipo Fuego le gana al tipo Planta` = {

@@ -129,7 +129,7 @@ case class Pokemon(
   
   def subirUnNivel(): Pokemon = {
     val pokemon: Pokemon = copy(nivel = nivel + 1)
-    pokemon.especie.condicionDeEvolucion.map{_.subioDeNivel(pokemon)}.get
+    pokemon.especie.condicionDeEvolucion.fold(pokemon){_.subioDeNivel(pokemon)}
   }
   
   def pierdeCon(tipo: Tipo): Boolean = {
@@ -183,7 +183,6 @@ case class Pokemon(
   }
   
   def fingeIntercambio() : Pokemon = {
-    var poke = this.especie.fingeIntercambio(this)
-    return poke
+    this.especie.fingeIntercambio(this)
   }
 }
