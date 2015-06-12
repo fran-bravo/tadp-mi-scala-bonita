@@ -1,6 +1,5 @@
 package tadp.scala.bonita
 
-
 class Rutina(
   val nombre: String,
   val actividades: List[Actividad]) {
