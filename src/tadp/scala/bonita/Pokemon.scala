@@ -37,7 +37,9 @@ case class Pokemon(
 
   
   def realizarActividad(actividad:Actividad) : Pokemon= { //este vendría a ser el accept
+       
     actividad.realizar(this)
+   
   }
   
   
@@ -175,4 +177,8 @@ case class Pokemon(
   
   def tieneElTipo(tipo: Tipo) : Boolean = especie.tieneElTipo(tipo)
   
+  
+  def realizarRutina(rutina: Rutina) = {
+    rutina.realizarRutina(this)
+  }
 }
