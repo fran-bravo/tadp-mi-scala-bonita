@@ -95,11 +95,14 @@ case class Pokemon(
   }
   
   def fingirIntercambio() = {
-    this.especie.condicionDeEvolucion.map{_.fingeIntercambio(this)}.get
+    this.especie.condicionDeEvolucion.fold(this){_.fingeIntercambio(this)}
   }
   
   def usarPiedra(unaPiedra: PiedraAbstract) = {
-    this.especie.condicionDeEvolucion.map{_.usaPiedra(this, unaPiedra)}.get
+    var poke = this.especie.condicionDeEvolucion.fold(this){_.usaPiedra(this, unaPiedra)}
+    if (unaPiedra.perjudicasA(poke))
+      poke = poke.pasarAEnvenenado()
+    poke
   }
   
   // Modificar peso

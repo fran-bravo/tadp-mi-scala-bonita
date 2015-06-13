@@ -76,6 +76,11 @@ case class AprenderAtaque(ataque:Ataque) extends Actividad
 
 }
 
+case class DarPiedra(piedra:PiedraAbstract) extends Actividad{
+  def doRealizar(pokemon:Pokemon) : Pokemon = {
+    pokemon.usarPiedra(piedra)
+  }
+}
 
 case object Descansar extends Actividad
 {
