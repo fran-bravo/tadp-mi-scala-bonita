@@ -5,7 +5,7 @@ class Especie(
     val pesoMaximo: Int,
     val tipos: List[Tipo],
     val resistenciaEvolutiva: Int,
-    val evolucion: Option[Evolucion],
+    val evolucion: Option[Evolucion],    
     val incEnergiaMaxima: Int,
     val incPeso: Int,
     val incFuerza: Int,
@@ -35,17 +35,20 @@ class Especie(
   }
   
   def fingeIntercambio(pokemon:Pokemon) : Pokemon ={
-    return this.evolucion.get.condicion.fingeIntercambio(pokemon)
+    return this.condicionDeEvolucion.fingeIntercambio(pokemon)
   }
   
-  def especieDeEvolucion() : Especie = {
+  def condicionDeEvolucion(): CondicionEvolucion = {
+   return this.evolucion.get.condicion
+  }
+  
+  def especieDeEvolucion(): Especie = {
     return this.evolucion.get.especie
   }
   
-  def condicionDeEvolucion() : CondicionEvolucion = {
-    return this.evolucion.get.condicion
+  def noTieneEvolucion(): Boolean = {
+    return this.evolucion.isEmpty
   }
-  
   
 
 }

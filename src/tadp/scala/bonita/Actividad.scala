@@ -81,6 +81,7 @@ case class DarPiedra(piedra:PiedraAbstract) extends Actividad{
     pokemon.usarPiedra(piedra)
   }
 }
+ 
 
 case object Descansar extends Actividad
 {

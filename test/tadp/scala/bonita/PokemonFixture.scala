@@ -99,10 +99,6 @@ package object fixture {
     new Pokemon(Macho, 100, 100, 40, 40, 10, kingdra)
   }
   
-  def nuevoDragoniteM(): Pokemon = {
-    new Pokemon(Macho, 200, 200, 90, 70, 60, dragonite)
-  }
-  
   //pokemones que saben cosas:
   
   def nuevoPikachuConThunderbolt(): Pokemon = {
@@ -152,6 +148,11 @@ package object fixture {
   def nuevoKingdraConDragonRage(): Pokemon = {
     nuevoKingdraM().incorporar(dragon_rage)
   }
+  
+  def nuevoDragoniteM(): Pokemon = {
+    new Pokemon(Macho, 200, 200, 90, 70, 60, dragonite)
+  }
+  
   
   def pokemonUsa5hiperrayos(pokemon:Pokemon) = {
     var poke: Pokemon = pokemon

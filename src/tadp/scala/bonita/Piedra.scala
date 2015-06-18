@@ -14,9 +14,8 @@ class Piedra(val unTipo: Tipo) extends PiedraAbstract {
   }
   
   override def perjudicasA(unPokemon: Pokemon): Boolean = {
-    unPokemon.pierdeCon(tipo)
+    return unPokemon.pierdeCon(tipo)
   }
-  
 }
 
 case object PiedraLunar extends PiedraAbstract 

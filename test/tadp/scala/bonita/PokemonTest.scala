@@ -56,8 +56,7 @@ class PokemonTest {
     assertEquals(10, pokemon.peso)
        
   }
-
-  // Testeo de evolución con piedra (testeado también en UsarPiedraTest)
+  
   @Test
   def `Poliwhirl evoluciona cuando se le da una piedra Agua` = {
     var pokemon : Pokemon = fixture.nuevoPoliwhirlM()

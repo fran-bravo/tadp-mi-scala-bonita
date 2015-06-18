@@ -93,8 +93,8 @@ class ActividadesTest {
     pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
     pikachu = pikachu.realizarActividad(Descansar)
 
-    Assert.assertEquals(40, pikachu.energia)
     Assert.assertEquals(ppInicial, pikachu.paActual(fixture.thunderbolt))
+    Assert.assertEquals(40, pikachu.energia)
     Assert.assertEquals(estadoInicial, pikachu.estado)
   }
   

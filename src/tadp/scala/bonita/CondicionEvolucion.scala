@@ -1,6 +1,6 @@
 package tadp.scala.bonita
 
-class Evolucion(val condicion:CondicionEvolucion, val especie:Especie) {
+class Evolucion(val condicion:CondicionEvolucion, val especie:Especie){
   
 }
 
@@ -14,13 +14,10 @@ abstract class CondicionEvolucion {
     return unPokemon
   }
   
-  /* Se podría extraer en este método, pero generaría el mismo problema de "que pasa si alguien le manda ese mensaje"
-  def evolucionarPokemon(unPokemon: Pokemon): Pokemon = {
-    return unPokemon.copy(especie = unPokemon.especie.especieDeEvolucion)
-  }*/
-  
   def subioDeNivel(unPokemon: Pokemon): Pokemon = { return unPokemon}
-  
+  /*Se podría extraer en este método, pero generaría el mismo problema de "que pasa si alguien le manda ese mensaje"
+  def evolucionarPokemon(unPokemon: Pokemon): Pokemon = { unPokemon.copy(especie = unPokemon.especie.especieDeEvolucion) }
+  */
 }
 
 
@@ -69,8 +66,9 @@ class UsarPiedra extends CondicionEvolucion{
     case _ =>  if(this.cumple(unPokemon, unaPiedra))
                   unPokemon.copy(especie = unPokemon.especie.especieDeEvolucion)
                else
-                 unPokemon
+                  unPokemon
   }
+  
 }
 
 class UsarPiedraLunar extends UsarPiedra{

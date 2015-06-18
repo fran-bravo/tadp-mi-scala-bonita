@@ -89,17 +89,21 @@ case class Pokemon(
   }
   
   //Evolucionar 
-  
   def fingirIntercambio() = {
     this.especie.condicionDeEvolucion.fingeIntercambio(this)
   }
   
   def usarPiedra(unaPiedra: PiedraAbstract) = {
-    var poke = this.especie.condicionDeEvolucion.usaPiedra(this, unaPiedra)
+    var poke = this
+    if (this.especie.noTieneEvolucion){
+        
+    } else {
+    	poke = this.especie.condicionDeEvolucion.usaPiedra(this, unaPiedra) 
+    }
+    
     if (unaPiedra.perjudicasA(poke))
       poke = poke.pasarAEnvenenado()
     poke
-
   }
   
   // Modificar peso
@@ -129,7 +133,11 @@ case class Pokemon(
   
   def subirUnNivel(): Pokemon = {
     val pokemon: Pokemon = copy(nivel = nivel + 1)
-    pokemon.especie.condicionDeEvolucion.subioDeNivel(pokemon)
+    if (especie.noTieneEvolucion()){
+      return pokemon      
+    } else {
+    	return pokemon.especie.condicionDeEvolucion.subioDeNivel(pokemon)
+    }
   }
   
   def pierdeCon(tipo: Tipo): Boolean = {
@@ -183,6 +191,6 @@ case class Pokemon(
   }
   
   def fingeIntercambio() : Pokemon = {
-    this.especie.fingeIntercambio(this)
+    return this.especie.condicionDeEvolucion.fingeIntercambio(this) 
   }
 }
