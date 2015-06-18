@@ -56,7 +56,8 @@ class PokemonTest {
     assertEquals(10, pokemon.peso)
        
   }
-  
+
+  // Testeo de evolución con piedra (testeado también en UsarPiedraTest)
   @Test
   def `Poliwhirl evoluciona cuando se le da una piedra Agua` = {
     var pokemon : Pokemon = fixture.nuevoPoliwhirlM()
@@ -79,7 +80,7 @@ class PokemonTest {
   def `Poliwhirl no evoluciona si se le pasa una piedra lunar` = {
     var pokemon : Pokemon = fixture.nuevoPoliwhirlM()
     
-    pokemon.usarPiedra(PiedraLunar)
+    pokemon = pokemon.usarPiedra(PiedraLunar)
     
     assertEquals(fixture.poliwhirl, pokemon.especie)
   }
@@ -97,7 +98,7 @@ class PokemonTest {
   def `Clefairy no evoluciona si se le pasa otra piedra` = {
     var pokemon : Pokemon = fixture.nuevoClefairyM()
     
-    pokemon.usarPiedra(new Piedra(Agua))
+    pokemon = pokemon.usarPiedra(new Piedra(Agua))
     
     assertEquals(fixture.clefairy, pokemon.especie)
   }
@@ -117,6 +118,15 @@ class PokemonTest {
     
     assertEquals(pika.experiencia, 1200)
     assertEquals(pika.nivel, 3)
+  }
+  
+  @Test
+  def `Un dragonite de nivel 1 sube de nivel al recibir 700 de experiencia` = {
+    var dragonite = fixture.nuevoDragoniteM()
+    dragonite = dragonite.ganarExperiencia(700)
+    
+    assertEquals(dragonite.experiencia, 700)
+    assertEquals(dragonite.nivel, 2)
   }
   
   // Testeo de tipos

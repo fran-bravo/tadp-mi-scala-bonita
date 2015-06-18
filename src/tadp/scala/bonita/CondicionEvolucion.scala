@@ -69,13 +69,8 @@ class UsarPiedra extends CondicionEvolucion{
     case _ =>  if(this.cumple(unPokemon, unaPiedra))
                   unPokemon.copy(especie = unPokemon.especie.especieDeEvolucion)
                else
-                  this.envenenar(unPokemon)
+                 unPokemon
   }
-  
-  def envenenar(unPokemon: Pokemon): Pokemon = {
-    unPokemon.pasarAEnvenenado()
-  }
-  
 }
 
 class UsarPiedraLunar extends UsarPiedra{
