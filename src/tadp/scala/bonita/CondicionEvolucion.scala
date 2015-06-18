@@ -1,5 +1,9 @@
 package tadp.scala.bonita
 
+class Evolucion(val condicion:CondicionEvolucion, val especie:Especie) {
+  
+}
+
 abstract class CondicionEvolucion {
   
   def fingeIntercambio(unPokemon: Pokemon): Pokemon = {
@@ -9,6 +13,11 @@ abstract class CondicionEvolucion {
   def usaPiedra(unPokemon: Pokemon, unaPiedra: PiedraAbstract): Pokemon = {
     return unPokemon
   }
+  
+  /* Se podría extraer en este método, pero generaría el mismo problema de "que pasa si alguien le manda ese mensaje"
+  def evolucionarPokemon(unPokemon: Pokemon): Pokemon = {
+    return unPokemon.copy(especie = unPokemon.especie.especieDeEvolucion)
+  }*/
   
   def subioDeNivel(unPokemon: Pokemon): Pokemon = { return unPokemon}
   
@@ -25,7 +34,7 @@ class SubirNivel(val nivel: Int) extends CondicionEvolucion{
   
   override def subioDeNivel(unPokemon: Pokemon): Pokemon = {
     if(this.cumple(unPokemon))
-      return unPokemon.evolucionar()
+      return unPokemon.copy(especie = unPokemon.especie.especieDeEvolucion)
     return unPokemon
   }
 
@@ -42,7 +51,7 @@ class Intercambiar() extends CondicionEvolucion{
   
   override def fingeIntercambio(unPokemon: Pokemon): Pokemon = {
     this.fingioIntercambio = true
-    unPokemon.evolucionar()
+    unPokemon.copy(especie = unPokemon.especie.especieDeEvolucion)
   }
   
 }
@@ -58,7 +67,7 @@ class UsarPiedra extends CondicionEvolucion{
     unaPiedra match{
     case PiedraLunar => return unPokemon
     case _ =>  if(this.cumple(unPokemon, unaPiedra))
-                  unPokemon.evolucionar()
+                  unPokemon.copy(especie = unPokemon.especie.especieDeEvolucion)
                else
                   this.envenenar(unPokemon)
   }
@@ -72,7 +81,7 @@ class UsarPiedra extends CondicionEvolucion{
 class UsarPiedraLunar extends UsarPiedra{
   override def usaPiedra(unPokemon: Pokemon, unaPiedra: PiedraAbstract): Pokemon = 
     unaPiedra match {
-    case PiedraLunar => unPokemon.evolucionar()
+    case PiedraLunar => unPokemon.copy(especie = unPokemon.especie.especieDeEvolucion)
     case _ => return unPokemon
     }
 }

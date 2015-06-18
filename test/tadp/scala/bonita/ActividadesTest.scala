@@ -57,9 +57,9 @@ class ActividadesTest {
     var pikachu = fixture.nuevoPikachuConThunderbolt()
     val ppInicial = pikachu.paActual(fixture.thunderbolt)
     
-    pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
-    pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
-    pikachu.realizarActividad(Descansar)
+    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
+    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
+    pikachu = pikachu.realizarActividad(Descansar)
     
     Assert.assertEquals(ppInicial, pikachu.paActual(fixture.thunderbolt))
   }
@@ -71,8 +71,8 @@ class ActividadesTest {
     pikachu = pikachu.perderEnergia(60) //Le queda 40 de vida de un total de 100
     val ppInicial = pikachu.paActual(fixture.thunderbolt)
     
-    pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
-    pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
+    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
+    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
     pikachu = pikachu.realizarActividad(Descansar)
 
     Assert.assertEquals(ppInicial, pikachu.paActual(fixture.thunderbolt))
@@ -89,13 +89,25 @@ class ActividadesTest {
     val estadoInicial = pikachu.estado
     val ppInicial = pikachu.paActual(fixture.thunderbolt)
     
-    pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
-    pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
+    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
+    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
     pikachu = pikachu.realizarActividad(Descansar)
 
-    Assert.assertEquals(ppInicial, pikachu.paActual(fixture.thunderbolt))
     Assert.assertEquals(40, pikachu.energia)
+    Assert.assertEquals(ppInicial, pikachu.paActual(fixture.thunderbolt))
     Assert.assertEquals(estadoInicial, pikachu.estado)
+  }
+  
+  @Test
+  def  `un pokemon dormido se cura con el ether`
+  {
+    var pikachu = fixture.nuevoPikachuM()
+    pikachu = pikachu.pasarADormido()
+    
+    pikachu = pikachu.realizarActividad(UsarEther)
+    
+    Assert.assertEquals(pikachu.estado, Saludable)
+    
   }
   
   

@@ -2,40 +2,40 @@ package tadp.scala.bonita
 
 package object fixture {
 	//Especies Tipo Electrico
-  val raichu = new Especie(20, List(Electrico),500 , None, None, 1, 0, 0, 3)
-  val pikachu = new Especie(10, List(Electrico), 350, Some(new SubirNivel(2)), Some(raichu), 1, 0, 0, 2)
+  val raichu = new Especie(20, List(Electrico),500 , None, 1, 0, 0, 3)
+  val pikachu = new Especie(10, List(Electrico), 350, Some(new Evolucion((new SubirNivel(2)), raichu)), 1, 0, 0, 2)
   //Especies Tipo Fantasma
-  val gastly = new Especie(2, List(Fantasma), 300, None, None, 2, 0, 0, 1)
+  val gastly = new Especie(2, List(Fantasma), 300, None, 2, 0, 0, 1)
   //Especies Tipo Pelea
-  val machamp = new Especie(30, List(Pelea), 700, None, None, 3, 1, 3, 1)
-  val machoke = new Especie(30, List(Pelea),450 , Some(new Intercambiar), Some(machamp), 2, 1, 2, 1)
-  val machop = new Especie(30, List(Pelea), 250, Some(new SubirNivel(10)), Some(machoke), 1, 0, 1, 0)
+  val machamp = new Especie(30, List(Pelea), 700, None, 3, 1, 3, 1)
+  val machoke = new Especie(30, List(Pelea),450 , Some(new Evolucion(new Intercambiar, machamp)), 2, 1, 2, 1)
+  val machop = new Especie(30, List(Pelea), 250, Some(new Evolucion(new SubirNivel(10), machoke)), 1, 0, 1, 0)
   //Especies Tipo Agua
-  val poliwrath = new Especie(20, List(Agua, Pelea), 650, None, None, 2, 2, 2, 1)
-  val poliwhirl = new Especie(18, List(Agua), 500, Some(new UsarPiedra), Some(poliwrath), 1, 1, 1, 1)
-  val poliwag = new Especie(12, List(Agua), 350, Some(new SubirNivel(25)), Some(poliwhirl), 1, 1, 1, 2)
+  val poliwrath = new Especie(20, List(Agua, Pelea), 650, None, 2, 2, 2, 1)
+  val poliwhirl = new Especie(18, List(Agua), 500, Some(new Evolucion(new UsarPiedra, poliwrath)), 1, 1, 1, 1)
+  val poliwag = new Especie(12, List(Agua), 350, Some(new Evolucion(new SubirNivel(25), poliwhirl)), 1, 1, 1, 2)
   //Especies Tipo Normal
-  val clefable = new Especie(18, List(Normal), 500, None, None, 2, 1, 1, 1)
-  val clefairy = new Especie(18, List(Normal), 500, Some(new UsarPiedraLunar), Some(clefable), 1, 0, 0, 1) 
+  val clefable = new Especie(18, List(Normal), 500, None, 2, 1, 1, 1)
+  val clefairy = new Especie(18, List(Normal), 500, Some(new Evolucion(new UsarPiedraLunar, clefable)), 1, 0, 0, 1) 
   //Especies Tipo Fuego
-  val charizard = new Especie(90, List(Fuego, Volador), 700, None, None, 3, 4, 3, 2)
-  val charmeleon = new Especie(19, List(Fuego), 500, Some(new SubirNivel(36)), Some(charizard), 3, 2, 3, 2)
-  val charmander = new Especie(9, List(Fuego), 350, Some(new SubirNivel(16)), Some(charmeleon), 2, 1, 2, 3)
+  val charizard = new Especie(90, List(Fuego, Volador), 700, None, 3, 4, 3, 2)
+  val charmeleon = new Especie(19, List(Fuego), 500, Some(new Evolucion(new SubirNivel(36), charizard)), 3, 2, 3, 2)
+  val charmander = new Especie(9, List(Fuego), 350, Some(new Evolucion(new SubirNivel(16), charmeleon)), 2, 1, 2, 3)
   //Especies Tipo Roca-Tierra
-  val golem = new Especie(300, List(Roca, Tierra), 700, None, None, 3, 3, 3, 1)
-  val graveler = new Especie(105, List(Roca, Tierra), 500, Some(new Intercambiar()), Some(golem), 2, 3, 2, 1)
-  val geodude = new Especie(20, List(Roca, Tierra), 350, Some(new SubirNivel(25)), Some(graveler), 1, 2, 2, 2)
+  val golem = new Especie(300, List(Roca, Tierra), 700, None, 3, 3, 3, 1)
+  val graveler = new Especie(105, List(Roca, Tierra), 500, Some(new Evolucion(new Intercambiar(), golem)), 2, 3, 2, 1)
+  val geodude = new Especie(20, List(Roca, Tierra), 350, Some(new Evolucion(new SubirNivel(25), graveler)), 1, 2, 2, 2)
   //Especies Tipo Dragon
-  val dragonite = new Especie(210, List(Dragon, Volador), 700, None, None, 3, 4, 3, 3)
-  val dragonair = new Especie(16, List(Dragon), 500, Some(new SubirNivel(55)), Some(dragonite), 2, 1, 2, 3)
-  val dratini = new Especie(4, List(Dragon), 350, Some(new SubirNivel(30)), Some(dragonair), 1, 1, 1, 2)
-  val kingdra = new Especie(150, List(Agua, Dragon), 700, None, None, 3, 3, 3, 3)
+  val dragonite = new Especie(210, List(Dragon, Volador), 700, None, 3, 4, 3, 3)
+  val dragonair = new Especie(16, List(Dragon), 500, Some(new Evolucion(new SubirNivel(55), dragonite)), 2, 1, 2, 3)
+  val dratini = new Especie(4, List(Dragon), 350, Some(new Evolucion(new SubirNivel(30), dragonair)), 1, 1, 1, 2)
+  val kingdra = new Especie(150, List(Agua, Dragon), 700, None, 3, 3, 3, 3)
   //Especies Tipo Psiquico
-  val alakazam = new Especie(48, List(Psiquico), 700, None, None, 3, 2, 2, 2)
-  val kadabra = new Especie(56, List(Psiquico), 500, Some(new Intercambiar()), Some(alakazam), 2, 2, 2, 3)
-  val abra = new Especie(20, List(Psiquico), 350, Some(new SubirNivel(16)), Some(kadabra), 2, 1, 1, 2)
+  val alakazam = new Especie(48, List(Psiquico), 700, None, 3, 2, 2, 2)
+  val kadabra = new Especie(56, List(Psiquico), 500, Some(new Evolucion(new Intercambiar(), alakazam)), 2, 2, 2, 3)
+  val abra = new Especie(20, List(Psiquico), 350, Some(new Evolucion(new SubirNivel(16), kadabra)), 2, 1, 1, 2)
   //Especie tipo Volador-Roca
-  val aerodactyl = new Especie(90, List(Volador, Roca), 1000, None, None, 3, 1, 2, 1)
+  val aerodactyl = new Especie(90, List(Volador, Roca), 1000, None, 3, 1, 2, 1)
   
   //Ataques
   def thunderbolt = new Ataque("thunderbolt", Electrico, 15)

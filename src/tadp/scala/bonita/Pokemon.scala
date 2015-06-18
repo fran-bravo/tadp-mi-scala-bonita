@@ -88,18 +88,14 @@ case class Pokemon(
     copy(energia = energiaMaxima)
   }
   
-  //Evolucionar
-  
-  def evolucionar() = {
-    copy(especie = this.especie.especieDeEvolucion.get)
-  }
+  //Evolucionar 
   
   def fingirIntercambio() = {
-    this.especie.condicionDeEvolucion.map{_.fingeIntercambio(this)}.get
+    this.especie.condicionDeEvolucion.fingeIntercambio(this)
   }
   
   def usarPiedra(unaPiedra: PiedraAbstract) = {
-    this.especie.condicionDeEvolucion.map{_.usaPiedra(this, unaPiedra)}.get
+    this.especie.condicionDeEvolucion.usaPiedra(this, unaPiedra)
   }
   
   // Modificar peso
@@ -129,7 +125,7 @@ case class Pokemon(
   
   def subirUnNivel(): Pokemon = {
     val pokemon: Pokemon = copy(nivel = nivel + 1)
-    pokemon.especie.condicionDeEvolucion.map{_.subioDeNivel(pokemon)}.get
+    pokemon.especie.condicionDeEvolucion.subioDeNivel(pokemon)
   }
   
   def pierdeCon(tipo: Tipo): Boolean = {

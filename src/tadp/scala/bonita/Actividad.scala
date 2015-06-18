@@ -129,6 +129,11 @@ case object UsarAntidoto extends Actividad
 }
 
 case object UsarEther extends Actividad{
+  override def realizar(pokemon: Pokemon) : Pokemon = pokemon.estado match {
+    case KO => throw new KOException
+    case poke => doRealizar(pokemon).validarCaracteristicas() //esto va a venir reemplazado por un try seguramente
+  }
+  
   def doRealizar(pokemon:Pokemon) = pokemon.estado match
   {
     case KO => pokemon
