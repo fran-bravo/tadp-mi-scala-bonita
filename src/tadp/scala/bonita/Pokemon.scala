@@ -88,9 +88,19 @@ case class Pokemon(
     copy(energia = energiaMaxima)
   }
   
+  //Auxiliar
+  
+  def obtenerCondicion(): CondicionEvolucion = {
+    return this.especie.condicionDeEvolucion
+  }
+  
+  def aplicarACondicion(func : (CondicionEvolucion => Pokemon)): Pokemon = {
+    func(this.obtenerCondicion)
+  }
+  
   //Evolucionar 
   def fingirIntercambio() = {
-    this.especie.condicionDeEvolucion.fingeIntercambio(this)
+    this.aplicarACondicion({con => con.fingeIntercambio(this)})
   }
   
   def usarPiedra(unaPiedra: PiedraAbstract) = {
@@ -98,7 +108,7 @@ case class Pokemon(
     if (this.especie.noTieneEvolucion){
         
     } else {
-    	poke = this.especie.condicionDeEvolucion.usaPiedra(this, unaPiedra) 
+    	poke = this.aplicarACondicion({con => con.usaPiedra(this, unaPiedra)}) 
     }
     
     if (unaPiedra.perjudicasA(poke))
@@ -136,7 +146,7 @@ case class Pokemon(
     if (especie.noTieneEvolucion()){
       return pokemon      
     } else {
-    	return pokemon.especie.condicionDeEvolucion.subioDeNivel(pokemon)
+    	return pokemon.aplicarACondicion({con => con.subioDeNivel(pokemon)})
     }
   }
   
@@ -191,6 +201,6 @@ case class Pokemon(
   }
   
   def fingeIntercambio() : Pokemon = {
-    return this.especie.condicionDeEvolucion.fingeIntercambio(this) 
+    return this.aplicarACondicion({con => con.fingeIntercambio(this)})
   }
 }
