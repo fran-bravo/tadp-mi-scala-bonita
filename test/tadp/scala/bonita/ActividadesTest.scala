@@ -2,6 +2,7 @@ package tadp.scala.bonita
 
 import org.junit.Test
 import org.junit.Assert
+import scala.util.Try
 
 /**
  * @author Dario
@@ -14,8 +15,8 @@ class ActividadesTest {
   { 
     var pikachu = fixture.nuevoPikachuConThunderbolt()
     pikachu = pikachu.pasarADormido()
-    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
-    Assert.assertEquals(0, pikachu.experiencia)
+    var pika : Try[Pokemon] = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
+    Assert.assertEquals(0, pika.get.experiencia)
   }
   //lamentablemente no se me ocurre cómo más probar que no haga una actividad
   //sin probar una consecuencia, y por lo tanto se depende de otra funcionalidad
@@ -27,12 +28,12 @@ class ActividadesTest {
     var pikachu = fixture.nuevoPikachuConThunderbolt()
     pikachu = pikachu.pasarADormido()
     Assert.assertTrue(pikachu.estoyDormido())
-    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
-    Assert.assertTrue(pikachu.estoyDormido())
-    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
-    Assert.assertTrue(pikachu.estoyDormido())
-    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
-    Assert.assertFalse(pikachu.estoyDormido())
+    var pika : Try[Pokemon] = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
+    Assert.assertTrue(pika.get.estoyDormido())
+    pika = pika.get.realizarActividad(RealizarAtaque(fixture.thunderbolt))
+    Assert.assertTrue(pika.get.estoyDormido())
+    pika = pika.get.realizarActividad(RealizarAtaque(fixture.thunderbolt))
+    Assert.assertFalse(pika.get.estoyDormido())
   }
   
   @Test(expected = classOf[KOException])
@@ -40,14 +41,15 @@ class ActividadesTest {
   {
     var pikachu = fixture.nuevoPikachuConThunderbolt()
     pikachu = pikachu.pasarAKO()
-    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
+    pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt)).get
+
   }
   
   @Test(expected = classOf[CaracteristicasInvalidasException])
   def `un pokemon que queda con caracteristicas invalidas rompe`
   {
     var machamp = new Pokemon(Macho, 100, 100, 45, 97, 12, fixture.machamp)
-    machamp.realizarActividad(ComerHierro)
+    machamp.realizarActividad(ComerHierro).get
   }
   
   
@@ -57,9 +59,9 @@ class ActividadesTest {
     var pikachu = fixture.nuevoPikachuConThunderbolt()
     val ppInicial = pikachu.paActual(fixture.thunderbolt)
     
-    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
-    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
-    pikachu = pikachu.realizarActividad(Descansar)
+    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt)).get
+    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt)).get
+    pikachu = pikachu.realizarActividad(Descansar).get
     
     Assert.assertEquals(ppInicial, pikachu.paActual(fixture.thunderbolt))
   }
@@ -71,13 +73,13 @@ class ActividadesTest {
     pikachu = pikachu.perderEnergia(60) //Le queda 40 de vida de un total de 100
     val ppInicial = pikachu.paActual(fixture.thunderbolt)
     
-    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
-    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
-    pikachu = pikachu.realizarActividad(Descansar)
+    var pika : Try[Pokemon] = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
+    pika = pika.get.realizarActividad(RealizarAtaque(fixture.thunderbolt))
+    pika = pika.get.realizarActividad(Descansar)
 
-    Assert.assertEquals(ppInicial, pikachu.paActual(fixture.thunderbolt))
-    Assert.assertEquals(40, pikachu.energia)
-    Assert.assertEquals(Dormido(), pikachu.estado)
+    Assert.assertEquals(ppInicial, pika.get.paActual(fixture.thunderbolt))
+    Assert.assertEquals(40, pika.get.energia)
+    Assert.assertEquals(Dormido(), pika.get.estado)
   }
   
   @Test
@@ -89,13 +91,13 @@ class ActividadesTest {
     val estadoInicial = pikachu.estado
     val ppInicial = pikachu.paActual(fixture.thunderbolt)
     
-    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
-    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
-    pikachu = pikachu.realizarActividad(Descansar)
+    var pika : Try[Pokemon] = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
+    pika = pika.get.realizarActividad(RealizarAtaque(fixture.thunderbolt))
+    pika = pika.get.realizarActividad(Descansar)
 
-    Assert.assertEquals(ppInicial, pikachu.paActual(fixture.thunderbolt))
-    Assert.assertEquals(40, pikachu.energia)
-    Assert.assertEquals(estadoInicial, pikachu.estado)
+    Assert.assertEquals(ppInicial, pika.get.paActual(fixture.thunderbolt))
+    Assert.assertEquals(40, pika.get.energia)
+    Assert.assertEquals(estadoInicial, pika.get.estado)
   }
   
   @Test
@@ -104,9 +106,9 @@ class ActividadesTest {
     var pikachu = fixture.nuevoPikachuM()
     pikachu = pikachu.pasarADormido()
     
-    pikachu = pikachu.realizarActividad(UsarEther)
+    var pika : Try[Pokemon] = pikachu.realizarActividad(UsarEther)
     
-    Assert.assertEquals(pikachu.estado, Saludable)
+    Assert.assertEquals(pika.get.estado, Saludable)
     
   }
   

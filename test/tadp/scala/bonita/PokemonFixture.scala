@@ -155,13 +155,12 @@ package object fixture {
   
   
   def pokemonUsa5hiperrayos(pokemon:Pokemon) = {
-    var poke: Pokemon = pokemon
-    poke = poke.realizarActividad(RealizarAtaque(hiper_rayo))
-    poke = poke.realizarActividad(RealizarAtaque(hiper_rayo))
-    poke = poke.realizarActividad(RealizarAtaque(hiper_rayo))
-    poke = poke.realizarActividad(RealizarAtaque(hiper_rayo))
-    poke = poke.realizarActividad(RealizarAtaque(hiper_rayo))
-    poke  
+    var tPoke = pokemon.realizarActividad(RealizarAtaque(hiper_rayo))
+    tPoke = tPoke.get.realizarActividad(RealizarAtaque(hiper_rayo))
+    tPoke = tPoke.get.realizarActividad(RealizarAtaque(hiper_rayo))
+    tPoke = tPoke.get.realizarActividad(RealizarAtaque(hiper_rayo))
+    tPoke = tPoke.get.realizarActividad(RealizarAtaque(hiper_rayo))
+    tPoke 
   }
 
   //Alguna rutinas

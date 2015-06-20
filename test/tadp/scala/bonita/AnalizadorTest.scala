@@ -11,9 +11,9 @@ class AnalizadorTest {
     var dratini = fixture.nuevoDratiniMConDragonRage()
     val analisisPorNivel = new AnalizadorDeRutina(fixture.criterioMasNivel)
     
-    var nombreRutina = analisisPorNivel.elegirMejorRutina(dratini, fixture.rutinas)
+    var rutinaResultante = analisisPorNivel.elegirMejorRutina(dratini, fixture.rutinas)
 
-    assertEquals("Rutina Ataques", nombreRutina)
+    assertEquals(fixture.rutinaNivel, rutinaResultante)
   }
   
   @Test
@@ -22,9 +22,9 @@ class AnalizadorTest {
     var dratini = fixture.nuevoDratiniMConDragonRage()
     val analisisPorEnergia = new AnalizadorDeRutina(fixture.criterioMasEnergia)
     
-    var nombreRutina = analisisPorEnergia.elegirMejorRutina(dratini, fixture.rutinas)
+    var rutinaResultante = analisisPorEnergia.elegirMejorRutina(dratini, fixture.rutinas)
 
-    assertEquals("Rutina Comida", nombreRutina)
+    assertEquals(fixture.rutinaEnergia, rutinaResultante)
   }
 
   @Test
@@ -33,9 +33,9 @@ class AnalizadorTest {
     var dratini = fixture.nuevoDratiniMConDragonRage()
     val analisisPorEnergia = new AnalizadorDeRutina(fixture.criterioMenorPeso)
     
-    var nombreRutina = analisisPorEnergia.elegirMejorRutina(dratini, fixture.rutinas)
+    var rutinaResultante = analisisPorEnergia.elegirMejorRutina(dratini, fixture.rutinas)
 
-    assertEquals("Rutina Descanso", nombreRutina)
+    assertEquals(fixture.rutinaMenosPeso, rutinaResultante)
   }
 
 }

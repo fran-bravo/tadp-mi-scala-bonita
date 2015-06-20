@@ -1,7 +1,7 @@
 package tadp.scala.bonita
 import org.junit.Assert
 import org.junit.Test
-
+import scala.util.Try
 
 /**
  * @author Dario
@@ -13,8 +13,8 @@ class RealizarAtaqueTest
   {
     var pikachu = fixture.nuevoPikachuConThunderbolt()
     Assert.assertEquals(15, pikachu.paActual(fixture.thunderbolt))
-    pikachu = pikachu.realizarActividad(new RealizarAtaque(fixture.thunderbolt))
-    Assert.assertEquals(14, pikachu.paActual(fixture.thunderbolt))
+    var pika = pikachu.realizarActividad(new RealizarAtaque(fixture.thunderbolt))
+    Assert.assertEquals(14, pika.get.paActual(fixture.thunderbolt))
   }
   
   @Test
@@ -22,9 +22,9 @@ class RealizarAtaqueTest
   { //estrictamente hablando este test no va acá, pero lo tengo que probar YA
     var pikachu = fixture.nuevoPikachuConThunderbolt()
     Assert.assertEquals(15, pikachu.paActual(fixture.thunderbolt))
-    pikachu = pikachu.realizarActividad(new RealizarAtaque(fixture.thunderbolt))
-    Assert.assertEquals(14, pikachu.paActual(fixture.thunderbolt))
-    pikachu = pikachu.recuperarPA()
+    var pika = pikachu.realizarActividad(new RealizarAtaque(fixture.thunderbolt))
+    Assert.assertEquals(14, pika.get.paActual(fixture.thunderbolt))
+    pikachu = pika.get.recuperarPA()
     Assert.assertEquals(15, pikachu.paActual(fixture.thunderbolt)) 
   }
   
@@ -35,8 +35,8 @@ class RealizarAtaqueTest
     var pikachu = fixture.nuevoPikachuConThunderbolt()
     Assert.assertEquals(pikachu, fixture.thunderbolt.efecto(pikachu))
     Assert.assertEquals(0, pikachu.experiencia)
-    pikachu = pikachu.realizarActividad(new RealizarAtaque(fixture.thunderbolt))
-    Assert.assertEquals(50, pikachu.experiencia)
+    var pika = pikachu.realizarActividad(new RealizarAtaque(fixture.thunderbolt))
+    Assert.assertEquals(50, pika.get.experiencia)
   }
   
   @Test
@@ -44,8 +44,8 @@ class RealizarAtaqueTest
   {
     var charizard = fixture.nuevoCharizardMConFly()
     Assert.assertEquals(0, charizard.experiencia)
-    charizard = charizard.realizarActividad(new RealizarAtaque(fixture.fly))
-    Assert.assertEquals(20, charizard.experiencia)
+    var chari = charizard.realizarActividad(new RealizarAtaque(fixture.fly))
+    Assert.assertEquals(20, chari.get.experiencia)
   }
 
   @Test
@@ -53,8 +53,8 @@ class RealizarAtaqueTest
   {
     var charizard = fixture.nuevoCharizardFConFly()
     Assert.assertEquals(0, charizard.experiencia)
-    charizard = charizard.realizarActividad(new RealizarAtaque(fixture.fly))
-    Assert.assertEquals(40, charizard.experiencia)
+    var chari = charizard.realizarActividad(new RealizarAtaque(fixture.fly))
+    Assert.assertEquals(40, chari.get.experiencia)
   }
   
   @Test
@@ -62,8 +62,8 @@ class RealizarAtaqueTest
   {
     var dratini = fixture.nuevoDratiniMConDragonRage()
     Assert.assertEquals(0, dratini.experiencia)
-    dratini = dratini.realizarActividad(new RealizarAtaque(fixture.dragon_rage))
-    Assert.assertEquals(80, dratini.experiencia)
+    var drati = dratini.realizarActividad(new RealizarAtaque(fixture.dragon_rage))
+    Assert.assertEquals(80, drati.get.experiencia)
   }
   
   
@@ -71,14 +71,15 @@ class RealizarAtaqueTest
   def `un pokemon no conoce el ataque y quiere realizarlo igual`
   {
     var pikachu = fixture.nuevoPikachuM()
-    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
+    pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt)).get
   }
   
   @Test(expected = classOf[UnknownAttackException])
   def `un pokemon no conoce el ataque, pero conoce otro y quiere realizarlo igual`
   {
     var pikachu = fixture.nuevoPikachuConThunderbolt()
-    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.storm))
+    pikachu.realizarActividad(RealizarAtaque(fixture.storm)).get
+
   }
   
   @Test
@@ -93,11 +94,11 @@ class RealizarAtaqueTest
   {
     var abra = fixture.nuevoAbraConRest()
     abra = abra.perderEnergia(10) //Hago que pierda energía para comprobar que se recupera toda
-    abra = abra.realizarActividad(RealizarAtaque(fixture.rest))
+    var aby = abra.realizarActividad(RealizarAtaque(fixture.rest))
     
-    Assert.assertEquals(50, abra.experiencia)
-    Assert.assertEquals(Dormido(), abra.estado)
-    Assert.assertEquals(20, abra.energia)
+    Assert.assertEquals(50, aby.get.experiencia)
+    Assert.assertEquals(Dormido(), aby.get.estado)
+    Assert.assertEquals(20, aby.get.energia)
   }
   
   @Test
@@ -105,11 +106,11 @@ class RealizarAtaqueTest
   {
     var clefairy = fixture.nuevoClefairyConEndurance()
     clefairy = clefairy.perderEnergia(20)
-    clefairy = clefairy.realizarActividad(RealizarAtaque(fixture.endurecerse))
+    var clefa = clefairy.realizarActividad(RealizarAtaque(fixture.endurecerse))
     
-    Assert.assertEquals(50, clefairy.experiencia)
-    Assert.assertEquals(Paralizado, clefairy.estado)
-    Assert.assertEquals(65, clefairy.energia)
+    Assert.assertEquals(50, clefa.get.experiencia)
+    Assert.assertEquals(Paralizado, clefa.get.estado)
+    Assert.assertEquals(65, clefa.get.energia)
     
   }
   
@@ -118,10 +119,10 @@ class RealizarAtaqueTest
   {
     var clefairy = fixture.nuevoClefairyConFocus()
     val velocidadPrevia = clefairy.velocidad
-    clefairy = clefairy.realizarActividad(RealizarAtaque(fixture.enfocarse))
+    var clefa = clefairy.realizarActividad(RealizarAtaque(fixture.enfocarse))
     
-    Assert.assertEquals(50, clefairy.experiencia)
-    Assert.assertEquals(velocidadPrevia+1, clefairy.velocidad)
+    Assert.assertEquals(50, clefa.get.experiencia)
+    Assert.assertEquals(velocidadPrevia+1, clefa.get.velocidad)
     
   }
     
@@ -129,9 +130,9 @@ class RealizarAtaqueTest
   def `un pokemon Agua-Dragon realiza ataque dragon`
   {
     var kingdra = fixture.nuevoKingdraConDragonRage()
-    kingdra = kingdra.realizarActividad(RealizarAtaque(fixture.dragon_rage))
+    var king = kingdra.realizarActividad(RealizarAtaque(fixture.dragon_rage))
     
-    Assert.assertEquals(80, kingdra.experiencia)
+    Assert.assertEquals(80, king.get.experiencia)
   }
   
   @Test(expected = classOf[NoRemainingPPException])
@@ -139,8 +140,9 @@ class RealizarAtaqueTest
   {
     var clefairy = fixture.nuevoClefairyConHyperBeam()
     //Hiper rayo tiene 5 PPs
-    clefairy = fixture.pokemonUsa5hiperrayos(clefairy)
-    clefairy = clefairy.realizarActividad(RealizarAtaque(fixture.hiper_rayo))
+    clefairy = fixture.pokemonUsa5hiperrayos(clefairy).get
+    clefairy.realizarActividad(RealizarAtaque(fixture.hiper_rayo)).get
+
   }
   
   

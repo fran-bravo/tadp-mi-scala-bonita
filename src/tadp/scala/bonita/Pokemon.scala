@@ -1,6 +1,6 @@
 package tadp.scala.bonita
 import scala.math
-
+import scala.util.Try
 
 
 case class Pokemon(
@@ -36,7 +36,7 @@ case class Pokemon(
   
 
   
-  def realizarActividad(actividad:Actividad) : Pokemon= { //este vendría a ser el accept
+  def realizarActividad(actividad:Actividad) : Try[Pokemon] = { //este vendría a ser el accept
        
     actividad.realizar(this)
    

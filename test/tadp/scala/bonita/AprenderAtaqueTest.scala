@@ -2,6 +2,7 @@ package tadp.scala.bonita
 
 import org.junit.Test
 import org.junit.Assert
+import scala.util.Try
 /**
  * @author Dario
  */
@@ -12,38 +13,38 @@ class AprenderAtaqueTest {
   {
     var pikachu = fixture.nuevoPikachuM()
     Assert.assertFalse(pikachu.sabeElAtaque(fixture.thunderbolt))
-    pikachu = pikachu.realizarActividad(AprenderAtaque(fixture.thunderbolt))
-    Assert.assertTrue(pikachu.sabeElAtaque(fixture.thunderbolt))
+    var pika : Try[Pokemon] = pikachu.realizarActividad(AprenderAtaque(fixture.thunderbolt))
+    Assert.assertTrue(pika.get.sabeElAtaque(fixture.thunderbolt))
   }
   
   @Test
   def `pokemon electrico aprende thunderbolt y obtiene 15 pp`
   {
     var pikachu = fixture.nuevoPikachuM()
-    pikachu = pikachu.realizarActividad(AprenderAtaque(fixture.thunderbolt))
-    Assert.assertEquals(15, pikachu.paActual(fixture.thunderbolt))
+    var pika : Try[Pokemon] = pikachu.realizarActividad(AprenderAtaque(fixture.thunderbolt))
+    Assert.assertEquals(15, pika.get.paActual(fixture.thunderbolt))
   }
   
   @Test
   def `pokemon electrico aprender thunderbolt y obtiene 15 pp max`
   {
     var pikachu = fixture.nuevoPikachuM()
-    pikachu = pikachu.realizarActividad(AprenderAtaque(fixture.thunderbolt))
-    Assert.assertEquals(15, pikachu.paMax(fixture.thunderbolt))
+    var pika : Try[Pokemon] = pikachu.realizarActividad(AprenderAtaque(fixture.thunderbolt))
+    Assert.assertEquals(15, pika.get.paMax(fixture.thunderbolt))
   }
   
   @Test
   def `pokemon electrico aprende thunderbolt y lo usa, decrementa su pp actual pero no el max`
   {
     var pikachu = fixture.nuevoPikachuM()
-    pikachu = pikachu.realizarActividad(AprenderAtaque(fixture.thunderbolt))
-    Assert.assertEquals(15, pikachu.paActual(fixture.thunderbolt))
-    Assert.assertEquals(15, pikachu.paMax(fixture.thunderbolt))
-    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
-    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
-    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
-    Assert.assertEquals(12, pikachu.paActual(fixture.thunderbolt))
-    Assert.assertEquals(15, pikachu.paMax(fixture.thunderbolt))
+    var pika : Try[Pokemon] = pikachu.realizarActividad(AprenderAtaque(fixture.thunderbolt))
+    Assert.assertEquals(15, pika.get.paActual(fixture.thunderbolt))
+    Assert.assertEquals(15, pika.get.paMax(fixture.thunderbolt))
+    pika = pika.get.realizarActividad(RealizarAtaque(fixture.thunderbolt))
+    pika = pika.get.realizarActividad(RealizarAtaque(fixture.thunderbolt))
+    pika = pika.get.realizarActividad(RealizarAtaque(fixture.thunderbolt))
+    Assert.assertEquals(12, pika.get.paActual(fixture.thunderbolt))
+    Assert.assertEquals(15, pika.get.paMax(fixture.thunderbolt))
     
   }
   
@@ -52,8 +53,8 @@ class AprenderAtaqueTest {
   {
     var pikachu = fixture.nuevoPikachuM()
     Assert.assertFalse(pikachu.sabeElAtaque(fixture.pound))
-    pikachu = pikachu.realizarActividad(AprenderAtaque(fixture.pound))
-    Assert.assertTrue(pikachu.sabeElAtaque(fixture.pound))
+    var pika : Try[Pokemon] = pikachu.realizarActividad(AprenderAtaque(fixture.pound))
+    Assert.assertTrue(pika.get.sabeElAtaque(fixture.pound))
   }
   
   @Test
@@ -61,8 +62,8 @@ class AprenderAtaqueTest {
   {
     var dratini = fixture.nuevoDratiniM()
     Assert.assertFalse(dratini.sabeElAtaque(fixture.pound))
-    dratini = dratini.realizarActividad(AprenderAtaque(fixture.pound))
-    Assert.assertTrue(dratini.sabeElAtaque(fixture.pound))
+    var drati : Try[Pokemon] = dratini.realizarActividad(AprenderAtaque(fixture.pound))
+    Assert.assertTrue(drati.get.sabeElAtaque(fixture.pound))
   }
   
   @Test
@@ -70,8 +71,8 @@ class AprenderAtaqueTest {
   {
     var pikachu = fixture.nuevoPikachuM()
     Assert.assertFalse(pikachu.sabeElAtaque(fixture.dragon_rage))
-    pikachu = pikachu.realizarActividad(AprenderAtaque(fixture.dragon_rage))
-    Assert.assertFalse(pikachu.sabeElAtaque(fixture.dragon_rage))
+    var pika : Try[Pokemon] = pikachu.realizarActividad(AprenderAtaque(fixture.dragon_rage))
+    Assert.assertFalse(pika.get.sabeElAtaque(fixture.dragon_rage))
   }
   
   @Test
@@ -79,8 +80,8 @@ class AprenderAtaqueTest {
   {
     var pikachu = fixture.nuevoPikachuM()
     Assert.assertFalse(pikachu.sabeElAtaque(fixture.dragon_rage))
-    pikachu = pikachu.realizarActividad(AprenderAtaque(fixture.dragon_rage))
-    Assert.assertEquals(KO, pikachu.estado)
+    var pika : Try[Pokemon] = pikachu.realizarActividad(AprenderAtaque(fixture.dragon_rage))
+    Assert.assertEquals(KO, pika.get.estado)
   }
   
 }

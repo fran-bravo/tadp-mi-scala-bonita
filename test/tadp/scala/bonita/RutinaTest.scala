@@ -3,6 +3,7 @@ package tadp.scala.bonita
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.Ignore
+import scala.util.Try
 
 class RutinaTest {
   
@@ -15,7 +16,7 @@ class RutinaTest {
     var rutina = new Rutina("Rutina con descanso", 
                             List(RealizarAtaque(fixture.thunderbolt),RealizarAtaque(fixture.thunderbolt),Descansar))
     
-    assertEquals(ppInicial, pikachu.realizarRutina(rutina).paActual(fixture.thunderbolt))
+    assertEquals(ppInicial, pikachu.realizarRutina(rutina).get.paActual(fixture.thunderbolt))
     
   }
   
@@ -29,7 +30,7 @@ class RutinaTest {
     var rutina = new Rutina("Rutina con 3 ataques",
                             List(RealizarAtaque(fixture.thunderbolt),RealizarAtaque(fixture.thunderbolt),RealizarAtaque(fixture.thunderbolt)))
 
-    pikachu = pikachu.realizarRutina(rutina)
+    pikachu = pikachu.realizarRutina(rutina).get
     assertEquals(false, pikachu.estoyDormido())                                                  
   }
   
@@ -39,7 +40,7 @@ class RutinaTest {
     var machamp = new Pokemon(Macho, 100, 100, 45, 97, 12, fixture.machamp)
     var rutina = new Rutina("Rutina donde se come hierro",List(ComerHierro))
     
-    machamp.realizarRutina(rutina)
+    machamp.realizarRutina(rutina).get
   }
   
   @Test(expected = classOf[UnknownAttackException])
@@ -51,19 +52,20 @@ class RutinaTest {
     var rutina = new Rutina("Rutina con 3 ataques",
                             List(RealizarAtaque(fixture.thunderbolt),RealizarAtaque(fixture.storm),RealizarAtaque(fixture.thunderbolt)))
 
-    pikachu = pikachu.realizarRutina(rutina)                                                  
+    pikachu.realizarRutina(rutina).get                                                
   }
   
   @Test(expected = classOf[NoRemainingPPException])
   def `Un pokemon no puede realizar rutina de ataques sin PPs`
    {
     var clefairy = fixture.nuevoClefairyConHyperBeam()
-    clefairy = fixture.pokemonUsa5hiperrayos(clefairy)
+    clefairy = fixture.pokemonUsa5hiperrayos(clefairy).get
     
     
     var rutina = new Rutina("Rutina con 3 ataques",
                             List(RealizarAtaque(fixture.hiper_rayo),RealizarAtaque(fixture.storm),RealizarAtaque(fixture.thunderbolt)))
 
-    clefairy = clefairy.realizarRutina(rutina)                                                  
+    clefairy.realizarRutina(rutina).get
+    
   }
 }

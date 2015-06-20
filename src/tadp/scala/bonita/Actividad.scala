@@ -1,5 +1,6 @@
 package tadp.scala.bonita
 
+import scala.util.Try
 /**
  * @author Dario
  */
@@ -10,11 +11,11 @@ package tadp.scala.bonita
 //por ahora no tiene mucho sentido que sean case classes pero va a servir más adelante
 
 trait Actividad {
-  def realizar(pokemon: Pokemon) : Pokemon = pokemon.estado match {
+  def realizar(pokemon: Pokemon) : Try[Pokemon] = Try(pokemon.estado match {
     case KO => throw new KOException
     case Dormido(_) => pokemon.irDespertando()
     case poke => doRealizar(pokemon).validarCaracteristicas() //esto va a venir reemplazado por un try seguramente
-  }
+  })
   
   def doRealizar(pokemon:Pokemon) : Pokemon
 }
@@ -134,10 +135,10 @@ case object UsarAntidoto extends Actividad
 }
 
 case object UsarEther extends Actividad{
-  override def realizar(pokemon: Pokemon) : Pokemon = pokemon.estado match {
+  override def realizar(pokemon: Pokemon) : Try[Pokemon] = Try(pokemon.estado match {
     case KO => throw new KOException
     case poke => doRealizar(pokemon).validarCaracteristicas() //esto va a venir reemplazado por un try seguramente
-  }
+  })
   
   def doRealizar(pokemon:Pokemon) = pokemon.estado match
   {

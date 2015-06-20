@@ -6,46 +6,23 @@ class AnalizadorDeRutina(val criterio: Pokemon => Int) {
   
  //Agarra las al pokemon y le aplica las rutinas. Se queda solo con el nombre de aquellas que no tiren error
  //(Al menos eso quise hacer :$)
-  def analizar(pokemon: Pokemon, rutinas: List[Rutina]): List[(String, Pokemon)] = {  
-   var resultados: List[(String, Pokemon)] =List()
+  def analizar(pokemon: Pokemon, rutinas: List[Rutina]): List[Rutina] = {  
    
-   rutinas match  {
-     case Nil => resultados     
-     case rutina :: restantes =>
+	 return  rutinas.filter { rut => Try(pokemon.realizarRutina(rut)).isSuccess}  
 
-       val poke: Try[Pokemon] = Try(pokemon.realizarRutina(rutina))
-       
-       if (poke.isSuccess) {
-         resultados = resultados :+ (rutina.nombre, poke.get)
-       }
-       
-       resultados :+ analizar(pokemon, restantes)
-
-       resultados
-       
-   }
-
-   return resultados
   }
   
   
  //Le aplico las rutinas a un pokemon. Si ninguna rutina aplica para el pokemon, tiro error.
  //Si hay rutinas que si puedo hacer, elijo la mejor con mi criterio
-  def elegirMejorRutina(pokemon: Pokemon, rutinas: List[Rutina]): String = {
+  def elegirMejorRutina(pokemon: Pokemon, rutinas: List[Rutina]): Rutina = {
    
     val resultados = analizar(pokemon, rutinas)
-   
-    resultados.size match {
-      case 0 => throw new NoRutineForPokemonException("El pokemon no puede hacer ninguna rutina del conjunto")
-      case _ =>
-        val posiblesPokemons : List[(String, Pokemon)] = rutinas.map { rutina =>                                                                      
-                                                                       (rutina.nombre, rutina.realizarRutina(pokemon)) }
-
-        posiblesPokemons.maxBy { case (nombre, poke) => criterio(poke) }._1
-       
-        
+    if (resultados.size == 0){
+      return throw new NoRutineForPokemonException("El pokemon no puede hacer ninguna rutina del conjunto")
+    }  else { 
+      return resultados.maxBy { rut => criterio(pokemon.realizarRutina(rut).get) }
     }
-    
   }
 }
 
