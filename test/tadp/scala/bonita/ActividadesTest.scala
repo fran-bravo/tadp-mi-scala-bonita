@@ -73,13 +73,13 @@ class ActividadesTest {
     pikachu = pikachu.perderEnergia(60) //Le queda 40 de vida de un total de 100
     val ppInicial = pikachu.paActual(fixture.thunderbolt)
     
-    var pika : Try[Pokemon] = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
-    pika = pika.get.realizarActividad(RealizarAtaque(fixture.thunderbolt))
-    pika = pika.get.realizarActividad(Descansar)
+    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt)).get
+    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt)).get
+    pikachu = pikachu.realizarActividad(Descansar).get
 
-    Assert.assertEquals(ppInicial, pika.get.paActual(fixture.thunderbolt))
-    Assert.assertEquals(40, pika.get.energia)
-    Assert.assertEquals(Dormido(), pika.get.estado)
+    Assert.assertEquals(ppInicial, pikachu.paActual(fixture.thunderbolt))
+    Assert.assertEquals(40, pikachu.energia)
+    Assert.assertEquals(Dormido(), pikachu.estado)
   }
   
   @Test
@@ -91,13 +91,13 @@ class ActividadesTest {
     val estadoInicial = pikachu.estado
     val ppInicial = pikachu.paActual(fixture.thunderbolt)
     
-    var pika : Try[Pokemon] = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
-    pika = pika.get.realizarActividad(RealizarAtaque(fixture.thunderbolt))
-    pika = pika.get.realizarActividad(Descansar)
+    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt)).get
+    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt)).get
+    pikachu = pikachu.realizarActividad(Descansar).get
 
-    Assert.assertEquals(ppInicial, pika.get.paActual(fixture.thunderbolt))
-    Assert.assertEquals(40, pika.get.energia)
-    Assert.assertEquals(estadoInicial, pika.get.estado)
+    Assert.assertEquals(ppInicial, pikachu.paActual(fixture.thunderbolt))
+    Assert.assertEquals(40, pikachu.energia)
+    Assert.assertEquals(estadoInicial, pikachu.estado)
   }
   
   @Test
@@ -106,9 +106,9 @@ class ActividadesTest {
     var pikachu = fixture.nuevoPikachuM()
     pikachu = pikachu.pasarADormido()
     
-    var pika : Try[Pokemon] = pikachu.realizarActividad(UsarEther)
+    pikachu = pikachu.realizarActividad(UsarEther).get
     
-    Assert.assertEquals(pika.get.estado, Saludable)
+    Assert.assertEquals(pikachu.estado, Saludable)
     
   }
   
