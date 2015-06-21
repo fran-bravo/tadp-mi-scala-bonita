@@ -9,15 +9,15 @@ class Ataque(val nombre: String,
   def experienciaPara(pokemon: Pokemon) : Int = pokemon match
   {
     case poke if tipo == Dragon => 80
-    case poke if poke.especie.tipoPrincipal() == tipo => 50
-    case poke if poke.especie.tipoSecundario() == tipo && poke.genero == Macho => 20
-    case poke if poke.especie.tipoSecundario() == tipo && poke.genero == Hembra => 40
+    case poke if poke.especie.tipoPrincipal == tipo => 50
+    case poke if poke.especie.tipoSecundario == tipo && poke.genero == Macho => 20
+    case poke if poke.especie.tipoSecundario == tipo && poke.genero == Hembra => 40
   }
   
   def esAfin(especie: Especie) : Boolean = tipo match
   {
     case Normal => true
-    case other if especie.tipos.contains(other) => true
+    case other if especie.tieneElTipo(other) => true
     case _ => false
   }
     
