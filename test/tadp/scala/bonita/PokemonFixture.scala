@@ -64,6 +64,10 @@ package object fixture {
     new Pokemon(Macho, 100, 100, 10, 5, 6, pikachu)
   }
   
+  def nuevoCharmanderParaEvolucion(): Pokemon = {
+    new Pokemon(Macho, 100, 100, 10, 5, 6, charmander)
+  }
+  
   def nuevoPoliwhirlM(): Pokemon = {
     new Pokemon(Macho, 100, 100, 20, 5, 6, poliwhirl)
   }

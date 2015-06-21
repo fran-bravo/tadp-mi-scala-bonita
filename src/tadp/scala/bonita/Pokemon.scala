@@ -10,8 +10,7 @@ case class Pokemon(
   val pesoBase: Int,  //Minimo, 
   val fuerzaBase: Int,  //De 1 a 1, 
   val velocidadBase: Int,  //De 1 a 1, 
-  val especie: Especie, 
-  val nivel: Int = 1, //De 1 a 100
+  val especie: Especie,
   val experiencia: BigInt = 0, 
   val estado: Estado = Saludable,
   val ataques: Map[String, (Int, Int)] = Map[String, (Int, Int)]()) //que representa el PP que tiene para cada ataque
@@ -21,6 +20,8 @@ case class Pokemon(
   def energiaMaxima : Int = statEfectiva(energiaMaximaBase, especie.incEnergiaMaxima)
   def velocidad : Int = statEfectiva(velocidadBase, especie.incVelocidad)
   def fuerza : Int = statEfectiva(fuerzaBase, especie.incFuerza)
+  
+  def nivel: Int = especie.nivelParaExperiencia(experiencia)
   
   def statEfectiva(valorBase : Int, incremento : Int) = valorBase + incremento * (nivel-1)
   
@@ -132,23 +133,23 @@ case class Pokemon(
   
   def ganarExperiencia (exp: Int): Pokemon = {
     var pokemon: Pokemon = copy(experiencia = experiencia + exp)
+    var nivelAnterior = this.nivel
+    var nivelActual = pokemon.nivel
     
-    //if (pokemon.experiencia >= pokemon.especie.experienciaParaNivel(pokemon.nivel+1)){
-    if (pokemon.nivel < pokemon.especie.nivelParaExperiencia(pokemon.experiencia)){
-      pokemon = pokemon.subirUnNivel()
-    }
+    if (nivelAnterior < nivelActual ){
+      pokemon = pokemon.subioUnNivel()
+    } //esto esta solo para gatillar la evolucion
     return pokemon
   }
   
   def ganarVelocidad (vel: Int): Pokemon = copy(velocidadBase = velocidadBase + vel)
   def ganarFuerza(fza : Int): Pokemon = copy(fuerzaBase = fuerzaBase + fza)
   
-  def subirUnNivel(): Pokemon = {
-    val pokemon: Pokemon = copy(nivel = nivel + 1)
+  def subioUnNivel(): Pokemon = {
     if (especie.noTieneEvolucion()){
-      return pokemon      
+      return this   
     } else {
-    	return pokemon.aplicarACondicion({con => con.subioDeNivel(pokemon)})
+    	return this.aplicarACondicion({con => con.subioDeNivel(this)})
     }
   }
   

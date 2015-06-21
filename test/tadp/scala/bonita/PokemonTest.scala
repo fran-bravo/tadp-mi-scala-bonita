@@ -12,19 +12,19 @@ class PokemonTest {
   def `Pikachu evoluciona a raichu` = {    
     var pokemon : Pokemon = fixture.nuevoPikachuParaEvolucion()
     
-    pokemon = pokemon.subirUnNivel()
+    pokemon = pokemon.ganarExperiencia(400) //esto lo sube a nivel 2
     
     assertEquals(fixture.raichu, pokemon.especie)
     
   }
   
   @Test
-  def `Pikachu no cumple el nivel necesario para evolucionar a raichu` = {
-    var pokemon : Pokemon = fixture.nuevoPikachuParaEvolucion()
-    pokemon = pokemon.copy(nivel = 0)
-    
-    pokemon.subirUnNivel()
-    assertEquals(fixture.pikachu, pokemon.especie)
+  def `charmander no cumple el nivel necesario para evolucionar a charmeleon` = {
+    var pokemon : Pokemon = fixture.nuevoCharmanderParaEvolucion()
+  
+    pokemon = pokemon.ganarExperiencia(2500)  //esto lo lleva a nivel 4 (necesita 16)
+
+    assertEquals(fixture.charmander, pokemon.especie)
   }
   
   @Test
@@ -112,7 +112,6 @@ class PokemonTest {
   def `Un pikachu de nivel 2 sube de nivel cuando gana suficiente experiencia` = {
     var pika: Pokemon = new Pokemon(Hembra, 40, 40, 15, 10, 15, fixture.pikachu)
     pika = pika.copy(experiencia = 600)
-    pika = pika.copy(nivel = 2) //Con 600 pts de exp, este pikachu est� en nivel 2
     pika = pika.ganarExperiencia(600)
     
     assertEquals(pika.experiencia, 1200)
