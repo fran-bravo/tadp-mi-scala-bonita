@@ -12,7 +12,7 @@ case class Pokemon(
   val velocidadBase: Int,  //De 1 a 1, 
   val especie: Especie, 
   val nivel: Int = 1, //De 1 a 100
-  val experiencia: Int = 0, 
+  val experiencia: BigInt = 0, 
   val estado: Estado = Saludable,
   val ataques: Map[String, (Int, Int)] = Map[String, (Int, Int)]()) //que representa el PP que tiene para cada ataque
   {
@@ -133,7 +133,8 @@ case class Pokemon(
   def ganarExperiencia (exp: Int): Pokemon = {
     var pokemon: Pokemon = copy(experiencia = experiencia + exp)
     
-    if (pokemon.experiencia >= pokemon.especie.experienciaParaNivel(pokemon.nivel+1)){
+    //if (pokemon.experiencia >= pokemon.especie.experienciaParaNivel(pokemon.nivel+1)){
+    if (pokemon.nivel < pokemon.especie.nivelParaExperiencia(pokemon.experiencia)){
       pokemon = pokemon.subirUnNivel()
     }
     return pokemon

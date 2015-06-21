@@ -31,10 +31,15 @@ class Especie(
   
   def tieneElTipo(tipo: Tipo): Boolean = tipos.contains(tipo)
   
-  def experienciaParaNivel(nivel: Int): Int = nivel match{   
+  def experienciaParaNivel(nivel: Int): BigInt = nivel match{   
     case 1 => 0
     case _ => (2 * this.experienciaParaNivel(nivel-1)) + this.resistenciaEvolutiva
     // No estoy contemplando un nivel menor a 1
+  }
+  
+  def nivelParaExperiencia(experiencia : BigInt) : Int = {
+    val rangoDeNiveles = 1 until 100
+    rangoDeNiveles.find{ nivel => this.experienciaParaNivel(nivel) > experiencia }.getOrElse(101) - 1
   }
   
   def fingeIntercambio(pokemon:Pokemon) : Pokemon ={

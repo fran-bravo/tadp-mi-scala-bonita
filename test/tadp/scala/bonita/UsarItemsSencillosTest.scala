@@ -52,12 +52,9 @@ class UsarItemsSencillosTest
      var pika = fixture.nuevoPikachuM()
      pika = pika.pasarADormido()
      Assert.assertEquals(Dormido(3), pika.estado)  
-     //whoops, esto es una limitación de JUnit? quisiera poder hacer Dormido(_)
+     //whoops, esto es una limitación de JUnit, quisiera poder hacer Dormido(_)
      pika = pika.realizarActividad(UsarEther).get
-     //Assert.assertEquals(Saludable, pika.estado)     
-     //aca chocan los requerimientos, se supone que el ether cura el sueño
-     //pero tambien se supone que un pokemon dormido ignora las actividades que le dan
-     //entonces no puede tomar el ether
+     Assert.assertEquals(Saludable, pika.estado)     
    }
    
    @Test
@@ -77,10 +74,8 @@ class UsarItemsSencillosTest
      pika = pika.pasarAKO()
      Assert.assertEquals(KO, pika.estado)   
      pika.realizarActividad(UsarEther).get
-     //en realidad esto choca con otro requerimiento
-     //por el requerimiento general de que los pokemon KO no pueden hacer actividades
-     //ni siquiera va a llegar a usar el ether
-      
+//     Assert.assertEquals(KO, pika.estado) 
+     //todo debería romper o quedar KO sin romper? es un detalle igual
    }
    
    
