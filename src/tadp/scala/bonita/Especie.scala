@@ -11,12 +11,15 @@ class Especie(
     val incFuerza: Int,
     val incVelocidad: Int) {   
   
-   
-  def puedeLevantar(): Int = {
-    val listaAux = this.tipos.map{case (tipo)=>tipo.puedoLevantar()} 
-    return listaAux.max
-    
-  }
+  
+//  def incrementoParaNivel(stat: Int, nivel : Int) : Int = stat * (nivel-1)
+//  
+//  def incPesoParaLv(nivel : Int) : Int = incrementoParaNivel(incPeso, nivel)
+//  def incEnergiaMaximaParaLv(nivel : Int) : Int = incrementoParaNivel(incEnergiaMaxima, nivel)
+//  def incFuerzaParaLv(nivel : Int) : Int = incrementoParaNivel(incFuerza, nivel)
+//  def incVelocidadParaLv(nivel : Int) : Int = incrementoParaNivel(incVelocidad, nivel)
+//  
+  
   
   def tipoPrincipal(): Tipo = {
     return tipos.head

@@ -4,10 +4,6 @@ package tadp.scala.bonita
 abstract class Tipo(val nombresperdedores: List[String]) {
 
   
-  def puedoLevantar(): Int = {
-     return 1
-  }
-  
   def leGanaA(unTipo: Tipo): Boolean ={
     var perdedores : List[Tipo] = List()
     
@@ -43,9 +39,7 @@ case object Tierra extends Tipo(List("Electrico", "Roca", "Fuego", "Veneno"))
 case object Roca extends Tipo(List("Volador", "Fuego", "Hielo", "Bicho"))
 
 case object Pelea extends Tipo(List("Hielo", "Roca", "Normal")) {
-  override def puedoLevantar(): Int = {
-    return 2
-  }
+ 
 }
 
 case object Planta extends Tipo(List("Agua", "Tierra", "Roca"))
@@ -53,9 +47,7 @@ case object Planta extends Tipo(List("Agua", "Tierra", "Roca"))
 case object Hielo extends Tipo(List("Dragon", "Tierra", "Planta", "Volador"))
 
 case object Fantasma extends Tipo(List("Psiquico", "Fantasma")) {
-  override def puedoLevantar(): Int = {
-    throw new TypeException("Soy de tipo fantasma")
-  }
+  
 }
 
 case object Electrico extends Tipo(List("Agua", "Volador"))

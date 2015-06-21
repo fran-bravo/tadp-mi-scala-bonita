@@ -17,11 +17,12 @@ case class Pokemon(
   val ataques: Map[String, (Int, Int)] = Map[String, (Int, Int)]()) //que representa el PP que tiene para cada ataque
   {
     
-  def peso : Int = pesoBase + especie.incPeso * (nivel-1)
-  def energiaMaxima : Int = energiaMaximaBase + especie.incEnergiaMaxima * (nivel-1)
-  def velocidad : Int = velocidadBase + especie.incVelocidad * (nivel-1)
-  def fuerza : Int = fuerzaBase + especie.incFuerza * (nivel-1)
-  //pero mira como esta ese codigo repetido papa
+  def peso : Int = statEfectiva(pesoBase, especie.incPeso)
+  def energiaMaxima : Int = statEfectiva(energiaMaximaBase, especie.incEnergiaMaxima)
+  def velocidad : Int = statEfectiva(velocidadBase, especie.incVelocidad)
+  def fuerza : Int = statEfectiva(fuerzaBase, especie.incFuerza)
+  
+  def statEfectiva(valorBase : Int, incremento : Int) = valorBase + incremento * (nivel-1)
   
   def validarCaracteristicas() =
   {
