@@ -4,10 +4,10 @@ package tadp.scala.bonita
 class Especie(
     val pesoMaximo: Int,
     val tipoPrincipal : Tipo,
-    val tipoSecundario : Option[Tipo] = None,
-    val resistenciaEvolutiva: Int,
-    val evolucion: Option[Evolucion],    
-    val incEnergiaMaxima: Int,
+    val tipoSecundario : Option[Tipo] = None)
+    (val resistenciaEvolutiva: Int,
+    val evolucion: Option[Evolucion] = None)    
+    (val incEnergiaMaxima: Int,
     val incPeso: Int,
     val incFuerza: Int,
     val incVelocidad: Int) {   
