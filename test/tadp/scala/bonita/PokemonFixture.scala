@@ -38,22 +38,22 @@ package object fixture {
   val aerodactyl = new Especie(90, Volador, Some(Roca)) (1000) (3, 1, 2, 1)
   
   //Ataques
-  def thunderbolt = new Ataque("thunderbolt", Electrico, 15)
-  def thunder = new Ataque("thunder", Electrico, 10)
-  def storm = new Ataque("storm", Electrico, 20)
-  def pound = new Ataque("pound", Normal, 35)
-  def surf = new Ataque("surf", Agua, 15)
-  def flamethrower = new Ataque("flamethrower", Fuego, 15)
-  def giga_drain = new Ataque("giga drain", Planta, 10)
-  def psychic = new Ataque("psychic", Psiquico, 10)
-  def fly = new Ataque("fly", Volador, 15)
-  def dragon_rage = new Ataque("dragon rage", Dragon, 10)
-  def hiper_rayo = new Ataque("hiper beam", Normal, 5)
+  def thunderbolt = new Ataque("thunderbolt", Electrico, 15)()
+  def thunder = new Ataque("thunder", Electrico, 10)()
+  def storm = new Ataque("storm", Electrico, 20)()
+  def pound = new Ataque("pound", Normal, 35)()
+  def surf = new Ataque("surf", Agua, 15)()
+  def flamethrower = new Ataque("flamethrower", Fuego, 15)()
+  def giga_drain = new Ataque("giga drain", Planta, 10)()
+  def psychic = new Ataque("psychic", Psiquico, 10)()
+  def fly = new Ataque("fly", Volador, 15)()
+  def dragon_rage = new Ataque("dragon rage", Dragon, 10)()
+  def hiper_rayo = new Ataque("hiper beam", Normal, 5)()
   
   //Ataques con efecto
-  def enfocarse = new Ataque("focus", Normal, 30, {p => p.ganarVelocidad(1)})
-  def rest = new Ataque("rest", Psiquico, 10, {p => p.curarTodaLaEnergia().pasarADormido()})
-  def endurecerse = new Ataque("endurance", Normal, 40, {p => p.curarEnergia(5).pasarAParalizado()})
+  def enfocarse = new Ataque("focus", Normal, 30) ({p => p.ganarVelocidad(1)})
+  def rest = new Ataque("rest", Psiquico, 10) ({p => p.curarTodaLaEnergia().pasarADormido()})
+  def endurecerse = new Ataque("endurance", Normal, 40)({p => p.curarEnergia(5).pasarAParalizado()})
   
     
   def nuevoPikachuM(): Pokemon = {

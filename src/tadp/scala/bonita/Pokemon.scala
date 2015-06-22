@@ -2,7 +2,6 @@ package tadp.scala.bonita
 import scala.math
 import scala.util.Try
 
-
 case class Pokemon(
   val genero: Genero,  //Macho o Hemb, 
   val energia: Int,  //Minimo 0, maximo energiaMaxi, 
@@ -15,7 +14,9 @@ case class Pokemon(
   val estado: Estado = Saludable,
   val ataques: Map[String, (Int, Int)] = Map[String, (Int, Int)]()) //que representa el PP que tiene para cada ataque
   {
-    
+  
+
+  
   def peso : Int = statEfectiva(pesoBase, especie.incPeso)
   def energiaMaxima : Int = statEfectiva(energiaMaximaBase, especie.incEnergiaMaxima)
   def velocidad : Int = statEfectiva(velocidadBase, especie.incVelocidad)

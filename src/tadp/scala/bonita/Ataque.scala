@@ -1,9 +1,9 @@
 package tadp.scala.bonita
 
-class Ataque(val nombre: String,
+case class Ataque(val nombre: String,
              val tipo: Tipo, 
-             val puntosAtaqueBase: Int, 
-             val efecto: (Pokemon => Pokemon) = {p => p})
+             val puntosAtaqueBase: Int) 
+             (val efecto: (Pokemon => Pokemon) = {p => p})
   {  
   
   def experienciaPara(pokemon: Pokemon) : Int = pokemon match
@@ -17,7 +17,7 @@ class Ataque(val nombre: String,
   def esAfin(especie: Especie) : Boolean = tipo match
   {
     case Normal => true
-    case other if especie.tieneElTipo(other) => true
+    case other if especie.tieneElTipo(tipo) => true
     case _ => false
   }
     
