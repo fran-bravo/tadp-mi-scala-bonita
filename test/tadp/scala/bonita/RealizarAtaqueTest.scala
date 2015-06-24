@@ -34,36 +34,46 @@ class RealizarAtaqueTest
   {
     var pikachu = fixture.nuevoPikachuConThunderbolt()
     Assert.assertEquals(pikachu, fixture.thunderbolt.efecto(pikachu))
-    Assert.assertEquals(0, pikachu.experiencia)
+    
+    var exp: BigInt = 0
+    Assert.assertEquals(exp, pikachu.experiencia)
     var pika = pikachu.realizarActividad(new RealizarAtaque(fixture.thunderbolt))
-    Assert.assertEquals(50, pika.get.experiencia)
+    exp = 50
+    Assert.assertEquals(exp, pika.get.experiencia)
   }
   
   @Test
   def `realizar ataque de tipo secundario da 20 exp a un macho`
   {
     var charizard = fixture.nuevoCharizardMConFly()
-    Assert.assertEquals(0, charizard.experiencia)
+    
+    var exp: BigInt = 0
+    Assert.assertEquals(exp, charizard.experiencia)
     var chari = charizard.realizarActividad(new RealizarAtaque(fixture.fly))
-    Assert.assertEquals(20, chari.get.experiencia)
+    exp = 20
+    Assert.assertEquals(exp, chari.get.experiencia)
   }
 
   @Test
   def `realizar ataque de tipo secundario da 40 exp a una hembra`
   {
     var charizard = fixture.nuevoCharizardFConFly()
-    Assert.assertEquals(0, charizard.experiencia)
+    var exp: BigInt = 0
+    Assert.assertEquals(exp, charizard.experiencia)
     var chari = charizard.realizarActividad(new RealizarAtaque(fixture.fly))
-    Assert.assertEquals(40, chari.get.experiencia)
+    exp = 40
+    Assert.assertEquals(exp, chari.get.experiencia)
   }
   
   @Test
   def `realizar ataque dragon da 80 exp`
   {
     var dratini = fixture.nuevoDratiniMConDragonRage()
-    Assert.assertEquals(0, dratini.experiencia)
+    var exp: BigInt = 0
+    Assert.assertEquals(exp, dratini.experiencia)
     var drati = dratini.realizarActividad(new RealizarAtaque(fixture.dragon_rage))
-    Assert.assertEquals(80, drati.get.experiencia)
+    exp = 80
+    Assert.assertEquals(exp, drati.get.experiencia)
   }
   
   
@@ -96,9 +106,11 @@ class RealizarAtaqueTest
     abra = abra.perderEnergia(10) //Hago que pierda energía para comprobar que se recupera toda
     var aby = abra.realizarActividad(RealizarAtaque(fixture.rest))
     
-    Assert.assertEquals(50, aby.get.experiencia)
+    var exp: BigInt = 50
+    Assert.assertEquals(exp, aby.get.experiencia)
     Assert.assertEquals(Dormido(), aby.get.estado)
-    Assert.assertEquals(20, aby.get.energia)
+    exp = 20
+    Assert.assertEquals(exp, aby.get.energia)
   }
   
   @Test
@@ -108,9 +120,11 @@ class RealizarAtaqueTest
     clefairy = clefairy.perderEnergia(20)
     var clefa = clefairy.realizarActividad(RealizarAtaque(fixture.endurecerse))
     
-    Assert.assertEquals(50, clefa.get.experiencia)
+    var exp: BigInt = 50
+    Assert.assertEquals(exp, clefa.get.experiencia)
     Assert.assertEquals(Paralizado, clefa.get.estado)
-    Assert.assertEquals(65, clefa.get.energia)
+    exp = 65
+    Assert.assertEquals(exp, clefa.get.energia)
     
   }
   
@@ -121,7 +135,8 @@ class RealizarAtaqueTest
     val velocidadPrevia = clefairy.velocidad
     var clefa = clefairy.realizarActividad(RealizarAtaque(fixture.enfocarse))
     
-    Assert.assertEquals(50, clefa.get.experiencia)
+    val exp: BigInt = 50
+    Assert.assertEquals(exp, clefa.get.experiencia)
     Assert.assertEquals(velocidadPrevia+1, clefa.get.velocidad)
     
   }
@@ -132,7 +147,8 @@ class RealizarAtaqueTest
     var kingdra = fixture.nuevoKingdraConDragonRage()
     var king = kingdra.realizarActividad(RealizarAtaque(fixture.dragon_rage))
     
-    Assert.assertEquals(80, king.get.experiencia)
+    val exp: BigInt = 80
+    Assert.assertEquals(exp, king.get.experiencia)
   }
   
   @Test(expected = classOf[NoRemainingPPException])

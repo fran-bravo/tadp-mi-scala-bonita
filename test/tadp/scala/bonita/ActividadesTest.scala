@@ -16,7 +16,9 @@ class ActividadesTest {
     var pikachu = fixture.nuevoPikachuConThunderbolt()
     pikachu = pikachu.pasarADormido()
     var pika : Try[Pokemon] = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
-    Assert.assertEquals(0, pika.get.experiencia)
+    
+    val exp: BigInt = 0
+    Assert.assertEquals(exp, pika.get.experiencia)
   }
   //lamentablemente no se me ocurre cómo más probar que no haga una actividad
   //sin probar una consecuencia, y por lo tanto se depende de otra funcionalidad

@@ -13,7 +13,9 @@ class NadarTest {
   {
     var charizard = fixture.nuevoCharizardM()
     var chari : Try[Pokemon] = charizard.realizarActividad(Nadar(1)) 
-    Assert.assertEquals(0, chari.get.experiencia)
+    
+    val exp: BigInt = 0
+    Assert.assertEquals(exp, chari.get.experiencia)
     Assert.assertEquals(KO, chari.get.estado)
   }
   
@@ -22,7 +24,9 @@ class NadarTest {
   {
     var aerodactyl = fixture.nuevoAerodactylF()
     var aero: Try[Pokemon]= aerodactyl.realizarActividad(Nadar(1)) 
-    Assert.assertEquals(0, aero.get.experiencia)
+    
+    val exp: BigInt = 0
+    Assert.assertEquals(exp, aero.get.experiencia)
     Assert.assertEquals(KO, aero.get.estado)
   }
   
@@ -39,9 +43,11 @@ class NadarTest {
   def `nadar da 200 de exp por cada minuto que se nade`
   {
     var dratini = fixture.nuevoDratiniM()
-    Assert.assertEquals(0, dratini.experiencia)
+    var exp: BigInt = 0
+    Assert.assertEquals(exp, dratini.experiencia)
     var drati : Try[Pokemon] = dratini.realizarActividad(Nadar(8))
-    Assert.assertEquals(1600, drati.get.experiencia)
+    exp = 1600
+    Assert.assertEquals(exp, drati.get.experiencia)
   }
   
   @Test

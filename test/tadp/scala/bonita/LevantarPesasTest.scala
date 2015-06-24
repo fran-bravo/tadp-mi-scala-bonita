@@ -18,7 +18,8 @@ class LevantarPesasTest
     
     var poke : Try[Pokemon] = pokemon.realizarActividad(LevantarPesas(15))
     
-    assertEquals(15, poke.get.experiencia)
+    val exp: BigInt = 15
+    assertEquals(exp, poke.get.experiencia)
     
   }
   
@@ -34,7 +35,8 @@ class LevantarPesasTest
     
     var poke : Try[Pokemon] = pokemon.realizarActividad(LevantarPesas(10))
     
-    assertEquals(20, poke.get.experiencia)
+    val exp: BigInt = 20
+    assertEquals(exp, poke.get.experiencia)
   }
   
   @Test
@@ -43,14 +45,17 @@ class LevantarPesasTest
     
     var poke : Try[Pokemon] = pokemon.realizarActividad(LevantarPesas(10))
     
-    assertEquals(20, poke.get.experiencia)
+    val exp: BigInt = 20
+    assertEquals(exp, poke.get.experiencia)
   }
   
   @Test
   def `Pokemon sin suficiente fuerza levanta pesas` = {
     var pokemon : Pokemon = new Pokemon(Macho, 100, 100, 10, 2, 6, fixture.pikachu) 
     var poke : Try[Pokemon] = pokemon.realizarActividad(LevantarPesas(30))
-    assertEquals(0, poke.get.experiencia) 
+    
+    val exp: BigInt = 0
+    assertEquals(exp, poke.get.experiencia) 
     assertEquals(Paralizado, poke.get.estado)
   }
   
@@ -61,8 +66,9 @@ class LevantarPesasTest
     
     var poke : Try[Pokemon] = pokemon.realizarActividad(LevantarPesas(5))
     
+    val exp: BigInt = 0
     Assert.assertEquals(KO, poke.get.estado)
-    assertEquals(0, poke.get.experiencia)
+    assertEquals(exp, poke.get.experiencia)
   }
   
   @Test(expected = classOf[KOException])
