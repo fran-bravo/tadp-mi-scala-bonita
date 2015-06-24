@@ -29,7 +29,7 @@ class Especie(
     case `tipo` => true  //los backticks son porque, por default, poner tipo ahí es una variable libre del patrón, no el parámetro
     case _ => tipoSecundario match
     {
-      case Some(tipo) => true
+      case Some(`tipo`) => true
       case _ => false
     }
   }
