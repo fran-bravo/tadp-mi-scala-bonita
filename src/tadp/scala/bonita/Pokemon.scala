@@ -93,12 +93,8 @@ case class Pokemon(
   
   //Auxiliar
   
-  def obtenerCondicion(): CondicionEvolucion = {
-    return this.especie.condicionDeEvolucion
-  }
-  
   def aplicarACondicion(func : (CondicionEvolucion => Pokemon)): Pokemon = {
-    func(this.obtenerCondicion)
+    this.especie.evolucion.fold(this)(especie => func(especie.condicion))
   }
   
   //Evolucionar 
@@ -108,12 +104,8 @@ case class Pokemon(
   
   def usarPiedra(unaPiedra: PiedraAbstract) = {
     var poke = this
-    if (this.especie.noTieneEvolucion){
-        
-    } else {
-    	poke = this.aplicarACondicion({con => con.usaPiedra(this, unaPiedra)}) 
-    }
-    
+   	poke = this.aplicarACondicion({con => con.usaPiedra(this, unaPiedra)}) 
+  
     if (unaPiedra.perjudicasA(poke))
       poke = poke.pasarAEnvenenado()
     poke
@@ -147,11 +139,7 @@ case class Pokemon(
   def ganarFuerza(fza : Int): Pokemon = copy(fuerzaBase = fuerzaBase + fza)
   
   def subioUnNivel(): Pokemon = {
-    if (especie.noTieneEvolucion()){
-      return this   
-    } else {
     	return this.aplicarACondicion({con => con.subioDeNivel(this)})
-    }
   }
   
   def pierdeCon(tipo: Tipo): Boolean = {

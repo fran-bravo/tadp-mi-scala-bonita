@@ -50,10 +50,7 @@ class Especie(
     val rangoDeNiveles = 1 until 100
     rangoDeNiveles.find{ nivel => this.experienciaParaNivel(nivel) > experiencia }.getOrElse(101) - 1
   }
-  
-  def fingeIntercambio(pokemon:Pokemon) : Pokemon ={
-    return this.condicionDeEvolucion.fingeIntercambio(pokemon)
-  }
+
   
   def condicionDeEvolucion(): CondicionEvolucion = {
    return this.evolucion.get.condicion
@@ -62,10 +59,11 @@ class Especie(
   def especieDeEvolucion(): Especie = {
     return this.evolucion.get.especie
   }
-  
+
+  /*
   def noTieneEvolucion(): Boolean = {
     return this.evolucion.isEmpty
-  }
+  }*/
   
 
 }
