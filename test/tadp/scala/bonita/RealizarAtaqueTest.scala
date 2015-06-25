@@ -161,5 +161,23 @@ class RealizarAtaqueTest
 
   }
   
+  @Test
+  def `Un pokemon con tipo secundario no gana experiencia si el ataque no es de su tipo`{
+    var dragonite = fixture.nuevoDragoniteMConHiperRayo()
+    var drago = dragonite.realizarActividad(RealizarAtaque(fixture.hiper_rayo))
+    
+    val exp: BigInt = 0
+    Assert.assertEquals(exp, drago.get.experiencia)
+  }
+  
+  @Test
+  def `Un pokemon sin tipo secundario no gana experiencia si el ataque no es de su tipo`{
+    var dratini = fixture.nuevoDratiniMConHiperRayo()
+    var drati = dratini.realizarActividad(RealizarAtaque(fixture.hiper_rayo))
+    
+    val exp: BigInt = 0
+    Assert.assertEquals(exp, drati.get.experiencia)
+  }
+  
   
 }

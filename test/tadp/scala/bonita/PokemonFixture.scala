@@ -127,6 +127,10 @@ package object fixture {
     nuevoDratiniM.incorporar(dragon_rage)
   }
   
+  def nuevoDratiniMConHiperRayo(): Pokemon = {
+    nuevoDratiniM.incorporar(hiper_rayo)
+  }
+  
   def nuevoAbraConRest(): Pokemon = {
     nuevoAbraM.incorporar(rest)
   }
@@ -155,6 +159,10 @@ package object fixture {
   
   def nuevoDragoniteM(): Pokemon = {
     new Pokemon(Macho, 200, 200, 90, 70, 60, dragonite)
+  }
+  
+  def nuevoDragoniteMConHiperRayo(): Pokemon = {
+    nuevoDragoniteM().incorporar(hiper_rayo)
   }
   
   
