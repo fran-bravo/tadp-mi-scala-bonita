@@ -1,6 +1,7 @@
 package tadp.scala.bonita
 
 class Estado{
+  //algo no me cierra con todo este código, habría que ver si es necesario
   def paralisis(): Boolean = {
     return false
   }

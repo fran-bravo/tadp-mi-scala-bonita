@@ -14,7 +14,7 @@ trait Actividad {
   def realizar(pokemon: Pokemon) : Try[Pokemon] = Try(pokemon.estado match {
     case KO => throw new KOException
     case Dormido(_) => pokemon.irDespertando()
-    case poke => doRealizar(pokemon).validarCaracteristicas() //esto va a venir reemplazado por un try seguramente
+    case _ => doRealizar(pokemon).validarCaracteristicas()
   })
   
   def doRealizar(pokemon:Pokemon) : Pokemon
@@ -59,16 +59,8 @@ case class AprenderAtaque(ataque:Ataque) extends Actividad
 {
   def doRealizar(pokemon:Pokemon) : Pokemon = 
   {
-    if (ataque.esAfin(pokemon.especie))
-    {
-      pokemon.incorporar(ataque)
-    }
-    
-    else
-    {
-      pokemon.pasarAKO()
-    }
-    
+    if (ataque.esAfin(pokemon.especie)) pokemon.incorporar(ataque)
+    else pokemon.pasarAKO()    
   }
 
 }
@@ -133,7 +125,7 @@ case object UsarAntidoto extends Actividad
 case object UsarEther extends Actividad{
   override def realizar(pokemon: Pokemon) : Try[Pokemon] = Try(pokemon.estado match {
     case KO => throw new KOException
-    case poke => doRealizar(pokemon).validarCaracteristicas() //esto va a venir reemplazado por un try seguramente
+    case poke => doRealizar(pokemon).validarCaracteristicas() 
   })
   
   def doRealizar(pokemon:Pokemon) = pokemon.estado match

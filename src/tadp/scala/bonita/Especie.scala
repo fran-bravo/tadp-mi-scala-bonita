@@ -12,18 +12,6 @@ case class Especie(
     val incFuerza: Int,
     val incVelocidad: Int) {   
   
-  
-//  def incrementoParaNivel(stat: Int, nivel : Int) : Int = stat * (nivel-1)
-//  
-//  def incPesoParaLv(nivel : Int) : Int = incrementoParaNivel(incPeso, nivel)
-//  def incEnergiaMaximaParaLv(nivel : Int) : Int = incrementoParaNivel(incEnergiaMaxima, nivel)
-//  def incFuerzaParaLv(nivel : Int) : Int = incrementoParaNivel(incFuerza, nivel)
-//  def incVelocidadParaLv(nivel : Int) : Int = incrementoParaNivel(incVelocidad, nivel)
-//  
-  
-  
-  
-  
   def tieneElTipo(tipo: Tipo): Boolean = this match
   {
     case Especie(_, `tipo`, _) => true
@@ -56,11 +44,5 @@ case class Especie(
   def especieDeEvolucion(): Especie = {
     return this.evolucion.get.especie
   }
-
-  /*
-  def noTieneEvolucion(): Boolean = {
-    return this.evolucion.isEmpty
-  }*/
-  
 
 }

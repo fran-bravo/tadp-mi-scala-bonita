@@ -4,7 +4,25 @@ case class Ataque(val nombre: String,
              val tipo: Tipo, 
              val puntosAtaqueBase: Int) 
              (val efecto: (Pokemon => Pokemon) = {p => p})
-  {  
+{  
+  def experienciaPara(pokemon : Pokemon): Int = pokemon match
+  {
+    case _ if tipo == Dragon => 80
+    case Poke(_, `tipo`, _) => 50
+    case Poke(Hembra, _, Some(`tipo`)) => 40
+    case Poke(Macho, _, Some(`tipo`)) => 20
+    case _ => 0
+  }
+  
+  def esAfin(especie: Especie) : Boolean = tipo match
+  {
+    case Normal => true
+    case other if especie.tieneElTipo(tipo) => true
+    case _ => false
+  }
+}
+
+//versiones anteriores de experienciaPara
   
  /* def experienciaPara(pokemon: Pokemon) : Int = pokemon match
   {
@@ -29,24 +47,5 @@ case class Ataque(val nombre: String,
   
   */
   
-  //esto queda bonito porque se ve como fue cambiando el methid en el tiempo (R)
+  //esto queda bonito porque se ve como fue cambiando el method en el tiempo (R)
   
-  
-  def experienciaPara(pokemon : Pokemon): Int = pokemon match
-  {
-    case _ if tipo == Dragon => 80
-    case Poke(_, `tipo`, _) => 50
-    case Poke(Hembra, _, Some(`tipo`)) => 40
-    case Poke(Macho, _, Some(`tipo`)) => 20
-    case _ => 0
-  }
-  
-  def esAfin(especie: Especie) : Boolean = tipo match
-  {
-    case Normal => true
-    case other if especie.tieneElTipo(tipo) => true
-    case _ => false
-  }
-    
-  
-}
