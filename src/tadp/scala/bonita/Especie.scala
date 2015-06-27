@@ -1,7 +1,7 @@
 package tadp.scala.bonita
 
 
-class Especie(
+case class Especie(
     val pesoMaximo: Int,
     val tipoPrincipal : Tipo,
     val tipoSecundario : Option[Tipo] = None)
@@ -24,14 +24,11 @@ class Especie(
   
   
   
-  def tieneElTipo(tipo: Tipo): Boolean = tipoPrincipal match
+  def tieneElTipo(tipo: Tipo): Boolean = this match
   {
-    case `tipo` => true  //los backticks son porque, por default, poner tipo ahí es una variable libre del patrón, no el parámetro
-    case _ => tipoSecundario match
-    {
-      case Some(`tipo`) => true
-      case _ => false
-    }
+    case Especie(_, `tipo`, _) => true
+    case Especie(_, _, Some(`tipo`)) => true
+    case _ => false    
   }
   
   def tipos : List[Tipo] = tipoSecundario match {
