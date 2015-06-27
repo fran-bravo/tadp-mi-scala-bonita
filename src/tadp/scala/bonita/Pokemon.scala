@@ -2,6 +2,13 @@ package tadp.scala.bonita
 import scala.math
 import scala.util.Try
 
+case object Poke{
+  def unapply(poke: Pokemon)
+  {
+    Some((poke.genero, poke.especie.tipoPrincipal, poke.especie.tipoSecundario))
+  }
+}
+
 case class Pokemon(
   val genero: Genero,  //Macho o Hemb, 
   val energia: Int,  //Minimo 0, maximo energiaMaxi, 
@@ -12,7 +19,7 @@ case class Pokemon(
   val especie: Especie,
   val experiencia: BigInt = 0, 
   val estado: Estado = Saludable,
-  val ataques: Map[String, (Int, Int)] = Map[String, (Int, Int)]()) //que representa el PP que tiene para cada ataque
+  val ataques: Map[Ataque, (Int, Int)] = Map[Ataque, (Int, Int)]()) //que representa el PP que tiene para cada ataque
   {
   
 
@@ -146,20 +153,32 @@ case class Pokemon(
     this.especie.tipos.exists{tipoPok => tipo.leGanaA(tipoPok)}
   }
   
-  def sabeElAtaque(ataque:Ataque): Boolean = {
-    ataques.keys.exists { key => key == ataque.nombre }
+//  def obtenerPPSAtaque(ataque:Ataque): (Int, Int) = ataques.get(ataque) match {
+//    case Some(tupla) => tupla
+//    case None => throw new RuntimeException
+//  }
+//  ehh esto es como el get de option
+
+  def obtenerPPSAtaque(ataque:Ataque): Option[(Int, Int)] = ataques.get(ataque)
+  
+  def sabeElAtaque(ataque:Ataque): Boolean = obtenerPPSAtaque(ataque) match {
+    case Some(_) => true
+    case None => false        
   }
 
-  def paActual(ataque: Ataque): Int = {
-    ataques(ataque.nombre)._1 //verificar condición de error acá?
-  }
-  def paMax(ataque: Ataque): Int = {
-    ataques(ataque.nombre)._2 //idem
+  def paActual(ataque: Ataque): Int = obtenerPPSAtaque(ataque) match {
+    case Some((actual,_)) => actual
+    case None => throw new UnknownAttackException("el pokemon no conoce el ataque pedido")
   }
   
-  def decrementarPA(ataque: Ataque): Pokemon = { //verificar que esté el ataque 
+  def paMax(ataque: Ataque): Int = obtenerPPSAtaque(ataque) match {
+    case Some((_, max)) => max
+    case None => throw new UnknownAttackException("el pokemon no conoce el ataque pedido")
+  }
+  
+  def decrementarPA(ataque: Ataque): Pokemon = { 
     var nombre : String = ataque.nombre
-    var pokemon : Pokemon = copy(ataques = ataques.-(nombre).+((nombre, (ataques.get(nombre).get._1 - 1, ataques.get(nombre).get._2))))
+    var pokemon : Pokemon = copy(ataques = ataques.-(ataque).+((ataque, (ataques.get(ataque).get._1 - 1, ataques.get(ataque).get._2))))
     pokemon    
   }
   
@@ -177,12 +196,12 @@ case class Pokemon(
   
   def incorporar(ataque: Ataque): Pokemon =
   {
-    return copy(ataques = ataques.+((ataque.nombre, (ataque.puntosAtaqueBase, ataque.puntosAtaqueBase))))
+    return copy(ataques = ataques.+((ataque, (ataque.puntosAtaqueBase, ataque.puntosAtaqueBase))))
   }
   
     
   def noConoceAtaque(ataque: Ataque): Boolean = {
-    return !ataques.contains(ataque.nombre)
+    return !ataques.contains(ataque)
   }
   
   def tieneElTipo(tipo: Tipo) : Boolean = especie.tieneElTipo(tipo)
