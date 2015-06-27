@@ -54,21 +54,23 @@ case class Pokemon(
   
   
   // Metodos asociados al estado
-  
+  //IMPORTANTE: estos methods solo aparecian usados en los tests para preguntar como quedo el pokemon
+  //un paso siguiente seria reformular los tests para que ya no usen esto
   def estoyParalizado(): Boolean = {
-    return this.estado.paralisis 
+    this.estado == Paralizado
   }
   
   def estoyKO(): Boolean = {
-    return this.estado.knockeado
+    this.estado == KO
   }
   
   def estoyEnvenenado(): Boolean = {
-    return this.estado.envenenado()
+    this.estado == Envenenado
   }
   
-  def estoyDormido() : Boolean = {
-    return this.estado.dormido()
+  def estoyDormido() : Boolean = this.estado match {
+    case Dormido(_) => true
+    case _ => false
   }
   
   def pasarASaludable() = copy(estado = Saludable)
