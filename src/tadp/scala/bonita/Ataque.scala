@@ -14,7 +14,7 @@ case class Ataque(val nombre: String,
     case poke if poke.especie.tipoSecundario == tipo && poke.genero == Hembra => 40
   }*/
   
-  def experienciaPara(pokemon: Pokemon) : Int = pokemon match
+/* def _experienciaPara(pokemon: Pokemon) : Int = pokemon match
   {
     case poke if tipo == Dragon => 80
     case poke if poke.especie.tipoPrincipal == tipo => 50
@@ -25,6 +25,20 @@ case class Ataque(val nombre: String,
       }
       case _ => 0 // Ya sea porque no tiene tipo secundario o porque los tipos no coinciden
     }
+  }
+  
+  */
+  
+  //esto queda bonito porque se ve como fue cambiando el methid en el tiempo (R)
+  
+  
+  def experienciaPara(pokemon : Pokemon): Int = pokemon match
+  {
+    case _ if tipo == Dragon => 80
+    case Poke(_, `tipo`, _) => 50
+    case Poke(Hembra, _, Some(`tipo`)) => 40
+    case Poke(Macho, _, Some(`tipo`)) => 20
+    case _ => 0
   }
   
   def esAfin(especie: Especie) : Boolean = tipo match

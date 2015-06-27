@@ -3,7 +3,7 @@ import scala.math
 import scala.util.Try
 
 case object Poke{
-  def unapply(poke: Pokemon)
+  def unapply(poke: Pokemon)  = 
   {
     Some((poke.genero, poke.especie.tipoPrincipal, poke.especie.tipoSecundario))
   }
