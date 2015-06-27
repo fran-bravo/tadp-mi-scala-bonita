@@ -153,12 +153,6 @@ case class Pokemon(
     this.especie.tipos.exists{tipoPok => tipo.leGanaA(tipoPok)}
   }
   
-//  def obtenerPPSAtaque(ataque:Ataque): (Int, Int) = ataques.get(ataque) match {
-//    case Some(tupla) => tupla
-//    case None => throw new RuntimeException
-//  }
-//  ehh esto es como el get de option
-
   def obtenerPPSAtaque(ataque:Ataque): Option[(Int, Int)] = ataques.get(ataque)
   
   def sabeElAtaque(ataque:Ataque): Boolean = obtenerPPSAtaque(ataque) match {
@@ -167,19 +161,21 @@ case class Pokemon(
   }
 
   def paActual(ataque: Ataque): Int = obtenerPPSAtaque(ataque) match {
+    //este method solo se usa en los test
     case Some((actual,_)) => actual
     case None => throw new UnknownAttackException("el pokemon no conoce el ataque pedido")
   }
   
   def paMax(ataque: Ataque): Int = obtenerPPSAtaque(ataque) match {
+    //este method solo se usa en los test
     case Some((_, max)) => max
     case None => throw new UnknownAttackException("el pokemon no conoce el ataque pedido")
   }
   
-  def decrementarPA(ataque: Ataque): Pokemon = { 
-    var nombre : String = ataque.nombre
-    var pokemon : Pokemon = copy(ataques = ataques.-(ataque).+((ataque, (ataques.get(ataque).get._1 - 1, ataques.get(ataque).get._2))))
-    pokemon    
+  def decrementarPA(ataque: Ataque): Pokemon = obtenerPPSAtaque(ataque) match{
+    case Some((0, _)) => throw new NoRemainingPPException("el pokemon ya no tiene PP para realizar este ataque!")
+    case Some((ppActual, ppMax)) =>  copy(ataques = ataques.-(ataque).+((ataque, (ppActual - 1, ppMax))))
+    case None => throw new UnknownAttackException("el pokemon no conoce el ataque pedido")
   }
   
   def recuperarPA(): Pokemon = {
@@ -196,14 +192,11 @@ case class Pokemon(
   
   def incorporar(ataque: Ataque): Pokemon =
   {
-    return copy(ataques = ataques.+((ataque, (ataque.puntosAtaqueBase, ataque.puntosAtaqueBase))))
+    val Ataque(_, _, pa) = ataque
+    copy(ataques = ataques.+((ataque, (pa, pa))))
   }
   
     
-  def noConoceAtaque(ataque: Ataque): Boolean = {
-    return !ataques.contains(ataque)
-  }
-  
   def tieneElTipo(tipo: Tipo) : Boolean = especie.tieneElTipo(tipo)
   
   

@@ -96,7 +96,7 @@ class RealizarAtaqueTest
   def `un pokemon no conoce ataque`
   {
     var pikachu = fixture.nuevoPikachuM()
-    assert(pikachu.noConoceAtaque(fixture.thunderbolt))
+    Assert.assertFalse(pikachu.sabeElAtaque(fixture.thunderbolt))
   }
   
   @Test
