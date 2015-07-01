@@ -47,14 +47,22 @@ case class LevantarPesas(kg: Int) extends Actividad
 
 case class Nadar(minutos: Int) extends Actividad
 {
-  def doRealizar(pokemon : Pokemon) : Pokemon = 
+ /* def doRealizar(pokemon : Pokemon) : Pokemon = 
   {
     var poke : Pokemon = pokemon
     if (pokemon.pierdeCon(Agua)) return poke.pasarAKO
     poke = poke.ganarExperiencia(200 * minutos).perderEnergia(minutos)
     if (poke.tieneElTipo(Agua)) poke = poke.ganarVelocidad(minutos/60)
     return poke
-   }
+   }*/
+  
+  def doRealizar(poke : Pokemon) : Pokemon = poke match {
+      case poke if poke.pierdeCon(Agua) => poke.pasarAKO
+      case poke => poke.ganarExperiencia(200 * minutos).perderEnergia(minutos) match {
+        case pokemon if pokemon.tieneElTipo(Agua) => pokemon.ganarVelocidad(minutos/60)
+        case pokemon => pokemon
+      }
+    }
 }
 
 case class AprenderAtaque(ataque:Ataque) extends Actividad
