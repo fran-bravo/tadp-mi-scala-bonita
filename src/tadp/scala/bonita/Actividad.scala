@@ -138,9 +138,6 @@ case object UsarEther extends Actividad{
     case poke => doRealizar(pokemon).validarCaracteristicas() 
   })
   
-  def doRealizar(pokemon:Pokemon) = pokemon.estado match
-  {
-    case KO => pokemon
-    case _ => pokemon.pasarASaludable
-  }
+  def doRealizar(pokemon:Pokemon) = pokemon.pasarASaludable()
+
 }
