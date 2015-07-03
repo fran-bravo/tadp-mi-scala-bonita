@@ -57,50 +57,50 @@ package object fixture {
   
     
   def nuevoPikachuM(): Pokemon = {
-    new Pokemon(Macho, 100, 100, 10, 2, 6, pikachu) 
+    new Pokemon(Macho, new Caracteristicas(100, 100, 10, 2, 6), pikachu) 
   }
   
   def nuevoPikachuParaEvolucion(): Pokemon = {
-    new Pokemon(Macho, 100, 100, 10, 5, 6, pikachu)
+    new Pokemon(Macho, new Caracteristicas(100, 100, 10, 5, 6), pikachu)
   }
   
   def nuevoCharmanderParaEvolucion(): Pokemon = {
-    new Pokemon(Macho, 100, 100, 10, 5, 6, charmander)
+    new Pokemon(Macho, new Caracteristicas(100, 100, 10, 5, 6), charmander)
   }
   
   def nuevoPoliwhirlM(): Pokemon = {
-    new Pokemon(Macho, 100, 100, 20, 5, 6, poliwhirl)
+    new Pokemon(Macho, new Caracteristicas(100, 100, 20, 5, 6), poliwhirl)
   }
   
   def nuevoClefairyM(): Pokemon = {
-    new Pokemon(Macho, 100, 100, 20, 5, 6, fixture.clefairy)
+    new Pokemon(Macho, new Caracteristicas(100, 100, 20, 5, 6), fixture.clefairy)
   }
   
   def nuevoCharizardF(): Pokemon = {
-    new Pokemon(Hembra, 100, 100, 50, 40, 7, charizard)
+    new Pokemon(Hembra, new Caracteristicas(100, 100, 50, 40, 7), charizard)
   }
   def nuevoCharizardM(): Pokemon = {
-    new Pokemon(Macho, 100, 100, 50, 40, 7, charizard)
+    new Pokemon(Macho, new Caracteristicas(100, 100, 50, 40, 7), charizard)
   }
   
   def nuevoDratiniM(): Pokemon = {
-    new Pokemon(Macho, 100, 100, 30, 15, 20, dratini)
+    new Pokemon(Macho, new Caracteristicas(100, 100, 30, 15, 20), dratini)
   }
   
   def nuevoAerodactylF(): Pokemon = {
-    new Pokemon(Hembra, 100, 100, 40, 50, 8, aerodactyl)
+    new Pokemon(Hembra, new Caracteristicas(100, 100, 40, 50, 8), aerodactyl)
   }
   
   def nuevoAbraM(): Pokemon = {
-    new Pokemon(Macho, 20, 20, 10, 12, 13, abra)
+    new Pokemon(Macho, new Caracteristicas(20, 20, 10, 12, 13), abra)
   }
   
   def nuevoClefairyF(): Pokemon = {
-    new Pokemon(Hembra, 80, 80, 23, 20, 15, clefairy)
+    new Pokemon(Hembra, new Caracteristicas(80, 80, 23, 20, 15), clefairy)
   }
   
   def nuevoKingdraM(): Pokemon = {
-    new Pokemon(Macho, 100, 100, 40, 40, 10, kingdra)
+    new Pokemon(Macho, new Caracteristicas(100, 100, 40, 40, 10), kingdra)
   }
   
   //pokemones que saben cosas:
@@ -158,7 +158,7 @@ package object fixture {
   }
   
   def nuevoDragoniteM(): Pokemon = {
-    new Pokemon(Macho, 200, 200, 90, 70, 60, dragonite)
+    new Pokemon(Macho, new Caracteristicas(200, 200, 90, 70, 60), dragonite)
   }
   
   def nuevoDragoniteMConHiperRayo(): Pokemon = {
@@ -172,7 +172,7 @@ package object fixture {
     tPoke = tPoke.get.realizarActividad(RealizarAtaque(hiper_rayo))
     tPoke = tPoke.get.realizarActividad(RealizarAtaque(hiper_rayo))
     tPoke = tPoke.get.realizarActividad(RealizarAtaque(hiper_rayo))
-    tPoke 
+    tPoke.get 
   }
 
   //Alguna rutinas

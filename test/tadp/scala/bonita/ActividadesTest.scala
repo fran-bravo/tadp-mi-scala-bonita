@@ -30,12 +30,12 @@ class ActividadesTest {
     var pikachu = fixture.nuevoPikachuConThunderbolt()
     pikachu = pikachu.pasarADormido()
     Assert.assertTrue(pikachu.estoyDormido())
-    var pika : Try[Pokemon] = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt))
-    Assert.assertTrue(pika.get.estoyDormido())
-    pika = pika.get.realizarActividad(RealizarAtaque(fixture.thunderbolt))
-    Assert.assertTrue(pika.get.estoyDormido())
-    pika = pika.get.realizarActividad(RealizarAtaque(fixture.thunderbolt))
-    Assert.assertFalse(pika.get.estoyDormido())
+    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt)).get
+    Assert.assertTrue(pikachu.estoyDormido())
+    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt)).get
+    Assert.assertTrue(pikachu.estoyDormido())
+    pikachu = pikachu.realizarActividad(RealizarAtaque(fixture.thunderbolt)).get
+    Assert.assertFalse(pikachu.estoyDormido())
   }
   
   @Test(expected = classOf[KOException])
@@ -50,7 +50,7 @@ class ActividadesTest {
   @Test(expected = classOf[CaracteristicasInvalidasException])
   def `un pokemon que queda con caracteristicas invalidas rompe`
   {
-    var machamp = new Pokemon(Macho, 100, 100, 45, 97, 12, fixture.machamp)
+    var machamp = new Pokemon(Macho, new Caracteristicas(100, 100, 45, 97, 12), fixture.machamp)
     machamp.realizarActividad(ComerHierro).get
   }
   

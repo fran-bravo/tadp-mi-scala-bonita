@@ -29,7 +29,7 @@ class PokemonTest {
   
   @Test
   def `Machoke evoluciona a Machamp cuando finge ser intercambiado` = {    
-    var pokemon : Pokemon = new Pokemon(Macho, 100, 100, 10, 5, 6, fixture.machoke) 
+    var pokemon : Pokemon = new Pokemon(Macho, new Caracteristicas(100, 100, 10, 5, 6), fixture.machoke) 
       
     pokemon = pokemon.fingirIntercambio()
     
@@ -39,7 +39,7 @@ class PokemonTest {
   
   @Test
   def `Machop masculino engorda 1 kilo cuando finge intercambio` = {    
-    var pokemon : Pokemon = new Pokemon(Macho, 100, 100, 10, 5, 6, fixture.machop) 
+    var pokemon : Pokemon = new Pokemon(Macho, new Caracteristicas(100, 100, 10, 5, 6), fixture.machop) 
       
     pokemon = pokemon.fingirIntercambio()
     
@@ -49,7 +49,7 @@ class PokemonTest {
   
   @Test
   def `Machop femenino adelgaza 10 kilos cuando finge intercambio` = {    
-    var pokemon : Pokemon = new Pokemon(Hembra, 100, 100, 20, 5, 6, fixture.machop) 
+    var pokemon : Pokemon = new Pokemon(Hembra, new Caracteristicas(100, 100, 20, 5, 6), fixture.machop) 
       
     pokemon = pokemon.fingirIntercambio()
     
@@ -110,7 +110,7 @@ class PokemonTest {
   
   @Test
   def `Un pikachu de nivel 2 sube de nivel cuando gana suficiente experiencia` = {
-    var pika: Pokemon = new Pokemon(Hembra, 40, 40, 15, 10, 15, fixture.pikachu)
+    var pika: Pokemon = new Pokemon(Hembra, new Caracteristicas(40, 40, 15, 10, 15), fixture.pikachu)
     pika = pika.copy(experiencia = 600)
     pika = pika.ganarExperiencia(600)
     

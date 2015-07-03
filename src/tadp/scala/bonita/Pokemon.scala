@@ -11,18 +11,34 @@ case object Poke{
 
 case class Pokemon(
   val genero: Genero,  //Macho o Hemb, 
-  val energia: Int,  //Minimo 0, maximo energiaMaxi, 
-  val energiaMaximaBase: Int, 
-  val pesoBase: Int,  //Minimo, 
-  val fuerzaBase: Int,  //De 1 a 1, 
-  val velocidadBase: Int,  //De 1 a 1, 
+  val caracteristicas: Caracteristicas,
   val especie: Especie,
   val experiencia: BigInt = 0, 
   val estado: Estado = Saludable,
   val ataques: Map[Ataque, (Int, Int)] = Map[Ataque, (Int, Int)]()) //que representa el PP que tiene para cada ataque
   {
   
-
+  
+  def pesoBase() : Int ={
+    caracteristicas.pesoBase
+  }
+  
+  def energiaMaximaBase() : Int = {
+    caracteristicas.energiaMaximaBase
+  }
+  
+  def velocidadBase() : Int = {
+    caracteristicas.velocidadBase
+  }
+  
+  def fuerzaBase() : Int = {
+    caracteristicas.fuerzaBase
+  }
+  
+  def energia() : Int = {
+    caracteristicas.energia
+  }
+  
   
   def peso : Int = statEfectiva(pesoBase, especie.incPeso)
   def energiaMaxima : Int = statEfectiva(energiaMaximaBase, especie.incEnergiaMaxima)
@@ -86,18 +102,25 @@ case class Pokemon(
     //no debería ocurrir porque sólo se llama después de entrar por un pattern match
     //que tiene que matchear el estado del pokemon con dormido
   }
+ 
+  def modificarCaracteristicas(ener:Int = energia, enerMax:Int = energiaMaximaBase, 
+                           peso:Int = pesoBase, fuerza:Int = fuerzaBase,
+                           velocidad:Int = velocidadBase): Caracteristicas = {
+    val caract = new Caracteristicas(ener, enerMax, peso, fuerza, velocidad)
+    caract
+  }
   
   def perderEnergia(nrg : Int) = {
-    if (energia <= nrg) copy(energia=0, estado=KO) //esto no lo dice pero... es muy lógico
-    else copy(energia = energia - nrg)
+    if (energia <= nrg) copy(caracteristicas = modificarCaracteristicas(0), estado=KO) //esto no lo dice pero... es muy lógico
+    else copy(caracteristicas = modificarCaracteristicas(energia - nrg))
   }
   
   def curarEnergia(nrg : Int) = {
-    copy(energia = math.min(energiaMaxima, energia+nrg))
+    copy(caracteristicas = modificarCaracteristicas(math.min(energiaMaxima, energia+nrg)))
   }
   
   def curarTodaLaEnergia() = {
-    copy(energia = energiaMaxima)
+    copy(caracteristicas = modificarCaracteristicas(energiaMaxima))
   }
   
   //Auxiliar
@@ -123,7 +146,7 @@ case class Pokemon(
   // Modificar peso
   
   def modificarPeso(unPeso: Int) = {
-    copy(pesoBase = pesoBase + unPeso)
+    copy(caracteristicas = modificarCaracteristicas(peso = (pesoBase + unPeso)))
   }
   
   def modificarPesoPorIntercambio() = this.genero match{
@@ -144,8 +167,8 @@ case class Pokemon(
     return pokemon
   }
   
-  def ganarVelocidad (vel: Int): Pokemon = copy(velocidadBase = velocidadBase + vel)
-  def ganarFuerza(fza : Int): Pokemon = copy(fuerzaBase = fuerzaBase + fza)
+  def ganarVelocidad (vel: Int): Pokemon = copy(caracteristicas = modificarCaracteristicas(velocidad = velocidadBase + vel))
+  def ganarFuerza(fza : Int): Pokemon = copy(caracteristicas = modificarCaracteristicas(fuerza = fuerzaBase + fza))
   
   def subioUnNivel(): Pokemon = {
     	return this.aplicarACondicion({con => con.subioDeNivel(this)})

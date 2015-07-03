@@ -123,19 +123,19 @@ class TiposTest {
   
   @Test
   def `Poliwrath tiene el tipo agua`{
-     var pokemon : Pokemon = new Pokemon(Macho, 50, 50, 10, 4, 3, fixture.poliwrath)
+     var pokemon : Pokemon = new Pokemon(Macho, new Caracteristicas(50, 50, 10, 4, 3), fixture.poliwrath)
      Assert.assertTrue(pokemon.tieneElTipo(Agua))
   }
   
   @Test
   def `Poliwrath tiene el tipo pelea`{
-     var pokemon : Pokemon = new Pokemon(Macho, 50, 50, 10, 4, 3, fixture.poliwrath)
+     var pokemon : Pokemon = new Pokemon(Macho, new Caracteristicas(50, 50, 10, 4, 3), fixture.poliwrath)
      Assert.assertTrue(pokemon.tieneElTipo(Pelea))
   }
   
   @Test
   def `Poliwrath no tiene el tipo fantasma`{
-     var pokemon : Pokemon = new Pokemon(Macho, 50, 50, 10, 4, 3, fixture.poliwrath)
+     var pokemon : Pokemon = new Pokemon(Macho, new Caracteristicas(50, 50, 10, 4, 3), fixture.poliwrath)
      Assert.assertFalse(pokemon.tieneElTipo(Fantasma))
   }
 

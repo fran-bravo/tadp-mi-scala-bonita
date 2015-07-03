@@ -156,7 +156,7 @@ class RealizarAtaqueTest
   {
     var clefairy = fixture.nuevoClefairyConHyperBeam()
     //Hiper rayo tiene 5 PPs
-    clefairy = fixture.pokemonUsa5hiperrayos(clefairy).get
+    clefairy = fixture.pokemonUsa5hiperrayos(clefairy)
     clefairy.realizarActividad(RealizarAtaque(fixture.hiper_rayo)).get
 
   }

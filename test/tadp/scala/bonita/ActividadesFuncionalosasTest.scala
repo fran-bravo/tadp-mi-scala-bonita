@@ -3,7 +3,7 @@ package tadp.scala.bonita
 import org.junit.Test
 import org.junit.Assert
 import scala.util.Try
-import Actividades._
+import tadp.scala.bonita.Actividades._
 
 class ActividadesFuncionalosasTest {
 
@@ -36,7 +36,7 @@ class ActividadesFuncionalosasTest {
     
     var exp: BigInt = 0
     Assert.assertEquals(exp, pikachu.experiencia)
-    var pika = realizar(pikachu, realizarAtaque(fixture.thunderbolt)) //acá está infiriendo la aplicación parcial
+    var pika = realizar(pikachu, realizarAtaque(fixture.thunderbolt)) //acï¿½ estï¿½ infiriendo la aplicaciï¿½n parcial
     exp = 50
     Assert.assertEquals(exp, pika.get.experiencia)
   }

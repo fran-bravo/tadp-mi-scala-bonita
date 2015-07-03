@@ -16,47 +16,47 @@ class LevantarPesasTest
   def `Pokemon electrico levanta pesas` = {
     var pokemon : Pokemon = fixture.nuevoPikachuM() 
     
-    var poke : Try[Pokemon] = pokemon.realizarActividad(LevantarPesas(15))
+    pokemon = pokemon.realizarActividad(LevantarPesas(15)).get
     
     val exp: BigInt = 15
-    assertEquals(exp, poke.get.experiencia)
+    assertEquals(exp, pokemon.experiencia)
     
   }
   
   @Test(expected = classOf[TypeException])
   def `Pokemon fantasma trata de levantar pesas`: Unit = {
-    var pokemon : Pokemon = new Pokemon(Hembra, 50, 50, 1, 3, 3, fixture.gastly)
+    var pokemon : Pokemon = new Pokemon(Hembra, new Caracteristicas(50, 50, 1, 3, 3), fixture.gastly)
     pokemon.realizarActividad(LevantarPesas(15)).get
   }
   
   @Test
   def `Pokemon pelea levanta pesas` = {
-    var pokemon : Pokemon = new Pokemon(Hembra, 50, 50, 10, 8, 3, fixture.machop)
+    var pokemon : Pokemon = new Pokemon(Hembra, new Caracteristicas(50, 50, 10, 8, 3), fixture.machop)
     
-    var poke : Try[Pokemon] = pokemon.realizarActividad(LevantarPesas(10))
+    pokemon = pokemon.realizarActividad(LevantarPesas(10)).get
     
     val exp: BigInt = 20
-    assertEquals(exp, poke.get.experiencia)
+    assertEquals(exp, pokemon.experiencia)
   }
   
   @Test
   def `Pokemon subtipo pelea levanta pesas` = {
-    var pokemon : Pokemon = new Pokemon(Macho, 50, 50, 10, 4, 3, fixture.poliwrath)
+    var pokemon : Pokemon = new Pokemon(Macho, new Caracteristicas(50, 50, 10, 4, 3), fixture.poliwrath)
     
-    var poke : Try[Pokemon] = pokemon.realizarActividad(LevantarPesas(10))
+    pokemon = pokemon.realizarActividad(LevantarPesas(10)).get
     
     val exp: BigInt = 20
-    assertEquals(exp, poke.get.experiencia)
+    assertEquals(exp, pokemon.experiencia)
   }
   
   @Test
   def `Pokemon sin suficiente fuerza levanta pesas` = {
-    var pokemon : Pokemon = new Pokemon(Macho, 100, 100, 10, 2, 6, fixture.pikachu) 
-    var poke : Try[Pokemon] = pokemon.realizarActividad(LevantarPesas(30))
+    var pokemon : Pokemon = new Pokemon(Macho, new Caracteristicas(100, 100, 10, 2, 6), fixture.pikachu) 
+    pokemon = pokemon.realizarActividad(LevantarPesas(30)).get
     
     val exp: BigInt = 0
-    assertEquals(exp, poke.get.experiencia) 
-    assertEquals(Paralizado, poke.get.estado)
+    assertEquals(exp, pokemon.experiencia) 
+    assertEquals(Paralizado, pokemon.estado)
   }
   
   @Test
@@ -64,11 +64,11 @@ class LevantarPesasTest
     var pokemon : Pokemon = fixture.nuevoPikachuM()
     pokemon = pokemon.copy(estado = Paralizado)
     
-    var poke : Try[Pokemon] = pokemon.realizarActividad(LevantarPesas(5))
+    pokemon = pokemon.realizarActividad(LevantarPesas(5)).get
     
     val exp: BigInt = 0
-    Assert.assertEquals(KO, poke.get.estado)
-    assertEquals(exp, poke.get.experiencia)
+    Assert.assertEquals(KO, pokemon.estado)
+    assertEquals(exp, pokemon.experiencia)
   }
   
   @Test(expected = classOf[KOException])
