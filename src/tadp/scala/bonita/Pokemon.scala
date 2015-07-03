@@ -111,16 +111,16 @@ case class Pokemon(
   }
   
   def perderEnergia(nrg : Int) = {
-    if (energia <= nrg) copy(caracteristicas = modificarCaracteristicas(0), estado=KO) //esto no lo dice pero... es muy lógico
-    else copy(caracteristicas = modificarCaracteristicas(energia - nrg))
+    if (energia <= nrg) copy(caracteristicas = modificarCaracteristicas(ener = 0), estado=KO) //esto no lo dice pero... es muy lógico
+    else copy(caracteristicas = modificarCaracteristicas(ener = energia - nrg))
   }
   
   def curarEnergia(nrg : Int) = {
-    copy(caracteristicas = modificarCaracteristicas(math.min(energiaMaxima, energia+nrg)))
+    copy(caracteristicas = modificarCaracteristicas(ener = math.min(energiaMaxima, energia+nrg)))
   }
   
   def curarTodaLaEnergia() = {
-    copy(caracteristicas = modificarCaracteristicas(energiaMaxima))
+    copy(caracteristicas = modificarCaracteristicas(ener = energiaMaxima))
   }
   
   //Auxiliar

@@ -38,17 +38,13 @@ case object Tierra extends Tipo(List("Electrico", "Roca", "Fuego", "Veneno"))
 
 case object Roca extends Tipo(List("Volador", "Fuego", "Hielo", "Bicho"))
 
-case object Pelea extends Tipo(List("Hielo", "Roca", "Normal")) {
- 
-}
+case object Pelea extends Tipo(List("Hielo", "Roca", "Normal")) 
 
 case object Planta extends Tipo(List("Agua", "Tierra", "Roca"))
 
 case object Hielo extends Tipo(List("Dragon", "Tierra", "Planta", "Volador"))
 
-case object Fantasma extends Tipo(List("Psiquico", "Fantasma")) {
-  
-}
+case object Fantasma extends Tipo(List("Psiquico", "Fantasma"))
 
 case object Electrico extends Tipo(List("Agua", "Volador"))
 
