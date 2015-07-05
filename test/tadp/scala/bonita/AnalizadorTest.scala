@@ -37,5 +37,15 @@ class AnalizadorTest {
 
     assertEquals(fixture.rutinaMenosPeso, rutinaResultante)
   }
-
+  
+  @Test(expected = classOf[NoRutineForPokemonException])
+  def `Analisis de rutinas que un pokemon no puede realizar falla` 
+  {
+    var dratini = fixture.nuevoDragoniteM()
+    
+    val analisisPorEnergia = new AnalizadorDeRutina(fixture.criterioMenorPeso)
+    
+    var rutinaResultante = analisisPorEnergia.elegirMejorRutina(dratini, List(fixture.rutinaNivel))
+  }
+    
 }

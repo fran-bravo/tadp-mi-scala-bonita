@@ -175,7 +175,7 @@ package object fixture {
     tPoke.get 
   }
 
-  //Alguna rutinas
+  //Algunas rutinas
    val rutinaNivel = new Rutina("Rutina Ataques", 
                       List(RealizarAtaque(fixture.dragon_rage), RealizarAtaque(fixture.dragon_rage),
                            RealizarAtaque(fixture.dragon_rage), RealizarAtaque(fixture.dragon_rage),
