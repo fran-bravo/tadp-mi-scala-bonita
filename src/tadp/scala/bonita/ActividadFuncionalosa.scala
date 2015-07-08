@@ -5,6 +5,8 @@ import scala.util.Try
 package object Actividades{
   
   type Actividad = Pokemon => Pokemon
+  val a : List[Int] = List()
+  a.map { x => ??? }
   
   def irDespertando: Pokemon => Pokemon = {
     poke => poke.estado match {
@@ -12,13 +14,16 @@ package object Actividades{
       case Dormido(n) => poke.copy(estado = Dormido(n-1))
     }
   }
+  
+  val realizar: (Pokemon, Actividad, Boolean) => Try[Pokemon] = {
+    (poke, actividad, ignoraDormido) => Try(
 
-  val realizar: (Pokemon, Actividad) => Try[Pokemon] = {
-    (poke, actividad) => Try(poke.estado match {
-      case KO => throw new KOException
-      case Dormido(_) => irDespertando(poke)
-      case _ => actividad(poke).validarCaracteristicas()
-    })
+        poke.estado match {
+                            case KO => throw new KOException
+                            case Dormido(_) => if(ignoraDormido) actividad(poke).validarCaracteristicas()
+                                               else irDespertando(poke)
+                            case _ => actividad(poke).validarCaracteristicas()
+                          })
   }
   
   def levantarPesas (pesa: Int) (poke: Pokemon) = {
@@ -47,5 +52,46 @@ package object Actividades{
       }
     }
   }
+  
+  def darPiedra(piedra:PiedraAbstract)(pokemon:Pokemon) = pokemon.usarPiedra(piedra)
+  
+  def aprenderAtaque(ataque:Ataque) (poke:Pokemon) = {
+     if (ataque.esAfin(poke.especie)) poke.incorporar(ataque)
+    else poke.pasarAKO()   
+  }
+  
+  def usarPiedra(piedra:Piedra) (poke:Pokemon) = {
+    poke.usarPiedra(piedra)
+  }
+  
+  def descansar(pokemon:Pokemon) = {
+    var poke : Pokemon = pokemon.recuperarPA()
+    
+    poke.estado match
+    {
+      case Saludable if (poke.energia < poke.energiaMaxima/2) => poke.pasarADormido()
+      case _ => poke
+    }
+  }
+  
+  def fingirIntercambio(pokemon:Pokemon) = {
+    pokemon.fingeIntercambio()
+  }
+  
+  def comerHierro(pokemon:Pokemon) = pokemon.ganarFuerza(5)
+  
+  def comerCalcio(pokemon:Pokemon) = pokemon.ganarVelocidad(5)
+  
+  def comerZinc(pokemon:Pokemon) = pokemon.incrementarTodosLosPAMaxEn2
+  
+  def usarPocion(pokemon:Pokemon) = pokemon.curarEnergia(50)
+  
+  def usarAntidoto(pokemon:Pokemon) = pokemon.estado match
+  {
+    case Envenenado => pokemon.pasarASaludable
+    case _ => pokemon
+  }
+  
+  def usarEther(pokemon:Pokemon) = pokemon.pasarASaludable()
   
 }
