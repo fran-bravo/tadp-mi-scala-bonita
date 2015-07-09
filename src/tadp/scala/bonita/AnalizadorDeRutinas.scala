@@ -17,6 +17,20 @@ class AnalizadorDeRutina(val criterio: Pokemon => Int) {
           throw new NoRutineForPokemonException("El pokemon no puede hacer ninguna rutina del conjunto")
         }
   }
+
+//  def elegirMejorRutina(pokemon: Pokemon, rutinas: List[Rutina]) : Rutina = 
+//  {
+//    val resultados = for
+//    {
+//      rutina <- rutinas
+//      poke = pokemon.realizarRutina(rutina)
+//      if poke.isSuccess
+//      resultado = criterio(poke.get)
+//    }
+//    yield (rutina, resultado)
+//    
+//    return resultados.maxBy(_._2)._1
+//  }
   
 }
 
